@@ -29,6 +29,8 @@ import InvalidStateDemo from "../components/ui/InvalidStateDemo";
 import BlocksDemo from "../components/ui/BlocksDemo";
 import IconsDemo from "../components/ui/IconsDemo";
 
+import Institution from "../pages/Institution";
+
 import Crud from "../pages/Crud";
 import EmptyPage from "../pages/EmptyPage";
 import TimelineDemo from "../pages/TimelineDemo";
@@ -43,6 +45,8 @@ import "prismjs/themes/prism-coy.css";
 import "../assets/demo/flags/flags.css";
 import "../assets/demo/Demos.scss";
 import "../assets/layout/layout.scss";
+import Complex from "../pages/Complex";
+import TypeArea from "../pages/TypeArea";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -177,11 +181,6 @@ const App = () => {
           label: "Complejos",
           icon: "pi pi-fw pi-home",
           to: "/complexes",
-        },
-        {
-          label: "Areas",
-          icon: "pi pi-fw pi-home",
-          to: "/areas",
         },
         {
           label: "Tipos de areas",
@@ -397,6 +396,10 @@ const App = () => {
           <Route path="/crud" component={Crud} />
           <Route path="/empty" component={EmptyPage} />
           <Route path="/documentation" component={Documentation} />
+          {/* Start route app */}
+          <Route path="/institutions" component={Institution} />
+          <Route path="/complexes" component={Complex} />
+          <Route path="/types-of-areas" component={TypeArea} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
