@@ -29,8 +29,6 @@ import InvalidStateDemo from "../components/ui/InvalidStateDemo";
 import BlocksDemo from "../components/ui/BlocksDemo";
 import IconsDemo from "../components/ui/IconsDemo";
 
-import Institution from "../pages/Institution";
-
 import Crud from "../pages/Crud";
 import EmptyPage from "../pages/EmptyPage";
 import TimelineDemo from "../pages/TimelineDemo";
@@ -47,6 +45,10 @@ import "../assets/demo/Demos.scss";
 import "../assets/layout/layout.scss";
 import Complex from "../pages/Complex";
 import TypeArea from "../pages/TypeArea";
+
+import InstitutionCreate from "../pages/institution/Create";
+import Institution from "../pages/institution";
+import InstitutionEdit from "../pages/institution/Edit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -398,6 +400,8 @@ const App = () => {
           <Route path="/documentation" component={Documentation} />
           {/* Start route app */}
           <Route path="/institutions" component={Institution} />
+          <Route path="/institutions-create" component={InstitutionCreate} />
+          <Route path="/institutions-edit/:id" component={InstitutionEdit} />
           <Route path="/complexes" component={Complex} />
           <Route path="/types-of-areas" component={TypeArea} />
         </div>
