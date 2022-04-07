@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
-import InstitutionForm from "../../components/institutions/InstitutionForm";
+import ComplexForm from "../../components/complexes/ComplexForm";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
 
-const InstitutionEdit = () => {
+const ComplexEdit = () => {
   const history = useHistory();
 
-  const [lstSotorage, setStorage] = useLocalStorage("intitutions", []);
+  const [lstSotorage, setStorage] = useLocalStorage("complex", []);
   const [loading, setLoading] = useState(false);
   const [initial, setInitial] = useState();
   const { id } = useParams();
@@ -22,21 +22,21 @@ const InstitutionEdit = () => {
   }, []);
 
   const onSubmit = async (values) => {
-    history.push("/institutions");
+    history.push("/complexes");
   };
 
   return (
     <div className="col-12">
       <div className="card">
-        <h5>Editar Intitucion</h5>
+        <h5>Editar Complejo</h5>
         {!loading ? (
           <Skeleton width="100%" height="150px"></Skeleton>
         ) : (
-          <InstitutionForm initialFormValue={initial} onSubmit={onSubmit} />
+          <ComplexForm initialFormValue={initial} onSubmit={onSubmit} />
         )}
       </div>
     </div>
   );
 };
 
-export default InstitutionEdit;
+export default ComplexEdit;

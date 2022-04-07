@@ -43,12 +43,14 @@ import "prismjs/themes/prism-coy.css";
 import "../assets/demo/flags/flags.css";
 import "../assets/demo/Demos.scss";
 import "../assets/layout/layout.scss";
-import Complex from "../pages/Complex";
-import TypeArea from "../pages/TypeArea";
 
 import InstitutionCreate from "../pages/institution/Create";
 import Institution from "../pages/institution";
 import InstitutionEdit from "../pages/institution/Edit";
+import Complex from "../pages/complex";
+import ComplexCreate from "../pages/complex/ComplexCreate";
+import ComplexEdit from "../pages/complex/ComplexEdit";
+import TypeArea from "../pages/TypeArea";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -403,6 +405,8 @@ const App = () => {
           <Route path="/institutions-create" component={InstitutionCreate} />
           <Route path="/institutions-edit/:id" component={InstitutionEdit} />
           <Route path="/complexes" component={Complex} />
+          <Route path="/complex-create" component={ComplexCreate} />
+          <Route path="/complex-edit/:id" component={ComplexEdit} />
           <Route path="/types-of-areas" component={TypeArea} />
         </div>
 
