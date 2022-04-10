@@ -1,23 +1,25 @@
-import React, { useRef } from "react";
+import React, { useState } from "react";
 import InstitutionForm from "../../components/institutions/InstitutionForm";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useHistory } from "react-router-dom";
+import { postInstitucion } from "../../service/InstitutionService";
 
 const InstitutionCreate = () => {
-  const [lstSotorage, setStorage] = useLocalStorage("intitutions", []);
+  const [loading, setLoading] = useState(false);
+
   const history = useHistory();
 
   const initialFormValue = {
-    id: Math.random(),
-    name: "",
-    direction: "",
-    phone: "",
-    observation: "",
+    nombre: "",
+    direccion: "",
+    telefonoContacto: "",
+    observaciones: "",
   };
 
   const onSubmit = async (values) => {
-    setStorage(values);
-
+    setLoading(true);
+    const response = await postInstitucion(values);
+    setLoading(false);
+    console.log(response);
     history.push("/institutions");
   };
 

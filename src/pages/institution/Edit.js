@@ -1,27 +1,28 @@
 import React, { useEffect, useState } from "react";
 import InstitutionForm from "../../components/institutions/InstitutionForm";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
+import {
+  getOneInstitucion,
+  putInstitucion,
+} from "../../service/InstitutionService";
 
 const InstitutionEdit = () => {
   const history = useHistory();
-
-  const [lstSotorage, setStorage] = useLocalStorage("intitutions", []);
   const [loading, setLoading] = useState(false);
   const [initial, setInitial] = useState();
   const { id } = useParams();
 
-  useEffect(() => {
-    let res = lstSotorage.filter((item) => item.id == id)[0];
+  useEffect(async () => {
+    const res = await getOneInstitucion(id);
     setInitial(res);
-    setTimeout(() => {
-      setLoading(true);
-    }, 1000);
+    setLoading(true);
   }, []);
 
   const onSubmit = async (values) => {
+    const res = await putInstitucion(values);
+    console.log(res);
     history.push("/institutions");
   };
 
