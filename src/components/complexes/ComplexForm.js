@@ -3,9 +3,9 @@ import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import InputCustom from "../shared/InputCustom";
+import InputCustom from "../formcustom/InputCustom";
 import { getInstitucions } from "../../service/InstitutionService";
-import AutocompleteCustom from "../shared/AutocompleteCustom";
+import AutocompleteCustom from "../formcustom/AutocompleteCustom";
 
 const ComplexForm = ({ initialFormValue, onSubmit }) => {
   const [autoFilteredValue, setAutoFilteredValue] = useState([]);

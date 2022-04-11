@@ -3,8 +3,8 @@ import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import InputCustom from "../shared/InputCustom";
-import TextareaCustom from "../shared/TextareaCustom";
+import InputCustom from "../formcustom/InputCustom";
+import TextareaCustom from "../formcustom/TextareaCustom";
 
 const InstitutionForm = ({ initialFormValue, onSubmit, loading }) => {
   const formSchema = Yup.object().shape({
