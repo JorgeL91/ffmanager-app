@@ -7,11 +7,17 @@ import { Link } from "react-router-dom";
 import { deleteTypeArea, getTypeAreas } from "../../service/TypeAreaServices";
 import { classNames } from "primereact/utils";
 import BtnDelete from "../../components/confirmation/BtnDelete";
+import MsjToast from "../../components/confirmation/MsjToast";
 
 const TypeArea = () => {
   const [TypeAreas, setTypeAreas] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
+  const [show, setShow] = useState({
+    active: false,
+    severity: "error",
+    message: "",
+  });
 
   const initFilters1 = () => {
     setFilters1({
@@ -49,8 +55,17 @@ const TypeArea = () => {
 
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
-    await deleteTypeArea(item);
-    loadItems();
+
+    const res = await deleteTypeArea(item);
+    if (res.error) {
+      setShow({
+        ...show,
+        active: true,
+        message: res.errorMessage,
+      });
+    } else {
+      loadItems();
+    }
   };
 
   const checkBodyTemplate = (verified) => {
@@ -70,6 +85,7 @@ const TypeArea = () => {
         <div className="card">
           <div className="grid ">
             <div className="col-6">
+              <MsjToast show={show} setShow={setShow} />
               <h5>Tipo de areas</h5>
             </div>
             <div className="col-6 text-right ">

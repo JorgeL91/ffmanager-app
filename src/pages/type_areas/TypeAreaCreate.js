@@ -2,9 +2,15 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
 import { postTypeArea } from "../../service/TypeAreaServices";
+import MsjToast from "../../components/confirmation/MsjToast";
 
 const TypeAreaCreate = () => {
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState({
+    active: false,
+    severity: "error",
+    message: "",
+  });
 
   const history = useHistory();
 
@@ -18,14 +24,23 @@ const TypeAreaCreate = () => {
 
   const onSubmit = async (values) => {
     setLoading(true);
-    await postTypeArea(values);
+    const res = await postTypeArea(values);
+    if (res.error) {
+      setShow({
+        ...show,
+        active: true,
+        message: res.errorMessage,
+      });
+    } else {
+      history.push("/types-of-areas");
+    }
     setLoading(false);
-    history.push("/types-of-areas");
   };
 
   return (
     <div className="col-12">
       <div className="card">
+        <MsjToast show={show} setShow={setShow} />
         <h5>Crear tipo de area</h5>
         <TypeAreaForm
           initialFormValue={initialFormValue}

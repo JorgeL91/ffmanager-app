@@ -9,12 +9,17 @@ import {
 } from "../../service/InstitutionService";
 import { Link } from "react-router-dom";
 import BtnDelete from "../../components/confirmation/BtnDelete";
+import MsjToast from "../../components/confirmation/MsjToast";
 
 const Institution = () => {
   const [institutions, setInstitutions] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
-
+  const [show, setShow] = useState({
+    active: false,
+    severity: "error",
+    message: "",
+  });
   const initFilters1 = () => {
     setFilters1({
       global: { value: null, matchMode: FilterMatchMode.CONTAINS },
@@ -55,8 +60,16 @@ const Institution = () => {
 
   const deleteItem = async (displayConfirmation) => {
     const { item } = { ...displayConfirmation };
-    await deleteInstitucion(item);
-    loadItems();
+    const res = await deleteInstitucion(item);
+    if (res.error) {
+      setShow({
+        ...show,
+        active: true,
+        message: res.errorMessage,
+      });
+    } else {
+      loadItems();
+    }
   };
 
   return (
@@ -65,6 +78,8 @@ const Institution = () => {
         <div className="card">
           <div className="grid ">
             <div className="col-6">
+              <MsjToast show={show} setShow={setShow} />
+
               <h5>Instituciones</h5>
             </div>
             <div className="col-6 text-right ">

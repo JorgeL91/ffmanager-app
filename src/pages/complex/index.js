@@ -6,11 +6,17 @@ import { Button } from "primereact/button";
 import { getConplexes, deleteConplex } from "../../service/complexServices";
 import { Link } from "react-router-dom";
 import BtnDelete from "../../components/confirmation/BtnDelete";
+import MsjToast from "../../components/confirmation/MsjToast";
 
 const Complex = () => {
   const [complexes, setComplexes] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
+  const [show, setShow] = useState({
+    active: false,
+    severity: "error",
+    message: "",
+  });
 
   const initFilters1 = () => {
     setFilters1({
@@ -36,8 +42,16 @@ const Complex = () => {
 
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
-    await deleteConplex(item);
-    loadItems();
+    const res = await deleteConplex(item);
+    if (res.error) {
+      setShow({
+        ...show,
+        active: true,
+        message: res.errorMessage,
+      });
+    } else {
+      loadItems();
+    }
   };
 
   const verifiedBodyTemplate = (rowData) => {
@@ -57,6 +71,7 @@ const Complex = () => {
         <div className="card">
           <div className="grid ">
             <div className="col-6">
+              <MsjToast show={show} setShow={setShow} />
               <h5>Complejos</h5>
             </div>
             <div className="col-6 text-right ">

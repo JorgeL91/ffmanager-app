@@ -7,17 +7,23 @@ import {
   getOneInstitucion,
   putInstitucion,
 } from "../../service/InstitutionService";
+import MsjToast from "../../components/confirmation/MsjToast";
 
 const InstitutionEdit = () => {
   const history = useHistory();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [initial, setInitial] = useState();
+  const [show, setShow] = useState({
+    active: false,
+    severity: "error",
+    message: "",
+  });
   const { id } = useParams();
 
   const loadItem = async () => {
     const res = await getOneInstitucion(id);
     setInitial(res);
-    setLoading(true);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -25,15 +31,26 @@ const InstitutionEdit = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async (values) => {
-    await putInstitucion(values);
-    history.push("/institutions");
+    setLoading(true);
+    const res = await putInstitucion(values);
+    if (res.error) {
+      setShow({
+        ...show,
+        active: true,
+        message: res.errorMessage,
+      });
+    } else {
+      history.push("/institutions");
+    }
+    setLoading(false);
   };
 
   return (
     <div className="col-12">
       <div className="card">
+        <MsjToast show={show} setShow={setShow} />
         <h5>Editar Intitucion</h5>
-        {!loading ? (
+        {loading ? (
           <Skeleton width="100%" height="150px"></Skeleton>
         ) : (
           <InstitutionForm initialFormValue={initial} onSubmit={onSubmit} />

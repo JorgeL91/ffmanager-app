@@ -7,7 +7,7 @@ import InputCustom from "../formcustom/InputCustom";
 import { getInstitucions } from "../../service/InstitutionService";
 import AutocompleteCustom from "../formcustom/AutocompleteCustom";
 
-const ComplexForm = ({ initialFormValue, onSubmit }) => {
+const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
   const [autoFilteredValue, setAutoFilteredValue] = useState([]);
   const [autoValue, setAutoValue] = useState(null);
 
@@ -83,7 +83,12 @@ const ComplexForm = ({ initialFormValue, onSubmit }) => {
             <InputCustom name="direccion" placeholder="Calle 12 # 4 -6" />
           </div>
         </div>
-        <Button label="Guardar" type="submit" className="mr-2 mb-2" />
+        <Button
+          label="Guardar"
+          type="submit"
+          className="mr-2 mb-2"
+          loading={loading}
+        />
         <Link to="/complexes">
           <Button label="Volver" className=" p-button-danger mr-2 mb-2" />
         </Link>
