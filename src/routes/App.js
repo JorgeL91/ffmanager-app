@@ -50,7 +50,9 @@ import InstitutionEdit from "../pages/institution/Edit";
 import Complex from "../pages/complex";
 import ComplexCreate from "../pages/complex/ComplexCreate";
 import ComplexEdit from "../pages/complex/ComplexEdit";
-import TypeArea from "../pages/TypeArea";
+import TypeArea from "../pages/type_areas";
+import TypeAreaCreate from "../pages/type_areas/TypeAreaCreate";
+import TypeAreaEdit from "../pages/type_areas/TypeAreaEdit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -408,6 +410,8 @@ const App = () => {
           <Route path="/complex-create" component={ComplexCreate} />
           <Route path="/complex-edit/:id" component={ComplexEdit} />
           <Route path="/types-of-areas" component={TypeArea} />
+          <Route path="/types-of-areas-create" component={TypeAreaCreate} />
+          <Route path="/types-of-areas-edit/:id" component={TypeAreaEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />

@@ -13,10 +13,10 @@ import { Slider } from "primereact/slider";
 import { TriStateCheckbox } from "primereact/tristatecheckbox";
 import { ToggleButton } from "primereact/togglebutton";
 import { Rating } from "primereact/rating";
-import { CustomerService } from "../service/demo-ui/CustomerService";
-import { ProductService } from "../service/demo-ui/ProductService";
+import { CustomerService } from "../../service/demo-ui/CustomerService";
+import { ProductService } from "../../service/demo-ui/ProductService";
 
-const TypeArea = () => {
+const Area = () => {
   const [customers1, setCustomers1] = useState(null);
   const [customers2, setCustomers2] = useState([]);
   const [customers3, setCustomers3] = useState([]);
@@ -592,4 +592,4 @@ const TypeArea = () => {
   );
 };
 
-export default TypeArea;
+export default Area;
