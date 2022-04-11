@@ -1,23 +1,23 @@
-import React, { useRef } from "react";
+import React from "react";
 import ComplexForm from "../../components/complexes/ComplexForm";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 import { useHistory } from "react-router-dom";
+import { postConplex } from "../../service/complexServices";
 
 const ComplexCreate = () => {
-  const [lstSotorage, setStorage] = useLocalStorage("complex", []);
   const history = useHistory();
 
   const initialFormValue = {
-    id: Math.random(),
-    name: "",
-    direction: "",
-    phone: "",
-    fk_institution: "",
+    nombre: "",
+    direccion: "",
+    telefonoContacto: "",
+    datosInstitucionDeportiva: {
+      idDatosInstitucionDeportiva: "",
+    },
   };
 
   const onSubmit = async (values) => {
-    setStorage(values);
-
+    console.log(values);
+    const res = await postConplex(values);
     history.push("/complexes");
   };
 

@@ -19,7 +19,6 @@ const InstitutionCreate = () => {
     setLoading(true);
     const response = await postInstitucion(values);
     setLoading(false);
-    console.log(response);
     history.push("/institutions");
   };
 

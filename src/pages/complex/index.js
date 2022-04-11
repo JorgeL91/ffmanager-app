@@ -3,15 +3,13 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Button } from "primereact/button";
-import { getInstitucions } from "../../service/InstitutionService";
+import { getConplexes } from "../../service/complexServices";
 import { Link } from "react-router-dom";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
 
 const Complex = () => {
-  const [institutions, setInstitutions] = useState([]);
+  const [complexes, setComplexes] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
-  const [lstSotorage, setStorage] = useLocalStorage("complex", []);
 
   const initFilters1 = () => {
     setFilters1({
@@ -20,34 +18,14 @@ const Complex = () => {
         operator: FilterOperator.AND,
         constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
       },
-      direccion: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
-      "country.name": {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
-      representative: { value: null, matchMode: FilterMatchMode.IN },
-      date: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.DATE_IS }],
-      },
-      balance: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.EQUALS }],
-      },
-
-      activity: { value: null, matchMode: FilterMatchMode.BETWEEN },
-      verified: { value: null, matchMode: FilterMatchMode.EQUALS },
     });
   };
 
   useEffect(async () => {
     setLoading1(true);
-
-    const response = await getInstitucions();
-    setInstitutions(response);
+    const response = await getConplexes();
+    console.log(response);
+    setComplexes(response);
     setLoading1(false);
 
     initFilters1();
@@ -55,12 +33,28 @@ const Complex = () => {
 
   const verifiedBodyTemplate = (rowData) => {
     return (
-      <Link to={`complex-edit/${rowData.id}`}>
-        <i className="pi pi-clone"></i>
-      </Link>
+      <>
+        <Link to={`complex-edit/${rowData.idDatosInstitucionDeportiva}`}>
+          <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
+        </Link>
+        {/* <Link to={`institutions-edit/${rowData.idDatosInstitucionDeportiva}`}>
+          <Button icon="pi  pi-trash" className="p-button-danger" />
+        </Link> */}
+
+        <Button
+          icon="pi  pi-trash"
+          className="p-button-danger"
+          // onClick={() =>
+          //   setDisplayConfirmation({
+          //     ...displayConfirmation,
+          //     active: true,
+          //     item: rowData,
+          //   })
+          // }
+        />
+      </>
     );
   };
-
   return (
     <div className="grid table-demo">
       <div className="col-12">
@@ -71,33 +65,37 @@ const Complex = () => {
             </div>
             <div className="col-6 text-right ">
               <Link to="complex-create" className="btn btn-primary">
-                <Button label="Nuevo Registro" className="mr-2 mb-2" />
+                <Button
+                  icon="pi pi-plus"
+                  label="Nuevo Registro"
+                  className="mr-2 mb-2"
+                />
               </Link>
             </div>
           </div>
 
           <DataTable
-            value={lstSotorage}
+            value={complexes}
             paginator
             className="p-datatable-gridlines"
             showGridlines
             rows={10}
-            dataKey="id"
+            dataKey="idComplejo"
             filters={filters1}
             filterDisplay="menu"
             loading={loading1}
             responsiveLayout="scroll"
-            emptyMessage="No customers found."
+            emptyMessage="No existen complejos a mostrar."
           >
             <Column
-              field="name"
+              field="nombre"
               header="Nombre"
               filter
-              filterPlaceholder="Search by name"
+              filterPlaceholder="Buscar por nombre"
               style={{ minWidth: "12rem" }}
             />
-            <Column header="Direccion" field="direction" />
-            <Column header="Telefono" field="phone" />
+            <Column header="Direccion" field="direccion" />
+            <Column header="Telefono" field="telefonoContacto" />
             <Column header="Intitucion" field="observation" />
             <Column
               header=""
