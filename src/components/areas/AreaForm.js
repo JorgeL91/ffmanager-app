@@ -24,13 +24,6 @@ const AreaForm = ({ initialFormValue, onSubmit, loading }) => {
     setAutoValue(res);
     const complexes = await getConplexes();
     setAutoValue2(complexes);
-    // setAutoValue([
-    //   {
-    //     idTipoArea: 1,
-    //     nombre: "redonde",
-    //   },
-    //   { idTipoArea: 2, nombre: "cuadrado" },
-    // ]);
   };
 
   const searchText = (event) => {

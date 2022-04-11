@@ -12,11 +12,9 @@ export function useLocalStorage(key, initialValue) {
 
   const setLocalStorage = (value) => {
     try {
-      //var lst = value.filter((items) => items.id !== value.id);
       setValue((state) => [...state, value]);
       storedValue.push(value);
       window.localStorage.setItem(key, JSON.stringify(storedValue));
-      //setValue(value);
     } catch (e) {}
   };
 

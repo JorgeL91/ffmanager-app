@@ -12,16 +12,6 @@ export default function InputCustom({ name, ...props }) {
         onChange={field.onChange(name)}
         onBlur={field.onBlur(name)}
         value={field.value}
-        // leftIcon={
-        //   props.nameIcon && (
-        //     <Icon
-        //       type="material-community"
-        //       name={props.nameIcon}
-        //       iconStyle={styles.icon}
-        //       size={24}
-        //     />
-        //   )
-        // }
         {...props}
         className={classNames({ "p-invalid": meta.error && meta.touched })}
       />

@@ -121,8 +121,6 @@ const Institution = () => {
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
               body={verifiedBodyTemplate}
-              // filter
-              // filterElement={verifiedFilterTemplate}
             />
           </DataTable>
         </div>

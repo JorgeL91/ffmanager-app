@@ -12,6 +12,8 @@ const Area = () => {
   const [areas, setAreas] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
+  const [expandedRows, setExpandedRows] = useState(null);
+
   const [show, setShow] = useState({
     active: false,
     severity: "error",
@@ -65,6 +67,50 @@ const Area = () => {
       </>
     );
   };
+
+  const linkTextTemplate = (data) => {
+    console.log(data);
+
+    return (
+      <Link
+        to={`sector-edit/${data.idSector}`}
+        className="btn btn-primary bt-sm"
+      >
+        {data.nombre}
+      </Link>
+    );
+  };
+
+  const rowExpansionTemplate = (data) => {
+    console.log(data);
+    return (
+      <div className="orders-subtable">
+        <div className="grid ">
+          <div className="col-6">
+            <h5>Sectores</h5>
+          </div>
+          <div className="col-6 text-right ">
+            <Link to={`sector-create/${data.idArea}`}>
+              <Button
+                icon="pi pi-plus"
+                className="p-button-success mr-1 mb-1"
+              />
+            </Link>
+          </div>
+        </div>
+        <DataTable value={data.sectores} responsiveLayout="scroll">
+          <Column
+            field="nombre"
+            header="nombre"
+            body={linkTextTemplate}
+          ></Column>
+          <Column field="tamano" header="tamano"></Column>
+          <Column field="numeroSector" header="numeroSector"></Column>
+        </DataTable>
+      </div>
+    );
+  };
+
   return (
     <div className="grid table-demo">
       <div className="col-12">
@@ -97,7 +143,11 @@ const Area = () => {
             loading={loading1}
             responsiveLayout="scroll"
             emptyMessage="No existen areas a mostrar."
+            expandedRows={expandedRows}
+            onRowToggle={(e) => setExpandedRows(e.data)}
+            rowExpansionTemplate={rowExpansionTemplate}
           >
+            <Column expander style={{ width: "3em" }} />
             <Column
               field="nombre"
               header="Nombre"
@@ -112,8 +162,6 @@ const Area = () => {
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
               body={verifiedBodyTemplate}
-              // filter
-              // filterElement={verifiedFilterTemplate}
             />
           </DataTable>
         </div>

@@ -56,6 +56,8 @@ import TypeAreaEdit from "../pages/type_areas/TypeAreaEdit";
 import Area from "../pages/area";
 import AreaCreate from "../pages/area/AreaCreate";
 import AreaEdit from "../pages/area/AreaEdit";
+import SectorCreate from "../pages/area/SectorCreate";
+import SectorEdit from "../pages/area/SectorEdit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -423,6 +425,8 @@ const App = () => {
           <Route path="/areas" component={Area} />
           <Route path="/area-create" component={AreaCreate} />
           <Route path="/area-edit/:id" component={AreaEdit} />
+          <Route path="/sector-create/:id" component={SectorCreate} />
+          <Route path="/sector-edit/:id" component={SectorEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
