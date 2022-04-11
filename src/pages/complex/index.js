@@ -3,8 +3,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Button } from "primereact/button";
-import { getConplexes } from "../../service/complexServices";
+import { getConplexes, deleteConplex } from "../../service/complexServices";
 import { Link } from "react-router-dom";
+import BtnDelete from "../../components/confirmation/BtnDelete";
 
 const Complex = () => {
   const [complexes, setComplexes] = useState([]);
@@ -33,27 +34,20 @@ const Complex = () => {
     setLoading1(false);
   };
 
+  const deleteItem = async (confirmation) => {
+    const { item } = { ...confirmation };
+    await deleteConplex(item);
+    loadItems();
+  };
+
   const verifiedBodyTemplate = (rowData) => {
     return (
       <>
-        <Link to={`complex-edit/${rowData.idDatosInstitucionDeportiva}`}>
+        <Link to={`complex-edit/${rowData.idComplejo}`}>
           <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
         </Link>
-        {/* <Link to={`institutions-edit/${rowData.idDatosInstitucionDeportiva}`}>
-          <Button icon="pi  pi-trash" className="p-button-danger" />
-        </Link> */}
 
-        <Button
-          icon="pi  pi-trash"
-          className="p-button-danger"
-          // onClick={() =>
-          //   setDisplayConfirmation({
-          //     ...displayConfirmation,
-          //     active: true,
-          //     item: rowData,
-          //   })
-          // }
-        />
+        <BtnDelete item={rowData.idComplejo} onConfirmation={deleteItem} />
       </>
     );
   };

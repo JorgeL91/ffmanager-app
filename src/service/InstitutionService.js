@@ -57,13 +57,12 @@ export function putInstitucion(body, token = "") {
   return invokeApi(options);
 }
 
-export function deleteInstitucion(body, token = "") {
-  const url = `${urlApi}/delete/${body.idDatosInstitucionDeportiva}`;
+export function deleteInstitucion(idDatosInstitucionDeportiva, token = "") {
+  const url = `${urlApi}/delete/${idDatosInstitucionDeportiva}`;
 
   const options = {
     method: "DELETE",
     url: url,
-    data: body,
     headers: {
       Authorization: `Bearer ${token}`,
     },

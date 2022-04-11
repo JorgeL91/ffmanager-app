@@ -42,7 +42,7 @@ const TypeArea = () => {
           <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
         </Link>
 
-        <BtnDelete rowData={rowData} onConfirmation={deleteItem} />
+        <BtnDelete item={rowData.idTipoArea} onConfirmation={deleteItem} />
       </>
     );
   };

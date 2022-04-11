@@ -57,13 +57,12 @@ export function putConplex(body, token = "") {
   return invokeApi(options);
 }
 
-export function deleteConplex(body, token = "") {
-  const url = `${urlApi}/delete/${body.idDatosConplexDeportiva}`;
+export function deleteConplex(idComplejo, token = "") {
+  const url = `${urlApi}/delete/${idComplejo}`;
 
   const options = {
     method: "DELETE",
     url: url,
-    data: body,
     headers: {
       Authorization: `Bearer ${token}`,
     },

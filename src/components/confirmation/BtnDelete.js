@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 
-const BtnDelete = ({ rowData, onConfirmation }) => {
+const BtnDelete = ({ item, onConfirmation }) => {
   const [displayConfirmation, setDisplayConfirmation] = useState({
     active: false,
-    item: {},
+    item: 0,
   });
 
   const confirmation = () => {
@@ -50,7 +50,7 @@ const BtnDelete = ({ rowData, onConfirmation }) => {
           setDisplayConfirmation({
             ...displayConfirmation,
             active: true,
-            item: rowData,
+            item: item,
           })
         }
       />

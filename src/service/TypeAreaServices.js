@@ -57,13 +57,12 @@ export function putTypeArea(body, token = "") {
   return invokeApi(options);
 }
 
-export function deleteTypeArea(body, token = "") {
-  const url = `${urlApi}/delete/${body.idTipoArea}`;
+export function deleteTypeArea(id, token = "") {
+  const url = `${urlApi}/delete/${id}`;
 
   const options = {
     method: "DELETE",
     url: url,
-    // data: body,
     headers: {
       Authorization: `Bearer ${token}`,
     },
