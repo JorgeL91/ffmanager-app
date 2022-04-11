@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { InputText } from "primereact/inputtext";
+import React from "react";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
-import { Formik, Form, Field } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../shared/InputCustom";
 import TextareaCustom from "../shared/TextareaCustom";
 
-const InstitutionForm = ({ initialFormValue, onSubmit }) => {
+const InstitutionForm = ({ initialFormValue, onSubmit, loading }) => {
   const formSchema = Yup.object().shape({
     nombre: Yup.string()
       .required("Por Favor ingrese un Nombre")
@@ -47,7 +46,12 @@ const InstitutionForm = ({ initialFormValue, onSubmit }) => {
             />
           </div>
         </div>
-        <Button label="Guardar" type="submit" className="mr-2 mb-2" />
+        <Button
+          label="Guardar"
+          type="submit"
+          className="mr-2 mb-2"
+          loading={loading}
+        />
         <Link to="/institutions">
           <Button label="Volver" className=" p-button-danger mr-2 mb-2" />
         </Link>

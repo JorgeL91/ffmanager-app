@@ -21,14 +21,17 @@ const Complex = () => {
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
+    loadItems();
+    initFilters1();
+  }, []); // eslint-disable-next-line
+
+  const loadItems = async () => {
     setLoading1(true);
     const response = await getConplexes();
     if (!response.error) setComplexes(response);
     setLoading1(false);
-
-    initFilters1();
-  }, []); // eslint-disable-next-line
+  };
 
   const verifiedBodyTemplate = (rowData) => {
     return (

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useField, useFormikContext } from "formik";
-import { InputTextarea } from "primereact/inputtextarea";
 import { classNames } from "primereact/utils";
 import { AutoComplete } from "primereact/autocomplete";
 
@@ -14,6 +13,7 @@ export default function AutocompleteCustom({ name, ...props }) {
       selected.idDatosInstitucionDeportiva;
     delete errors.datosInstitucionDeportiva;
     setSelectedAutoValue(selected);
+    console.log(field);
   };
   return (
     <>

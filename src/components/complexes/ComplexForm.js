@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../shared/InputCustom";
-import { AutoComplete } from "primereact/autocomplete";
 import { getInstitucions } from "../../service/InstitutionService";
 import AutocompleteCustom from "../shared/AutocompleteCustom";
 
@@ -12,10 +11,14 @@ const ComplexForm = ({ initialFormValue, onSubmit }) => {
   const [autoFilteredValue, setAutoFilteredValue] = useState([]);
   const [autoValue, setAutoValue] = useState(null);
 
-  useEffect(async () => {
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  const getItems = async () => {
     const res = await getInstitucions();
     setAutoValue(res);
-  }, []);
+  };
 
   const searchText = (event) => {
     setTimeout(() => {

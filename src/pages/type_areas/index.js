@@ -23,7 +23,7 @@ const TypeArea = () => {
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     loadItems();
     initFilters1();
   }, []); // eslint-disable-next-line
@@ -49,7 +49,7 @@ const TypeArea = () => {
 
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
-    const res = await deleteTypeArea(item);
+    await deleteTypeArea(item);
     loadItems();
   };
 

@@ -11,15 +11,18 @@ const ComplexEdit = () => {
   const [initial, setInitial] = useState();
   const { id } = useParams();
 
-  useEffect(async () => {
-    const res = await getOneConplex(id);
-    res.datosInstitucionDeportiva = { idDatosInstitucionDeportiva: 1 };
-    setInitial(res);
-    setLoading(true);
-  }, []);
+  useEffect(() => {
+    async function fetchData() {
+      const res = await getOneConplex(id);
+      res.datosInstitucionDeportiva = { idDatosInstitucionDeportiva: 1 };
+      setInitial(res);
+      setLoading(true);
+    }
+    fetchData();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async (values) => {
-    const res = await putConplex(values);
+    await putConplex(values);
     history.push("/complexes");
   };
 

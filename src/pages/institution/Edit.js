@@ -14,14 +14,18 @@ const InstitutionEdit = () => {
   const [initial, setInitial] = useState();
   const { id } = useParams();
 
-  useEffect(async () => {
+  const loadItem = async () => {
     const res = await getOneInstitucion(id);
     setInitial(res);
     setLoading(true);
-  }, []);
+  };
+
+  useEffect(() => {
+    loadItem();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async (values) => {
-    const res = await putInstitucion(values);
+    await putInstitucion(values);
     history.push("/institutions");
   };
 

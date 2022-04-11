@@ -12,7 +12,6 @@ const TypeAreaCreate = () => {
     nombre: "",
     descripcion: "",
     observaciones: "",
-    observaciones: "",
     esTechada: false,
     esCompuesta: false,
   };
@@ -28,7 +27,11 @@ const TypeAreaCreate = () => {
     <div className="col-12">
       <div className="card">
         <h5>Crear tipo de area</h5>
-        <TypeAreaForm initialFormValue={initialFormValue} onSubmit={onSubmit} />
+        <TypeAreaForm
+          initialFormValue={initialFormValue}
+          onSubmit={onSubmit}
+          loading={loading}
+        />
       </div>
     </div>
   );

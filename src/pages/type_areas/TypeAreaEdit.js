@@ -9,13 +9,17 @@ const TypeAreaEdit = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [initial, setInitial] = useState();
-  const { id } = useParams();
+  const { id = 0 } = useParams();
 
-  useEffect(async () => {
+  const loadItem = async () => {
     const res = await getOneTypeArea(id);
     setInitial(res);
     setLoading(true);
-  }, []);
+  };
+
+  useEffect(() => {
+    loadItem();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async (values) => {
     await putTypeArea(values);

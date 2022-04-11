@@ -7,7 +7,7 @@ import InputCustom from "../shared/InputCustom";
 import TextareaCustom from "../shared/TextareaCustom";
 import CheckboxCustom from "../shared/CheckboxCustom";
 
-const TypeAreaForm = ({ initialFormValue, onSubmit }) => {
+const TypeAreaForm = ({ initialFormValue, onSubmit, loading }) => {
   const formSchema = Yup.object().shape({
     nombre: Yup.string()
       .required("Por Favor ingrese un Nombre")
@@ -48,7 +48,12 @@ const TypeAreaForm = ({ initialFormValue, onSubmit }) => {
             </div>
           </div>
         </div>
-        <Button label="Guardar" type="submit" className="mr-2 mb-2" />
+        <Button
+          label="Guardar"
+          type="submit"
+          className="mr-2 mb-2"
+          loading={loading}
+        />
         <Link to="/types-of-areas">
           <Button label="Volver" className=" p-button-danger mr-2 mb-2" />
         </Link>

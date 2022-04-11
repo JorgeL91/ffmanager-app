@@ -17,7 +17,7 @@ const InstitutionCreate = () => {
 
   const onSubmit = async (values) => {
     setLoading(true);
-    const response = await postInstitucion(values);
+    await postInstitucion(values);
     setLoading(false);
     history.push("/institutions");
   };
@@ -29,6 +29,7 @@ const InstitutionCreate = () => {
         <InstitutionForm
           initialFormValue={initialFormValue}
           onSubmit={onSubmit}
+          loading={loading}
         />
       </div>
     </div>

@@ -30,7 +30,7 @@ const Institution = () => {
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     loadItems();
     initFilters1();
   }, []); // eslint-disable-next-line
@@ -49,9 +49,6 @@ const Institution = () => {
         <Link to={`institutions-edit/${rowData.idDatosInstitucionDeportiva}`}>
           <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
         </Link>
-        {/* <Link to={`institutions-edit/${rowData.idDatosInstitucionDeportiva}`}>
-          <Button icon="pi  pi-trash" className="p-button-danger" />
-        </Link> */}
 
         <Button
           icon="pi  pi-trash"
@@ -95,7 +92,7 @@ const Institution = () => {
 
   const deleteItem = async () => {
     const { item } = { ...displayConfirmation };
-    const res = await deleteInstitucion(item);
+    await deleteInstitucion(item);
     loadItems();
     setDisplayConfirmation({
       ...displayConfirmation,
