@@ -53,6 +53,9 @@ import ComplexEdit from "../pages/complex/ComplexEdit";
 import TypeArea from "../pages/type_areas";
 import TypeAreaCreate from "../pages/type_areas/TypeAreaCreate";
 import TypeAreaEdit from "../pages/type_areas/TypeAreaEdit";
+import Area from "../pages/area";
+import AreaCreate from "../pages/area/AreaCreate";
+import AreaEdit from "../pages/area/AreaEdit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -192,6 +195,11 @@ const App = () => {
           label: "Tipos de areas",
           icon: "pi pi-fw pi-home",
           to: "/types-of-areas",
+        },
+        {
+          label: "Areas",
+          icon: "pi pi-fw pi-home",
+          to: "/areas",
         },
       ],
     },
@@ -412,6 +420,9 @@ const App = () => {
           <Route path="/types-of-areas" component={TypeArea} />
           <Route path="/types-of-areas-create" component={TypeAreaCreate} />
           <Route path="/types-of-areas-edit/:id" component={TypeAreaEdit} />
+          <Route path="/areas" component={Area} />
+          <Route path="/area-create" component={AreaCreate} />
+          <Route path="/area-edit/:id" component={AreaEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />

@@ -4,20 +4,33 @@ import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
-import { getInstitucions } from "../../service/InstitutionService";
+import { getTypeAreas } from "../../service/TypeAreaServices";
 import AutocompleteCustom from "../formcustom/AutocompleteCustom";
+import { getConplexes } from "../../service/complexServices";
 
-const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
+const AreaForm = ({ initialFormValue, onSubmit, loading }) => {
   const [autoFilteredValue, setAutoFilteredValue] = useState([]);
   const [autoValue, setAutoValue] = useState(null);
-  console.log(initialFormValue.datosInstitucionDeportiva);
+
+  const [autoFilteredValue2, setAutoFilteredValue2] = useState([]);
+  const [autoValue2, setAutoValue2] = useState(null);
+
   useEffect(() => {
     getItems();
   }, []);
 
   const getItems = async () => {
-    const res = await getInstitucions();
+    const res = await getTypeAreas();
     setAutoValue(res);
+    const complexes = await getConplexes();
+    setAutoValue2(complexes);
+    // setAutoValue([
+    //   {
+    //     idTipoArea: 1,
+    //     nombre: "redonde",
+    //   },
+    //   { idTipoArea: 2, nombre: "cuadrado" },
+    // ]);
   };
 
   const searchText = (event) => {
@@ -36,20 +49,32 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
     }, 250);
   };
 
+  const searchText2 = (event) => {
+    setTimeout(() => {
+      if (!event.query.trim().length) {
+        setAutoFilteredValue2([...autoValue2]);
+      } else {
+        setAutoFilteredValue2(
+          autoValue2.filter((item) => {
+            return item.nombre
+              .toLowerCase()
+              .startsWith(event.query.toLowerCase());
+          })
+        );
+      }
+    }, 250);
+  };
+
   const formSchema = Yup.object().shape({
     nombre: Yup.string()
       .required("Por Favor ingrese un Nombre")
       .max(50, "Nombre debe tener maiximo 50 caracteres "),
-    direccion: Yup.string()
-      .required("Por Favor ingrese una direccion")
-      .max(50, "Nombre debe tener maiximo 50 caracteres "),
-    telefonoContacto: Yup.string()
-      .required("Por Favor ingrese un telefono")
-      .max(50, "Nombre debe tener maiximo 50 caracteres "),
-    datosInstitucionDeportiva: Yup.object().shape({
-      idDatosInstitucionDeportiva: Yup.string().required(
-        "Seleccione una institucion"
-      ),
+
+    tiposAreas: Yup.object().shape({
+      idTipoArea: Yup.string().required("Seleccione un tipo de area"),
+    }),
+    complejos: Yup.object().shape({
+      idComplejo: Yup.string().required("Seleccione un Complejo"),
     }),
   });
 
@@ -63,25 +88,31 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
         <div className="p-fluid formgrid grid">
           <div className="field col-12 md:col-6">
             <label htmlFor="nombre">Nombre</label>
-            <InputCustom name="nombre" placeholder="Nombre del complejo" />
+            <InputCustom name="nombre" />
           </div>
           <div className="field col-12 md:col-6">
-            <label htmlFor="telefonoContacto">Telefono</label>
-            <InputCustom name="telefonoContacto" placeholder="312 00 0000 0" />
+            <label htmlFor="observaciones">Observaciones</label>
+            <InputCustom name="observaciones" />
           </div>
           <div className="field col-12 md:col-12">
-            <label htmlFor="direction">Instutucion 2</label>
+            <label htmlFor="direction">Tipo de area</label>
             <AutocompleteCustom
-              name="datosInstitucionDeportiva.idDatosInstitucionDeportiva"
+              name="tiposAreas.idTipoArea"
               suggestions={autoFilteredValue}
               completeMethod={searchText}
               field="nombre"
-              labelText={initialFormValue.datosInstitucionDeportiva.nombre}
+              labelText={initialFormValue.tiposAreas.nombre}
             />
           </div>
           <div className="field col-12 md:col-12">
-            <label htmlFor="direccion">Direccion</label>
-            <InputCustom name="direccion" placeholder="Calle 12 # 4 -6" />
+            <label htmlFor="direction">Complejo</label>
+            <AutocompleteCustom
+              name="complejos.idComplejo"
+              suggestions={autoFilteredValue2}
+              completeMethod={searchText2}
+              field="nombre"
+              labelText={initialFormValue.complejos.nombre}
+            />
           </div>
         </div>
         <Button
@@ -90,7 +121,7 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
           className="mr-2 mb-2"
           loading={loading}
         />
-        <Link to="/complexes">
+        <Link to="/areas">
           <Button label="Volver" className=" p-button-danger mr-2 mb-2" />
         </Link>
       </Form>
@@ -98,4 +129,4 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
   );
 };
 
-export default ComplexForm;
+export default AreaForm;
