@@ -38,7 +38,8 @@ const Institution = () => {
   const loadItems = async () => {
     setLoading1(true);
     const response = await getInstitucions();
-    setInstitutions(response);
+    if (!response.error) setInstitutions(response);
+
     setLoading1(false);
   };
 
@@ -132,7 +133,7 @@ const Institution = () => {
             filterDisplay="menu"
             loading={loading1}
             responsiveLayout="scroll"
-            emptyMessage="No customers found."
+            emptyMessage="No se encontraron datos."
           >
             <Column
               field="nombre"

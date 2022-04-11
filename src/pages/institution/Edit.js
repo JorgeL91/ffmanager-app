@@ -22,7 +22,6 @@ const InstitutionEdit = () => {
 
   const onSubmit = async (values) => {
     const res = await putInstitucion(values);
-    console.log(res);
     history.push("/institutions");
   };
 

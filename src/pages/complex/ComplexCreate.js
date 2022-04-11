@@ -16,7 +16,6 @@ const ComplexCreate = () => {
   };
 
   const onSubmit = async (values) => {
-    console.log(values);
     const res = await postConplex(values);
     history.push("/complexes");
   };

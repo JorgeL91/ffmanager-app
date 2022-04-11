@@ -4,7 +4,6 @@ import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
-import { Dialog } from "primereact/dialog";
 import { deleteTypeArea, getTypeAreas } from "../../service/TypeAreaServices";
 import { classNames } from "primereact/utils";
 import BtnDelete from "../../components/confirmation/BtnDelete";
@@ -13,11 +12,6 @@ const TypeArea = () => {
   const [TypeAreas, setTypeAreas] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
-
-  const [displayConfirmation, setDisplayConfirmation] = useState({
-    active: false,
-    item: {},
-  });
 
   const initFilters1 = () => {
     setFilters1({
@@ -37,7 +31,7 @@ const TypeArea = () => {
   const loadItems = async () => {
     setLoading1(true);
     const response = await getTypeAreas();
-    setTypeAreas(response);
+    if (!response.error) setTypeAreas(response);
     setLoading1(false);
   };
 
@@ -47,58 +41,16 @@ const TypeArea = () => {
         <Link to={`types-of-areas-edit/${rowData.idTipoArea}`}>
           <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
         </Link>
-        {/* <Link to={`TypeAreas-edit/${rowData.idDatosInstitucionDeportiva}`}>
-          <Button icon="pi  pi-trash" className="p-button-danger" />
-        </Link> */}
-        {/* <BtnDelete /> */}
-        <Button
-          icon="pi  pi-trash"
-          className="p-button-danger"
-          onClick={() =>
-            setDisplayConfirmation({
-              ...displayConfirmation,
-              active: true,
-              item: rowData,
-            })
-          }
-        />
+
+        <BtnDelete rowData={rowData} onConfirmation={deleteItem} />
       </>
     );
   };
 
-  const confirmationDialogFooter = (
-    <>
-      <Button
-        type="button"
-        label="Cancelar"
-        icon="pi pi-times"
-        onClick={() =>
-          setDisplayConfirmation({
-            ...displayConfirmation,
-            active: false,
-          })
-        }
-        className="p-button-text"
-      />
-      <Button
-        type="button"
-        label="Aceptar"
-        icon="pi pi-check"
-        onClick={() => deleteItem()}
-        className="p-button-text"
-        autoFocus
-      />
-    </>
-  );
-
-  const deleteItem = async () => {
-    const { item } = { ...displayConfirmation };
+  const deleteItem = async (confirmation) => {
+    const { item } = { ...confirmation };
     const res = await deleteTypeArea(item);
     loadItems();
-    setDisplayConfirmation({
-      ...displayConfirmation,
-      active: false,
-    });
   };
 
   const checkBodyTemplate = (verified) => {
@@ -174,31 +126,8 @@ const TypeArea = () => {
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
               body={verifiedBodyTemplate}
-              // filter
-              // filterElement={verifiedFilterTemplate}
             />
           </DataTable>
-          <Dialog
-            header="Confirmación"
-            visible={displayConfirmation.active}
-            onHide={() =>
-              setDisplayConfirmation({
-                ...displayConfirmation,
-                active: false,
-              })
-            }
-            style={{ width: "350px" }}
-            modal
-            footer={confirmationDialogFooter}
-          >
-            <div className="flex align-items-center justify-content-center">
-              <i
-                className="pi pi-exclamation-triangle mr-3"
-                style={{ fontSize: "2rem" }}
-              />
-              <span>¿Estas seguro que deseas realizar la eliminación?</span>
-            </div>
-          </Dialog>
         </div>
       </div>
     </div>

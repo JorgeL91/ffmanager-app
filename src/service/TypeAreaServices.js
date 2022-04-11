@@ -58,12 +58,12 @@ export function putTypeArea(body, token = "") {
 }
 
 export function deleteTypeArea(body, token = "") {
-  const url = `${urlApi}/delete/${body.idDatosTypeAreaDeportiva}`;
+  const url = `${urlApi}/delete/${body.idTipoArea}`;
 
   const options = {
     method: "DELETE",
     url: url,
-    data: body,
+    // data: body,
     headers: {
       Authorization: `Bearer ${token}`,
     },

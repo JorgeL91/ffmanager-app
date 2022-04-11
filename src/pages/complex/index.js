@@ -24,8 +24,7 @@ const Complex = () => {
   useEffect(async () => {
     setLoading1(true);
     const response = await getConplexes();
-    console.log(response);
-    setComplexes(response);
+    if (!response.error) setComplexes(response);
     setLoading1(false);
 
     initFilters1();
