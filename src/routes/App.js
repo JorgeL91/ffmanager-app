@@ -61,6 +61,9 @@ import SectorEdit from "../pages/area/SectorEdit";
 import ProfileCreate from "../pages/profile/ProfileCreate";
 import ProfileEdit from "../pages/profile/ProfileEdit";
 import Profiile from "../pages/profile";
+import Job from "../pages/job";
+import JobCreate from "../pages/job/JobCreate";
+import JobEdit from "../pages/job/JobEdit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -195,6 +198,11 @@ const App = () => {
           label: "Perfiles",
           icon: "pi pi-fw pi-home",
           to: "/profiles",
+        },
+        {
+          label: "Cargos",
+          icon: "pi pi-fw pi-home",
+          to: "/jobs",
         },
       ],
     },
@@ -444,6 +452,9 @@ const App = () => {
           <Route path="/profiles" component={Profiile} />
           <Route path="/profile-create" component={ProfileCreate} />
           <Route path="/profile-edit/:id" component={ProfileEdit} />
+          <Route path="/jobs" component={Job} />
+          <Route path="/job-create" component={JobCreate} />
+          <Route path="/job-edit/:id" component={JobEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
