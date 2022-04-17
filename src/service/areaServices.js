@@ -1,7 +1,7 @@
 import config from "../config/config";
 import invokeApi from "../helpers/invokeApi";
 
-const urlApi = `${config.apiUrl}/areas`;
+const urlApi = `${config.apiUrl}/institucional-services/areas`;
 
 export function getAreas(token = "") {
   const url = `${urlApi}/get-all`;

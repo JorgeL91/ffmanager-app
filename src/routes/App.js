@@ -58,6 +58,9 @@ import AreaCreate from "../pages/area/AreaCreate";
 import AreaEdit from "../pages/area/AreaEdit";
 import SectorCreate from "../pages/area/SectorCreate";
 import SectorEdit from "../pages/area/SectorEdit";
+import ProfileCreate from "../pages/profile/ProfileCreate";
+import ProfileEdit from "../pages/profile/ProfileEdit";
+import Profiile from "../pages/profile";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -184,6 +187,22 @@ const App = () => {
       label: "Administracion",
       items: [
         {
+          label: "Tipos de areas",
+          icon: "pi pi-fw pi-home",
+          to: "/types-of-areas",
+        },
+        {
+          label: "Perfiles",
+          icon: "pi pi-fw pi-home",
+          to: "/profiles",
+        },
+      ],
+    },
+
+    {
+      label: "Institución",
+      items: [
+        {
           label: "Instituciónes",
           icon: "pi pi-fw pi-home",
           to: "/institutions",
@@ -192,11 +211,6 @@ const App = () => {
           label: "Complejos",
           icon: "pi pi-fw pi-home",
           to: "/complexes",
-        },
-        {
-          label: "Tipos de areas",
-          icon: "pi pi-fw pi-home",
-          to: "/types-of-areas",
         },
         {
           label: "Areas",
@@ -427,6 +441,9 @@ const App = () => {
           <Route path="/area-edit/:id" component={AreaEdit} />
           <Route path="/sector-create/:id" component={SectorCreate} />
           <Route path="/sector-edit/:id" component={SectorEdit} />
+          <Route path="/profiles" component={Profiile} />
+          <Route path="/profile-create" component={ProfileCreate} />
+          <Route path="/profile-edit/:id" component={ProfileEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />

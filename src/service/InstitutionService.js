@@ -1,7 +1,7 @@
 import config from "../config/config";
 import invokeApi from "../helpers/invokeApi";
 
-const urlApi = `${config.apiUrl}/instituciones-deportivas`;
+const urlApi = `${config.apiUrl}/institucional-services/instituciones-deportivas`;
 
 export function getInstitucions(token = "") {
   const url = `${urlApi}/get-all`;

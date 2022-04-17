@@ -1,7 +1,7 @@
 import config from "../config/config";
 import invokeApi from "../helpers/invokeApi";
 
-const urlApi = `${config.apiUrl}/complejos`;
+const urlApi = `${config.apiUrl}/institucional-services/complejos`;
 
 export function getConplexes(token = "") {
   const url = `${urlApi}/get-all`;

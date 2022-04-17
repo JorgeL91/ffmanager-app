@@ -1,9 +1,9 @@
 import config from "../config/config";
 import invokeApi from "../helpers/invokeApi";
 
-const urlApi = `${config.apiUrl}/institucional-services/tipos-areas`;
+const urlApi = `${config.apiUrl}/perfiles-services/perfiles`;
 
-export function getTypeAreas(token = "") {
+export function getPerfiles(token = "") {
   const url = `${urlApi}/get-all`;
 
   const options = {
@@ -16,7 +16,7 @@ export function getTypeAreas(token = "") {
   return invokeApi(options);
 }
 
-export function postTypeArea(body, token = "") {
+export function postPerfil(body, token = "") {
   const url = `${urlApi}/create`;
 
   const options = {
@@ -30,7 +30,7 @@ export function postTypeArea(body, token = "") {
   return invokeApi(options);
 }
 
-export function getOneTypeArea(id, token = "") {
+export function getOnePerfil(id, token = "") {
   const url = `${urlApi}/get-one/${id}`;
 
   const options = {
@@ -43,8 +43,8 @@ export function getOneTypeArea(id, token = "") {
   return invokeApi(options);
 }
 
-export function putTypeArea(body, token = "") {
-  const url = `${urlApi}/update/${body.idDatosTypeAreaDeportiva}`;
+export function putPerfil(body, token = "") {
+  const url = `${urlApi}/update/${body.idDatosPerfilDeportiva}`;
 
   const options = {
     method: "PUT",
@@ -57,7 +57,7 @@ export function putTypeArea(body, token = "") {
   return invokeApi(options);
 }
 
-export function deleteTypeArea(id, token = "") {
+export function deletePerfil(id, token = "") {
   const url = `${urlApi}/delete/${id}`;
 
   const options = {
