@@ -4,7 +4,10 @@ import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
-import { deletePerfil, getPerfiles } from "../../service/profilesServices";
+import {
+  deletePerfil,
+  getPerfiles,
+} from "../../service/profiles/profilesServices";
 import { classNames } from "primereact/utils";
 import BtnDelete from "../../components/confirmation/BtnDelete";
 import MsjToast from "../../components/confirmation/MsjToast";

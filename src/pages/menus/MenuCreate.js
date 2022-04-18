@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { postJob } from "../../service/profiles/jobsServices";
+import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
+import { postTypeArea } from "../../service/TypeAreaServices";
 import MsjToast from "../../components/confirmation/MsjToast";
-import JobForm from "../../components/job/JobForm";
 
-const JobCreate = () => {
+const MenuCreate = () => {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState({
     active: false,
@@ -16,12 +16,15 @@ const JobCreate = () => {
 
   const initialFormValue = {
     nombre: "",
-    esAdmin: false,
+    descripcion: "",
+    observaciones: "",
+    esTechada: false,
+    esCompuesta: false,
   };
 
   const onSubmit = async (values) => {
     setLoading(true);
-    const res = await postJob(values);
+    const res = await postTypeArea(values);
     if (res.error) {
       setShow({
         ...show,
@@ -29,7 +32,7 @@ const JobCreate = () => {
         message: res.errorMessage,
       });
     } else {
-      history.push("/jobs");
+      history.push("/menus");
     }
     setLoading(false);
   };
@@ -38,8 +41,8 @@ const JobCreate = () => {
     <div className="col-12">
       <div className="card">
         <MsjToast show={show} setShow={setShow} />
-        <h5>Crear cargo</h5>
-        <JobForm
+        <h5>Crear tipo de area</h5>
+        <TypeAreaForm
           initialFormValue={initialFormValue}
           onSubmit={onSubmit}
           loading={loading}
@@ -49,4 +52,4 @@ const JobCreate = () => {
   );
 };
 
-export default JobCreate;
+export default MenuCreate;

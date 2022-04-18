@@ -1,5 +1,5 @@
-import config from "../config/config";
-import invokeApi from "../helpers/invokeApi";
+import config from "../../config/config";
+import invokeApi from "../../helpers/invokeApi";
 
 const urlApi = `${config.apiUrl}/perfiles-services/cargos`;
 

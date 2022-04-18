@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
-import { getOnePerfil, putPerfil } from "../../service/profilesServices";
+import {
+  getOnePerfil,
+  putPerfil,
+} from "../../service/profiles/profilesServices";
 import MsjToast from "../../components/confirmation/MsjToast";
 import ProfileForm from "../../components/profile/ProfileForm";
 

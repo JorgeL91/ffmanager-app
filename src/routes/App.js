@@ -64,6 +64,9 @@ import Profiile from "../pages/profile";
 import Job from "../pages/job";
 import JobCreate from "../pages/job/JobCreate";
 import JobEdit from "../pages/job/JobEdit";
+import Menu from "../pages/menus";
+import MenuCreate from "../pages/menus/MenuCreate";
+import MenuEdit from "../pages/menus/MenuEdit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -190,9 +193,14 @@ const App = () => {
       label: "Administracion",
       items: [
         {
-          label: "Tipos de areas",
+          label: "Cargos",
           icon: "pi pi-fw pi-home",
-          to: "/types-of-areas",
+          to: "/jobs",
+        },
+        {
+          label: "Items Menus",
+          icon: "pi pi-fw pi-home",
+          to: "/menus",
         },
         {
           label: "Perfiles",
@@ -200,9 +208,9 @@ const App = () => {
           to: "/profiles",
         },
         {
-          label: "Cargos",
+          label: "Tipos de areas",
           icon: "pi pi-fw pi-home",
-          to: "/jobs",
+          to: "/types-of-areas",
         },
       ],
     },
@@ -455,6 +463,9 @@ const App = () => {
           <Route path="/jobs" component={Job} />
           <Route path="/job-create" component={JobCreate} />
           <Route path="/job-edit/:id" component={JobEdit} />
+          <Route path="/menus" component={Menu} />
+          <Route path="/menu-create" component={MenuCreate} />
+          <Route path="/menu-edit/:id" component={MenuEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />

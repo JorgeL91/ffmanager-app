@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { postPerfil } from "../../service/profilesServices";
+import { postPerfil } from "../../service/profiles/profilesServices";
 import MsjToast from "../../components/confirmation/MsjToast";
 import ProfileForm from "../../components/profile/ProfileForm";
 

@@ -4,12 +4,13 @@ import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Button } from "primereact/button";
 import { Link } from "react-router-dom";
-import { deleteJob, getJobs } from "../../service/profiles/jobsServices";
+import { deleteMenu, getMenus } from "../../service/profiles/menusServices";
+import { classNames } from "primereact/utils";
 import BtnDelete from "../../components/confirmation/BtnDelete";
 import MsjToast from "../../components/confirmation/MsjToast";
 
-const Job = () => {
-  const [jobs, setjobs] = useState([]);
+const Menu = () => {
+  const [menus, setMenus] = useState([]);
   const [filters1, setFilters1] = useState(null);
   const [loading1, setLoading1] = useState(true);
   const [show, setShow] = useState({
@@ -35,19 +36,19 @@ const Job = () => {
 
   const loadItems = async () => {
     setLoading1(true);
-    const response = await getJobs();
-    if (!response.error) setjobs(response);
+    const response = await getMenus();
+    if (!response.error) setMenus(response);
     setLoading1(false);
   };
 
   const verifiedBodyTemplate = (rowData) => {
     return (
       <>
-        <Link to={`job-edit/${rowData.idCargo}`}>
+        <Link to={`menu-edit/${rowData.idItemMenu}`}>
           <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
         </Link>
 
-        <BtnDelete item={rowData.idCargo} onConfirmation={deleteItem} />
+        <BtnDelete item={rowData.idItemMenu} onConfirmation={deleteItem} />
       </>
     );
   };
@@ -55,7 +56,7 @@ const Job = () => {
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
 
-    const res = await deleteJob(item);
+    const res = await deleteMenu(item);
     if (res.error) {
       setShow({
         ...show,
@@ -67,6 +68,17 @@ const Job = () => {
     }
   };
 
+  const checkBodyTemplate = (verified) => {
+    return (
+      <i
+        className={classNames("pi", {
+          "text-green-500 pi-check-circle": verified,
+          "text-pink-500 pi-times-circle": !verified,
+        })}
+      ></i>
+    );
+  };
+
   return (
     <div className="grid table-demo">
       <div className="col-12">
@@ -74,10 +86,10 @@ const Job = () => {
           <div className="grid ">
             <div className="col-6">
               <MsjToast show={show} setShow={setShow} />
-              <h5>Perfiles</h5>
+              <h5>Items de menu</h5>
             </div>
             <div className="col-6 text-right ">
-              <Link to="job-create" className="btn btn-success">
+              <Link to="menu-create" className="btn btn-success">
                 <Button
                   icon="pi pi-plus"
                   label="Nuevo Registro"
@@ -88,7 +100,7 @@ const Job = () => {
           </div>
 
           <DataTable
-            value={jobs}
+            value={menus}
             paginator
             className="p-datatable-gridlines"
             showGridlines
@@ -107,7 +119,23 @@ const Job = () => {
               filterPlaceholder="Buscar por nombre"
               style={{ minWidth: "12rem" }}
             />
-
+            <Column header="Link" field="link" />
+            <Column
+              field="esHoja"
+              header="Hoja"
+              dataType="boolean"
+              bodyClassName="text-center"
+              style={{ minWidth: "8rem" }}
+              body={(rowData) => checkBodyTemplate(rowData.esHoja)}
+            />
+            <Column
+              field="esRaiz"
+              header="Raiz"
+              dataType="boolean"
+              bodyClassName="text-center"
+              style={{ minWidth: "8rem" }}
+              body={(rowData) => checkBodyTemplate(rowData.esRaiz)}
+            />
             <Column
               header=""
               bodyClassName="text-center"
@@ -121,4 +149,4 @@ const Job = () => {
   );
 };
 
-export default Job;
+export default Menu;

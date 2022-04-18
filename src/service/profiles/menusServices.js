@@ -1,9 +1,9 @@
-import config from "../config/config";
-import invokeApi from "../helpers/invokeApi";
+import config from "../../config/config";
+import invokeApi from "../../helpers/invokeApi";
 
-const urlApi = `${config.apiUrl}/perfiles-services/perfiles`;
+const urlApi = `${config.apiUrl}/perfiles-services/items-menu`;
 
-export function getPerfiles(token = "") {
+export function getMenus(token = "") {
   const url = `${urlApi}/get-all`;
 
   const options = {
@@ -16,7 +16,7 @@ export function getPerfiles(token = "") {
   return invokeApi(options);
 }
 
-export function postPerfil(body, token = "") {
+export function postMenu(body, token = "") {
   const url = `${urlApi}/create`;
 
   const options = {
@@ -30,7 +30,7 @@ export function postPerfil(body, token = "") {
   return invokeApi(options);
 }
 
-export function getOnePerfil(id, token = "") {
+export function getOneMenu(id, token = "") {
   const url = `${urlApi}/get-one/${id}`;
 
   const options = {
@@ -43,8 +43,8 @@ export function getOnePerfil(id, token = "") {
   return invokeApi(options);
 }
 
-export function putPerfil(body, token = "") {
-  const url = `${urlApi}/update/${body.idDatosPerfilDeportiva}`;
+export function putMenu(body, token = "") {
+  const url = `${urlApi}/update/${body.idDatosJobDeportiva}`;
 
   const options = {
     method: "PUT",
@@ -57,7 +57,7 @@ export function putPerfil(body, token = "") {
   return invokeApi(options);
 }
 
-export function deletePerfil(id, token = "") {
+export function deleteMenu(id, token = "") {
   const url = `${urlApi}/delete/${id}`;
 
   const options = {

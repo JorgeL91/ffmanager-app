@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
-import { getOneJob, putJob } from "../../service/profiles/jobsServices";
+import { getOneTypeArea, putTypeArea } from "../../service/TypeAreaServices";
+import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
 import MsjToast from "../../components/confirmation/MsjToast";
-import JobForm from "../../components/job/JobForm";
 
-const JobEdit = () => {
+const MenuEdit = () => {
   const history = useHistory();
   const [loading, setLoading] = useState(false);
   const [initial, setInitial] = useState();
@@ -18,7 +18,7 @@ const JobEdit = () => {
   });
 
   const loadItem = async () => {
-    const res = await getOneJob(id);
+    const res = await getOneTypeArea(id);
     setInitial(res);
     setLoading(true);
   };
@@ -28,7 +28,7 @@ const JobEdit = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async (values) => {
-    const res = await putJob(values);
+    const res = await putTypeArea(values);
     if (res.error) {
       setShow({
         ...show,
@@ -36,7 +36,7 @@ const JobEdit = () => {
         message: res.errorMessage,
       });
     } else {
-      history.push("/jobs");
+      history.push("/menus");
     }
   };
 
@@ -44,15 +44,15 @@ const JobEdit = () => {
     <div className="col-12">
       <div className="card">
         <MsjToast show={show} setShow={setShow} />
-        <h5>Editar Pefil</h5>
+        <h5>Editar tipo de area</h5>
         {!loading ? (
           <Skeleton width="100%" height="150px"></Skeleton>
         ) : (
-          <JobForm initialFormValue={initial} onSubmit={onSubmit} />
+          <TypeAreaForm initialFormValue={initial} onSubmit={onSubmit} />
         )}
       </div>
     </div>
   );
 };
 
-export default JobEdit;
+export default MenuEdit;
