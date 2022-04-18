@@ -3,6 +3,32 @@ import invokeApi from "../../helpers/invokeApi";
 
 const urlApi = `${config.apiUrl}/perfiles-services/items-menu`;
 
+export function getMenusByPerfil(id, token = "") {
+  const url = `${urlApi}/get-by-perfil/${id}`;
+
+  const options = {
+    method: "GET",
+    url: url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return invokeApi(options);
+}
+
+export function getRootsMenus(token = "") {
+  const url = `${urlApi}/get-roots-without-child`;
+
+  const options = {
+    method: "GET",
+    url: url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return invokeApi(options);
+}
+
 export function getMenus(token = "") {
   const url = `${urlApi}/get-all`;
 

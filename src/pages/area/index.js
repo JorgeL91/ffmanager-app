@@ -69,8 +69,6 @@ const Area = () => {
   };
 
   const linkTextTemplate = (data) => {
-    console.log(data);
-
     return (
       <Link
         to={`sector-edit/${data.idSector}`}
@@ -82,7 +80,6 @@ const Area = () => {
   };
 
   const rowExpansionTemplate = (data) => {
-    console.log(data);
     return (
       <div className="orders-subtable">
         <div className="grid ">
