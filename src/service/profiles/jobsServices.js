@@ -44,7 +44,7 @@ export function getOneJob(id, token = "") {
 }
 
 export function putJob(body, token = "") {
-  const url = `${urlApi}/update/${body.idDatosJobDeportiva}`;
+  const url = `${urlApi}/update/${body.idCargo}`;
 
   const options = {
     method: "PUT",

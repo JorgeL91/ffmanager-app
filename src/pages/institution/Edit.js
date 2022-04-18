@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import InstitutionForm from "../../components/institutions/InstitutionForm";
+import InstitutionForm from "../../components/forms/InstitutionForm";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { postJob } from "../../service/profiles/jobsServices";
 import MsjToast from "../../components/confirmation/MsjToast";
-import JobForm from "../../components/job/JobForm";
+import JobForm from "../../components/forms/JobForm";
 
 const JobCreate = () => {
   const [loading, setLoading] = useState(false);

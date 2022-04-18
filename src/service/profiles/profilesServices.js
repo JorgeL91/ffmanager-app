@@ -44,7 +44,7 @@ export function getOnePerfil(id, token = "") {
 }
 
 export function putPerfil(body, token = "") {
-  const url = `${urlApi}/update/${body.idDatosPerfilDeportiva}`;
+  const url = `${urlApi}/update/${body.idPerfil}`;
 
   const options = {
     method: "PUT",

@@ -7,7 +7,7 @@ import {
   putPerfil,
 } from "../../service/profiles/profilesServices";
 import MsjToast from "../../components/confirmation/MsjToast";
-import ProfileForm from "../../components/profile/ProfileForm";
+import ProfileForm from "../../components/forms/ProfileForm";
 
 const ProfileEdit = () => {
   const history = useHistory();

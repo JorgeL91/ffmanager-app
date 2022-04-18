@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import ComplexForm from "../../components/complexes/ComplexForm";
+import ComplexForm from "../../components/forms/ComplexForm";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";

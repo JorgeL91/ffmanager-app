@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
-import { postTypeArea } from "../../service/TypeAreaServices";
+import { postMenu } from "../../service/profiles/menusServices";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ItemMenuForm from "../../components/forms/ItemMenuForm";
 
 const MenuCreate = () => {
   const [loading, setLoading] = useState(false);
@@ -16,15 +16,15 @@ const MenuCreate = () => {
 
   const initialFormValue = {
     nombre: "",
-    descripcion: "",
-    observaciones: "",
-    esTechada: false,
-    esCompuesta: false,
+    link: "",
+    esHoja: false,
+    esRaiz: false,
+    idItemMenuPadre: "",
   };
 
   const onSubmit = async (values) => {
     setLoading(true);
-    const res = await postTypeArea(values);
+    const res = await postMenu(values);
     if (res.error) {
       setShow({
         ...show,
@@ -41,8 +41,8 @@ const MenuCreate = () => {
     <div className="col-12">
       <div className="card">
         <MsjToast show={show} setShow={setShow} />
-        <h5>Crear tipo de area</h5>
-        <TypeAreaForm
+        <h5>Crear item de menu</h5>
+        <ItemMenuForm
           initialFormValue={initialFormValue}
           onSubmit={onSubmit}
           loading={loading}

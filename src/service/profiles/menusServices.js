@@ -44,7 +44,7 @@ export function getOneMenu(id, token = "") {
 }
 
 export function putMenu(body, token = "") {
-  const url = `${urlApi}/update/${body.idDatosJobDeportiva}`;
+  const url = `${urlApi}/update/${body.idItemMenu}`;
 
   const options = {
     method: "PUT",

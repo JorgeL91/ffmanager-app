@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ComplexForm from "../../components/complexes/ComplexForm";
+import ComplexForm from "../../components/forms/ComplexForm";
 import { useHistory } from "react-router-dom";
 import { postConplex } from "../../service/complexServices";
 import MsjToast from "../../components/confirmation/MsjToast";

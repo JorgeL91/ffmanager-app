@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
+import TypeAreaForm from "../../components/forms/TypeAreaForm";
 import { postTypeArea } from "../../service/TypeAreaServices";
 import MsjToast from "../../components/confirmation/MsjToast";
 

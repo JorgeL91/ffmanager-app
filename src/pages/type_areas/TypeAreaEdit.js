@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
 import { getOneTypeArea, putTypeArea } from "../../service/TypeAreaServices";
-import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
+import TypeAreaForm from "../../components/forms/TypeAreaForm";
 import MsjToast from "../../components/confirmation/MsjToast";
 
 const TypeAreaEdit = () => {

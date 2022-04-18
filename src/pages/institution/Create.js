@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import InstitutionForm from "../../components/institutions/InstitutionForm";
+import InstitutionForm from "../../components/forms/InstitutionForm";
 import { useHistory } from "react-router-dom";
 import { postInstitucion } from "../../service/InstitutionService";
 import MsjToast from "../../components/confirmation/MsjToast";

@@ -4,21 +4,28 @@ import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
-import { getInstitucions } from "../../service/InstitutionService";
+import CheckboxCustom from "../formcustom/CheckboxCustom";
 import AutocompleteCustom from "../formcustom/AutocompleteCustom";
+import { getMenus } from "../../service/profiles/menusServices";
 
-const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
+const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
   const [autoFilteredValue, setAutoFilteredValue] = useState([]);
   const [autoValue, setAutoValue] = useState(null);
-  console.log(initialFormValue.datosInstitucionDeportiva);
+
   useEffect(() => {
     getItems();
   }, []);
 
   const getItems = async () => {
-    const res = await getInstitucions();
+    const res = await getMenus();
     setAutoValue(res);
   };
+
+  const formSchema = Yup.object().shape({
+    nombre: Yup.string()
+      .required("Por Favor ingrese un Nombre")
+      .max(50, "Nombre debe tener maiximo 50 caracteres "),
+  });
 
   const searchText = (event) => {
     setTimeout(() => {
@@ -36,23 +43,6 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
     }, 250);
   };
 
-  const formSchema = Yup.object().shape({
-    nombre: Yup.string()
-      .required("Por Favor ingrese un Nombre")
-      .max(50, "Nombre debe tener maiximo 50 caracteres "),
-    direccion: Yup.string()
-      .required("Por Favor ingrese una direccion")
-      .max(50, "Nombre debe tener maiximo 50 caracteres "),
-    telefonoContacto: Yup.string()
-      .required("Por Favor ingrese un telefono")
-      .max(50, "Nombre debe tener maiximo 50 caracteres "),
-    datosInstitucionDeportiva: Yup.object().shape({
-      idDatosInstitucionDeportiva: Yup.string().required(
-        "Seleccione una institucion"
-      ),
-    }),
-  });
-
   return (
     <Formik
       onSubmit={onSubmit}
@@ -63,25 +53,34 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
         <div className="p-fluid formgrid grid">
           <div className="field col-12 md:col-6">
             <label htmlFor="nombre">Nombre</label>
-            <InputCustom name="nombre" placeholder="Nombre del complejo" />
+            <InputCustom name="nombre" />
           </div>
           <div className="field col-12 md:col-6">
-            <label htmlFor="telefonoContacto">Telefono</label>
-            <InputCustom name="telefonoContacto" placeholder="312 00 0000 0" />
+            <label htmlFor="link">Link</label>
+            <InputCustom name="link" />
+          </div>
+
+          <div className="field col-12 md:col-6">
+            <div className="flex align-items-center">
+              <CheckboxCustom name="esHoja" />
+              <label>Es Hoja</label>
+            </div>
+          </div>
+          <div className="field col-12 md:col-6">
+            <div className="flex align-items-center">
+              <CheckboxCustom name="esRaiz" />
+              <label>Es Raiz</label>
+            </div>
           </div>
           <div className="field col-12 md:col-12">
-            <label htmlFor="direction">Instutucion 2</label>
+            <label htmlFor="direction">Menu Padre</label>
             <AutocompleteCustom
-              name="datosInstitucionDeportiva.idDatosInstitucionDeportiva"
+              name="idItemMenuPadre"
               suggestions={autoFilteredValue}
               completeMethod={searchText}
               field="nombre"
-              labelText={initialFormValue.datosInstitucionDeportiva.nombre}
+              labelText={initialFormValue.idItemMenuPadre}
             />
-          </div>
-          <div className="field col-12 md:col-12">
-            <label htmlFor="direccion">Direccion</label>
-            <InputCustom name="direccion" placeholder="Calle 12 # 4 -6" />
           </div>
         </div>
         <Button
@@ -90,7 +89,7 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
           className="mr-2 mb-2"
           loading={loading}
         />
-        <Link to="/complexes">
+        <Link to="/menus">
           <Button label="Volver" className=" p-button-danger mr-2 mb-2" />
         </Link>
       </Form>
@@ -98,4 +97,4 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
   );
 };
 
-export default ComplexForm;
+export default ItemMenuForm;

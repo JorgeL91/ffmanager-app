@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { postPerfil } from "../../service/profiles/profilesServices";
 import MsjToast from "../../components/confirmation/MsjToast";
-import ProfileForm from "../../components/profile/ProfileForm";
+import ProfileForm from "../../components/forms/ProfileForm";
 
 const ProfileCreate = () => {
   const [loading, setLoading] = useState(false);

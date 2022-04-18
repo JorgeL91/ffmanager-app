@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
-import { getOneTypeArea, putTypeArea } from "../../service/TypeAreaServices";
-import TypeAreaForm from "../../components/type_areas/TypeAreaForm";
+import { getOneMenu, putMenu } from "../../service/profiles/menusServices";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ItemMenuForm from "../../components/forms/ItemMenuForm";
 
 const MenuEdit = () => {
   const history = useHistory();
@@ -18,7 +18,7 @@ const MenuEdit = () => {
   });
 
   const loadItem = async () => {
-    const res = await getOneTypeArea(id);
+    const res = await getOneMenu(id);
     setInitial(res);
     setLoading(true);
   };
@@ -28,7 +28,7 @@ const MenuEdit = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onSubmit = async (values) => {
-    const res = await putTypeArea(values);
+    const res = await putMenu(values);
     if (res.error) {
       setShow({
         ...show,
@@ -44,11 +44,11 @@ const MenuEdit = () => {
     <div className="col-12">
       <div className="card">
         <MsjToast show={show} setShow={setShow} />
-        <h5>Editar tipo de area</h5>
+        <h5>Editar item de menu</h5>
         {!loading ? (
           <Skeleton width="100%" height="150px"></Skeleton>
         ) : (
-          <TypeAreaForm initialFormValue={initial} onSubmit={onSubmit} />
+          <ItemMenuForm initialFormValue={initial} onSubmit={onSubmit} />
         )}
       </div>
     </div>
