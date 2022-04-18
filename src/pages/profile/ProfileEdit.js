@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Skeleton } from "primereact/skeleton";
 import {
+  deleteItemPerfil,
   getOnePerfil,
   postCreateItemsPerfil,
   putPerfil,
@@ -10,10 +11,7 @@ import {
 import MsjToast from "../../components/confirmation/MsjToast";
 import ProfileForm from "../../components/forms/ProfileForm";
 
-import {
-  getMenusByPerfil,
-  getRootsMenus,
-} from "../../service/profiles/menusServices";
+import { getRootsMenus } from "../../service/profiles/menusServices";
 
 import { PickList } from "primereact/picklist";
 
@@ -28,27 +26,21 @@ const ProfileEdit = () => {
     message: "",
   });
 
-  useEffect(() => {
-    getItems();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const getItems = async () => {
+  const getItemsMenus = async (itemsPefil) => {
     const res = await getRootsMenus();
-    let menus = await getMenusByPerfil(id);
-
     let itemAvailable = [];
-    if (menus.error) {
+    let menus = [];
+    if (itemsPefil.length === 0) {
       itemAvailable = res;
-      menus = [];
     } else {
-      setOriginalMenus(menus);
       res.forEach((element, index) => {
-        const result = menus.filter(
-          (menu) => menu.idItemMenu === element.idItemMenu
+        const result = itemsPefil.filter(
+          (menu) => parseInt(menu.idItemDeMenu) === element.idItemMenu
         );
-
         if (result.length === 0) {
           itemAvailable.push(res[index]);
+        } else {
+          menus.push(res[index]);
         }
       });
     }
@@ -59,11 +51,11 @@ const ProfileEdit = () => {
 
   const [picklistSourceValue, setPicklistSourceValue] = useState([]);
   const [picklistTargetValue, setPicklistTargetValue] = useState([]);
-  const [originalMenus, setOriginalMenus] = useState([]);
 
   const loadItem = async () => {
     const res = await getOnePerfil(id);
     setInitial(res);
+    getItemsMenus(res.itemsDelPerfil);
     setLoading(true);
   };
 
@@ -89,20 +81,21 @@ const ProfileEdit = () => {
   const updateItemsMenu = async () => {
     let newItems = [];
 
-    if (originalMenus.length > 0) {
-      originalMenus.forEach((origianl, index) => {
+    if (initial.itemsDelPerfil.length > 0) {
+      initial.itemsDelPerfil.forEach((origianl, index) => {
         const result = picklistTargetValue.filter(
-          (menu) => menu.idItemMenu === origianl.idItemMenu
+          (menu) =>
+            parseInt(menu.idItemMenu) === parseInt(origianl.idItemDeMenu)
         );
 
         if (result.length === 0) {
-          //TODO: "eliminar";
+          deleteItemPerfil(origianl.idItemPerfil);
         }
       });
 
       picklistTargetValue.forEach((origianl, index) => {
-        const result = originalMenus.filter(
-          (menu) => menu.idItemMenu === origianl.idItemMenu
+        const result = initial.itemsDelPerfil.filter(
+          (menu) => parseInt(menu.idItemDeMenu) === origianl.idItemMenu
         );
 
         if (result.length === 0) {
@@ -134,8 +127,8 @@ const ProfileEdit = () => {
               <PickList
                 source={picklistSourceValue}
                 target={picklistTargetValue}
-                sourceHeader="From"
-                targetHeader="To"
+                sourceHeader="Disponibles"
+                targetHeader="Seleccionados"
                 itemTemplate={(item) => <div>{item.nombre}</div>}
                 onChange={(e) => {
                   setPicklistSourceValue(e.source);

@@ -74,7 +74,7 @@ const Job = () => {
           <div className="grid ">
             <div className="col-6">
               <MsjToast show={show} setShow={setShow} />
-              <h5>Perfiles</h5>
+              <h5>Cargos</h5>
             </div>
             <div className="col-6 text-right ">
               <Link to="job-create" className="btn btn-success">

@@ -4,6 +4,19 @@ import invokeApi from "../../helpers/invokeApi";
 const urlApi = `${config.apiUrl}/perfiles-services/perfiles`;
 const urlApi2 = `${config.apiUrl}/perfiles-services/items-de-perfil`;
 
+export function deleteItemPerfil(id, token = "") {
+  const url = `${urlApi2}/delete/${id}`;
+
+  const options = {
+    method: "DELETE",
+    url: url,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return invokeApi(options);
+}
+
 export function postCreateItemsPerfil(items, idItemPerfil, token = "") {
   const url = `${urlApi2}/create-plus`;
 
