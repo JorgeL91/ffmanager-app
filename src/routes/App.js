@@ -67,6 +67,9 @@ import JobEdit from "../pages/job/JobEdit";
 import Menu from "../pages/menus";
 import MenuCreate from "../pages/menus/MenuCreate";
 import MenuEdit from "../pages/menus/MenuEdit";
+import User from "../pages/user";
+import UserCreate from "../pages/user/UserCreate";
+import UserEdit from "../pages/user/UserEdit";
 
 const App = () => {
   const [layoutMode, setLayoutMode] = useState("static");
@@ -211,6 +214,11 @@ const App = () => {
           label: "Tipos de areas",
           icon: "pi pi-fw pi-home",
           to: "/types-of-areas",
+        },
+        {
+          label: "Usuarios",
+          icon: "pi pi-fw pi-home",
+          to: "/users",
         },
       ],
     },
@@ -466,6 +474,9 @@ const App = () => {
           <Route path="/menus" component={Menu} />
           <Route path="/menu-create" component={MenuCreate} />
           <Route path="/menu-edit/:id" component={MenuEdit} />
+          <Route path="/users" component={User} />
+          <Route path="/user-create" component={UserCreate} />
+          <Route path="/user-edit/:id" component={UserEdit} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
