@@ -70,8 +70,12 @@ import MenuEdit from "../pages/menus/MenuEdit";
 import User from "../pages/user";
 import UserCreate from "../pages/user/UserCreate";
 import UserEdit from "../pages/user/UserEdit";
+import useToken from "../hooks/useToken";
+import Login from "../pages/Login";
 
 const App = () => {
+  const { token, setToken } = useToken();
+
   const [layoutMode, setLayoutMode] = useState("static");
   const [layoutColorMode, setLayoutColorMode] = useState("light");
   const [inputStyle, setInputStyle] = useState("outlined");
@@ -388,6 +392,26 @@ const App = () => {
     "layout-theme-light": layoutColorMode === "light",
   });
 
+  if (!token) {
+    return (
+      <>
+        <Login setToken={setToken} />
+        <div style={{ display: "none" }}>
+          <AppConfig
+            rippleEffect={ripple}
+            onRippleEffect={onRipple}
+            inputStyle={inputStyle}
+            onInputStyleChange={onInputStyleChange}
+            layoutMode={layoutMode}
+            onLayoutModeChange={onLayoutModeChange}
+            layoutColorMode={layoutColorMode}
+            onColorModeChange={onColorModeChange}
+          />
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className={wrapperClass} onClick={onWrapperClick}>
       <Tooltip
@@ -397,7 +421,6 @@ const App = () => {
         content="Copied to clipboard"
         event="focus"
       />
-
       <AppTopbar
         onToggleMenuClick={onToggleMenuClick}
         layoutColorMode={layoutColorMode}
@@ -405,7 +428,6 @@ const App = () => {
         onMobileTopbarMenuClick={onMobileTopbarMenuClick}
         onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
       />
-
       <div className="layout-sidebar" onClick={onSidebarClick}>
         <AppMenu
           model={menu}
@@ -413,7 +435,6 @@ const App = () => {
           layoutColorMode={layoutColorMode}
         />
       </div>
-
       <div className="layout-main-container">
         <div className="layout-main">
           <Route
@@ -481,7 +502,6 @@ const App = () => {
 
         <AppFooter layoutColorMode={layoutColorMode} />
       </div>
-
       <AppConfig
         rippleEffect={ripple}
         onRippleEffect={onRipple}
@@ -492,7 +512,6 @@ const App = () => {
         layoutColorMode={layoutColorMode}
         onColorModeChange={onColorModeChange}
       />
-
       <CSSTransition
         classNames="layout-mask"
         timeout={{ enter: 200, exit: 200 }}
