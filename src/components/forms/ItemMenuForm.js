@@ -13,11 +13,22 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
 
   useEffect(() => {
     getItems();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const getItems = async () => {
     const res = await getMenus();
-    setMenus(res);
+
+    let newItems = [];
+    res.forEach((element) => {
+      if (element.idItemMenu === parseInt(initialFormValue.idItemMenuPadre)) {
+        initialFormValue.nameSuper = element.nombre;
+      }
+      if (element.idItemMenu !== initialFormValue.idItemMenu) {
+        newItems.push(element);
+      }
+    });
+
+    setMenus(newItems);
   };
 
   const formSchema = Yup.object().shape({
@@ -55,15 +66,21 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
               <label>Es Raiz</label>
             </div>
           </div>
-          <div className="field col-12 md:col-12">
-            <label htmlFor="direction">Menu Padre</label>
-            <AutocompleteItemCustom
-              name="idItemMenuPadre"
-              items={menus}
-              field="nombre"
-              labelText={initialFormValue.idItemMenuPadre}
-            />
-          </div>
+          {menus && (
+            <div className="field col-12 md:col-12">
+              <label htmlFor="direction">Menu Padre</label>
+              <AutocompleteItemCustom
+                name="idItemMenuPadre"
+                items={menus}
+                field="nombre"
+                labelText={
+                  initialFormValue.nameSuper
+                    ? initialFormValue.nameSuper
+                    : initialFormValue.idItemMenuPadre
+                }
+              />
+            </div>
+          )}
         </div>
         <Button
           label="Guardar"
