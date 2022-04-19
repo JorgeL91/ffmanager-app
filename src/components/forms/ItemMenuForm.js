@@ -21,7 +21,7 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
     let newItems = [];
     res.forEach((element) => {
       if (element.idItemMenu === parseInt(initialFormValue.idItemMenuPadre)) {
-        initialFormValue.nameSuper = element.nombre;
+        initialFormValue.nameSuper = element.label;
       }
       if (element.idItemMenu !== initialFormValue.idItemMenu) {
         newItems.push(element);
@@ -32,7 +32,7 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
   };
 
   const formSchema = Yup.object().shape({
-    nombre: Yup.string()
+    label: Yup.string()
       .required("Por Favor ingrese un Nombre")
       .max(50, "Nombre debe tener maiximo 50 caracteres "),
   });
@@ -46,12 +46,20 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
       <Form>
         <div className="p-fluid formgrid grid">
           <div className="field col-12 md:col-6">
-            <label htmlFor="nombre">Nombre</label>
-            <InputCustom name="nombre" />
+            <label htmlFor="label">Nombre</label>
+            <InputCustom name="label" />
           </div>
           <div className="field col-12 md:col-6">
-            <label htmlFor="link">Link</label>
-            <InputCustom name="link" />
+            <label htmlFor="to">Link</label>
+            <InputCustom name="to" />
+          </div>
+          <div className="field col-12 md:col-6">
+            <label htmlFor="icon">Icon</label>
+            <InputCustom name="icon" />
+          </div>
+          <div className="field col-12 md:col-6">
+            <label htmlFor="order">Orden</label>
+            <InputCustom name="order" type="number" />
           </div>
 
           <div className="field col-12 md:col-6">
@@ -72,7 +80,7 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
               <AutocompleteItemCustom
                 name="idItemMenuPadre"
                 items={menus}
-                field="nombre"
+                field="label"
                 labelText={
                   initialFormValue.nameSuper
                     ? initialFormValue.nameSuper

@@ -21,7 +21,7 @@ export default function AutocompleteItemCustom({
       } else {
         setAutoFilteredValue(
           items.filter((item) => {
-            return item.nombre
+            return item[props.field]
               .toLowerCase()
               .startsWith(event.query.toLowerCase());
           })

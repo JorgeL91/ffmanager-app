@@ -15,11 +15,13 @@ const MenuCreate = () => {
   const history = useHistory();
 
   const initialFormValue = {
-    nombre: "",
-    link: "",
+    label: "",
+    to: "",
     esHoja: false,
     esRaiz: false,
     idItemMenuPadre: "",
+    order: 0,
+    icon: "",
   };
 
   const onSubmit = async (values) => {

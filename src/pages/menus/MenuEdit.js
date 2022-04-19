@@ -19,6 +19,7 @@ const MenuEdit = () => {
 
   const loadItem = async () => {
     const res = await getOneMenu(id);
+    res.icon = res.icon ? res.icon : "";
     setInitial(res);
     setLoading(true);
   };

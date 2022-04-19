@@ -113,13 +113,13 @@ const Menu = () => {
             emptyMessage="No existen datos."
           >
             <Column
-              field="nombre"
+              field="label"
               header="Nombre"
               filter
               filterPlaceholder="Buscar por nombre"
               style={{ minWidth: "12rem" }}
             />
-            <Column header="Link" field="link" />
+            <Column header="Link" field="to" />
             <Column
               field="esHoja"
               header="Hoja"

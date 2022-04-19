@@ -397,14 +397,14 @@ const App = () => {
       let loadMenu = [];
       token.menu.forEach((element) => {
         let item = {
-          label: element.nombre,
+          label: element.label,
           items: [],
         };
-        element.itemsMenuHijos.forEach((children) => {
+        element.items.forEach((children) => {
           item.items.push({
-            label: children.nombre,
-            icon: "pi pi-fw pi-home",
-            to: children.link,
+            label: children.label,
+            icon: children.icon ? "pi " + children.icon : "pi pi-fw pi-home",
+            to: children.to,
           });
         });
 
