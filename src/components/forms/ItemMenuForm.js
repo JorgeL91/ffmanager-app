@@ -5,12 +5,11 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
 import CheckboxCustom from "../formcustom/CheckboxCustom";
-import AutocompleteCustom from "../formcustom/AutocompleteCustom";
+import AutocompleteItemCustom from "../formcustom/AutocompleteItemCustom";
 import { getMenus } from "../../service/profiles/menusServices";
 
 const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
-  const [autoFilteredValue, setAutoFilteredValue] = useState([]);
-  const [autoValue, setAutoValue] = useState(null);
+  const [menus, setMenus] = useState(null);
 
   useEffect(() => {
     getItems();
@@ -18,7 +17,7 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
 
   const getItems = async () => {
     const res = await getMenus();
-    setAutoValue(res);
+    setMenus(res);
   };
 
   const formSchema = Yup.object().shape({
@@ -26,22 +25,6 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
       .required("Por Favor ingrese un Nombre")
       .max(50, "Nombre debe tener maiximo 50 caracteres "),
   });
-
-  const searchText = (event) => {
-    setTimeout(() => {
-      if (!event.query.trim().length) {
-        setAutoFilteredValue([...autoValue]);
-      } else {
-        setAutoFilteredValue(
-          autoValue.filter((item) => {
-            return item.nombre
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          })
-        );
-      }
-    }, 250);
-  };
 
   return (
     <Formik
@@ -74,10 +57,9 @@ const ItemMenuForm = ({ initialFormValue, onSubmit, loading }) => {
           </div>
           <div className="field col-12 md:col-12">
             <label htmlFor="direction">Menu Padre</label>
-            <AutocompleteCustom
+            <AutocompleteItemCustom
               name="idItemMenuPadre"
-              suggestions={autoFilteredValue}
-              completeMethod={searchText}
+              items={menus}
               field="nombre"
               labelText={initialFormValue.idItemMenuPadre}
             />

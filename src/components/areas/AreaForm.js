@@ -5,15 +5,12 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
 import { getTypeAreas } from "../../service/TypeAreaServices";
-import AutocompleteCustom from "../formcustom/AutocompleteCustom";
 import { getConplexes } from "../../service/complexServices";
+import AutocompleteItemCustom from "../formcustom/AutocompleteItemCustom";
 
 const AreaForm = ({ initialFormValue, onSubmit, loading }) => {
-  const [autoFilteredValue, setAutoFilteredValue] = useState([]);
-  const [autoValue, setAutoValue] = useState(null);
-
-  const [autoFilteredValue2, setAutoFilteredValue2] = useState([]);
-  const [autoValue2, setAutoValue2] = useState(null);
+  const [typeAreas, setTypeAreas] = useState(null);
+  const [complexes, setComplexes] = useState(null);
 
   useEffect(() => {
     getItems();
@@ -21,41 +18,9 @@ const AreaForm = ({ initialFormValue, onSubmit, loading }) => {
 
   const getItems = async () => {
     const res = await getTypeAreas();
-    setAutoValue(res);
-    const complexes = await getConplexes();
-    setAutoValue2(complexes);
-  };
-
-  const searchText = (event) => {
-    setTimeout(() => {
-      if (!event.query.trim().length) {
-        setAutoFilteredValue([...autoValue]);
-      } else {
-        setAutoFilteredValue(
-          autoValue.filter((item) => {
-            return item.nombre
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          })
-        );
-      }
-    }, 250);
-  };
-
-  const searchText2 = (event) => {
-    setTimeout(() => {
-      if (!event.query.trim().length) {
-        setAutoFilteredValue2([...autoValue2]);
-      } else {
-        setAutoFilteredValue2(
-          autoValue2.filter((item) => {
-            return item.nombre
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          })
-        );
-      }
-    }, 250);
+    setTypeAreas(res);
+    const res2 = await getConplexes();
+    setComplexes(res2);
   };
 
   const formSchema = Yup.object().shape({
@@ -89,20 +54,18 @@ const AreaForm = ({ initialFormValue, onSubmit, loading }) => {
           </div>
           <div className="field col-12 md:col-12">
             <label htmlFor="direction">Tipo de area</label>
-            <AutocompleteCustom
+            <AutocompleteItemCustom
               name="tiposAreas.idTipoArea"
-              suggestions={autoFilteredValue}
-              completeMethod={searchText}
+              items={typeAreas}
               field="nombre"
               labelText={initialFormValue.tiposAreas.nombre}
             />
           </div>
           <div className="field col-12 md:col-12">
             <label htmlFor="direction">Complejo</label>
-            <AutocompleteCustom
+            <AutocompleteItemCustom
               name="complejos.idComplejo"
-              suggestions={autoFilteredValue2}
-              completeMethod={searchText2}
+              items={complexes}
               field="nombre"
               labelText={initialFormValue.complejos.nombre}
             />

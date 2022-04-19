@@ -5,11 +5,10 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
 import { getInstitucions } from "../../service/InstitutionService";
-import AutocompleteCustom from "../formcustom/AutocompleteCustom";
+import AutocompleteItemCustom from "../formcustom/AutocompleteItemCustom";
 
 const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
-  const [autoFilteredValue, setAutoFilteredValue] = useState([]);
-  const [autoValue, setAutoValue] = useState(null);
+  const [institutions, setInstitutions] = useState(null);
 
   useEffect(() => {
     getItems();
@@ -17,23 +16,7 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
 
   const getItems = async () => {
     const res = await getInstitucions();
-    setAutoValue(res);
-  };
-
-  const searchText = (event) => {
-    setTimeout(() => {
-      if (!event.query.trim().length) {
-        setAutoFilteredValue([...autoValue]);
-      } else {
-        setAutoFilteredValue(
-          autoValue.filter((item) => {
-            return item.nombre
-              .toLowerCase()
-              .startsWith(event.query.toLowerCase());
-          })
-        );
-      }
-    }, 250);
+    setInstitutions(res);
   };
 
   const formSchema = Yup.object().shape({
@@ -70,11 +53,10 @@ const ComplexForm = ({ initialFormValue, onSubmit, loading }) => {
             <InputCustom name="telefonoContacto" placeholder="312 00 0000 0" />
           </div>
           <div className="field col-12 md:col-12">
-            <label htmlFor="direction">Instutucion 2</label>
-            <AutocompleteCustom
+            <label htmlFor="direction">Instutucion</label>
+            <AutocompleteItemCustom
               name="datosInstitucionDeportiva.idDatosInstitucionDeportiva"
-              suggestions={autoFilteredValue}
-              completeMethod={searchText}
+              items={institutions}
               field="nombre"
               labelText={initialFormValue.datosInstitucionDeportiva.nombre}
             />
