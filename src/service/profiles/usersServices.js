@@ -3,6 +3,20 @@ import invokeApi from "../../helpers/invokeApi";
 
 const urlApi = `${config.apiUrl}/perfiles-services/usuarios`;
 
+export function postLoginUser(body, token = "") {
+  const url = `${urlApi}/login`;
+
+  const options = {
+    method: "POST",
+    url: url,
+    data: body,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  return invokeApi(options);
+}
+
 export function getUsers(token = "") {
   const url = `${urlApi}/get-all`;
 

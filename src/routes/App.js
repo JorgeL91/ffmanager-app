@@ -75,7 +75,7 @@ import Login from "../pages/Login";
 
 const App = () => {
   const { token, setToken } = useToken();
-
+  const [menus, setMenus] = useState([]);
   const [layoutMode, setLayoutMode] = useState("static");
   const [layoutColorMode, setLayoutColorMode] = useState("light");
   const [inputStyle, setInputStyle] = useState("outlined");
@@ -392,6 +392,28 @@ const App = () => {
     "layout-theme-light": layoutColorMode === "light",
   });
 
+  useEffect(() => {
+    if (token) {
+      let loadMenu = [];
+      token.menu.forEach((element) => {
+        let item = {
+          label: element.nombre,
+          items: [],
+        };
+        element.itemsMenuHijos.forEach((children) => {
+          item.items.push({
+            label: children.nombre,
+            icon: "pi pi-fw pi-home",
+            to: children.link,
+          });
+        });
+
+        loadMenu.push(item);
+      });
+      setMenus(loadMenu);
+    }
+  }, [token]);
+
   if (!token) {
     return (
       <>
@@ -430,7 +452,7 @@ const App = () => {
       />
       <div className="layout-sidebar" onClick={onSidebarClick}>
         <AppMenu
-          model={menu}
+          model={menus.length == 0 ? menu : menus}
           onMenuItemClick={onMenuItemClick}
           layoutColorMode={layoutColorMode}
         />

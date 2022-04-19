@@ -4,15 +4,36 @@ import * as Yup from "yup";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import InputCustom from "../components/formcustom/InputCustom";
+import { postLoginUser } from "../service/profiles/usersServices";
+import MsjToast from "../components/confirmation/MsjToast";
 
 const Login = ({ setToken }) => {
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState({
+    active: false,
+    severity: "error",
+    message: "",
+  });
 
-  const onSubmit = (values) => {
+  const onSubmit = async (values) => {
     setLoading(true);
-    console.log(values);
-    setToken({ token: values.usuario });
+    const res = await postLoginUser(values);
     setLoading(false);
+    if (res.error) {
+      setShow({
+        ...show,
+        active: true,
+        message: "Usuario o contraseña invalidos.",
+      });
+    } else {
+      const token = {
+        menu: res["items-menu"],
+        token: "dfdfgsdfgsdfgsdf",
+        idUsuario: res.idUsuario,
+        usuario: res.usuario,
+      };
+      setToken({ token });
+    }
   };
 
   const initialFormValue = {
@@ -37,6 +58,7 @@ const Login = ({ setToken }) => {
         minHeight: "100vh",
       }}
     >
+      <MsjToast show={show} setShow={setShow} />
       <div className="xs:col-12 sm:col-12  md:col-5">
         <Card>
           <div className="mb-5 text-center">
@@ -68,7 +90,7 @@ const Login = ({ setToken }) => {
               <div className="grid p-fluid">
                 <div className="col-12">
                   <Button
-                    label="Iniciar Session"
+                    label="Iniciar sesión"
                     type="submit"
                     className="mr-2 mb-2 "
                     loading={loading}

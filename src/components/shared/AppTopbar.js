@@ -47,10 +47,10 @@ export const AppTopbar = (props) => {
             onClick={() => deleteToken()}
           >
             <i className="pi pi-sign-out" />
-            <span>Events</span>
+            <span>Cerrar sesión</span>
           </button>
         </li>
-        <li>
+        {/* <li>
           <button
             className="p-link layout-topbar-button"
             onClick={props.onMobileSubTopbarMenuClick}
@@ -58,14 +58,14 @@ export const AppTopbar = (props) => {
             <i className="pi pi-cog" />
             <span>Settings</span>
           </button>
-        </li>
+        </li> */}
         <li>
           <button
             className="p-link layout-topbar-button"
             onClick={props.onMobileSubTopbarMenuClick}
           >
             <i className="pi pi-user" />
-            <span>Profile</span>
+            <span>Perfil</span>
           </button>
         </li>
       </ul>
