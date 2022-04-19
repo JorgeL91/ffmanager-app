@@ -452,7 +452,7 @@ const App = () => {
       />
       <div className="layout-sidebar" onClick={onSidebarClick}>
         <AppMenu
-          model={menus.length == 0 ? menu : menus}
+          model={menus.length === 0 ? menu : menus}
           onMenuItemClick={onMenuItemClick}
           layoutColorMode={layoutColorMode}
         />
