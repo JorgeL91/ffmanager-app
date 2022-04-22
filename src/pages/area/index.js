@@ -5,8 +5,9 @@ import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { Button } from "primereact/button";
 import { getAreas, deleteArea } from "../../service/areaServices";
 import { Link } from "react-router-dom";
-import BtnDelete from "../../components/confirmation/BtnDelete";
+import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ListHeader from "../../components/List/ListHeader";
 
 const Area = () => {
   const [areas, setAreas] = useState([]);
@@ -56,18 +57,6 @@ const Area = () => {
     }
   };
 
-  const verifiedBodyTemplate = (rowData) => {
-    return (
-      <>
-        <Link to={`area-edit/${rowData.idArea}`}>
-          <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
-        </Link>
-
-        <BtnDelete item={rowData.idArea} onConfirmation={deleteItem} />
-      </>
-    );
-  };
-
   const linkTextTemplate = (data) => {
     return (
       <Link
@@ -112,21 +101,8 @@ const Area = () => {
     <div className="grid table-demo">
       <div className="col-12">
         <div className="card">
-          <div className="grid ">
-            <div className="col-6">
-              <MsjToast show={show} setShow={setShow} />
-              <h5>Areas</h5>
-            </div>
-            <div className="col-6 text-right ">
-              <Link to="area-create" className="btn btn-primary">
-                <Button
-                  icon="pi pi-plus"
-                  label="Nuevo Registro"
-                  className="mr-2 mb-2"
-                />
-              </Link>
-            </div>
-          </div>
+          <MsjToast show={show} setShow={setShow} />
+          <ListHeader title="Areas" toLink="area-create" />
 
           <DataTable
             value={areas}
@@ -158,7 +134,13 @@ const Area = () => {
               header=""
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={verifiedBodyTemplate}
+              body={(rowData) => (
+                <ButtonsOption
+                  idItem={rowData.idArea}
+                  deleteItem={deleteItem}
+                  link="area-edit"
+                />
+              )}
             />
           </DataTable>
         </div>

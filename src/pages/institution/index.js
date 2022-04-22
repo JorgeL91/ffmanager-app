@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
-import { Button } from "primereact/button";
 import {
   deleteInstitucion,
   getInstitucions,
 } from "../../service/InstitutionService";
-import { Link } from "react-router-dom";
-import BtnDelete from "../../components/confirmation/BtnDelete";
+import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ListHeader from "../../components/List/ListHeader";
 
 const Institution = () => {
   const [institutions, setInstitutions] = useState([]);
@@ -43,21 +42,6 @@ const Institution = () => {
     setLoading1(false);
   };
 
-  const verifiedBodyTemplate = (rowData) => {
-    return (
-      <>
-        <Link to={`institutions-edit/${rowData.idDatosInstitucionDeportiva}`}>
-          <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
-        </Link>
-
-        <BtnDelete
-          item={rowData.idDatosInstitucionDeportiva}
-          onConfirmation={deleteItem}
-        />
-      </>
-    );
-  };
-
   const deleteItem = async (displayConfirmation) => {
     const { item } = { ...displayConfirmation };
     const res = await deleteInstitucion(item);
@@ -76,22 +60,8 @@ const Institution = () => {
     <div className="grid table-demo">
       <div className="col-12">
         <div className="card">
-          <div className="grid ">
-            <div className="col-6">
-              <MsjToast show={show} setShow={setShow} />
-
-              <h5>Instituciones</h5>
-            </div>
-            <div className="col-6 text-right ">
-              <Link to="institutions-create" className="btn btn-success">
-                <Button
-                  icon="pi pi-plus"
-                  label="Nuevo Registro"
-                  className="mr-2 mb-2"
-                />
-              </Link>
-            </div>
-          </div>
+          <MsjToast show={show} setShow={setShow} />
+          <ListHeader title="Instituciones" toLink="institutions-create" />
 
           <DataTable
             value={institutions}
@@ -120,7 +90,13 @@ const Institution = () => {
               header=""
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={verifiedBodyTemplate}
+              body={(rowData) => (
+                <ButtonsOption
+                  idItem={rowData.idDatosInstitucionDeportiva}
+                  deleteItem={deleteItem}
+                  link="institutions-edit"
+                />
+              )}
             />
           </DataTable>
         </div>

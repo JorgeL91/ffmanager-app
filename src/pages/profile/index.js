@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
-import { Button } from "primereact/button";
-import { Link } from "react-router-dom";
 import {
   deletePerfil,
   getPerfiles,
 } from "../../service/profiles/profilesServices";
 import { classNames } from "primereact/utils";
-import BtnDelete from "../../components/confirmation/BtnDelete";
+import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ListHeader from "../../components/List/ListHeader";
 
 const Profiile = () => {
   const [profiles, setProfiles] = useState([]);
@@ -44,18 +43,6 @@ const Profiile = () => {
     setLoading1(false);
   };
 
-  const verifiedBodyTemplate = (rowData) => {
-    return (
-      <>
-        <Link to={`profile-edit/${rowData.idPerfil}`}>
-          <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
-        </Link>
-
-        <BtnDelete item={rowData.idPerfil} onConfirmation={deleteItem} />
-      </>
-    );
-  };
-
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
 
@@ -86,21 +73,8 @@ const Profiile = () => {
     <div className="grid table-demo">
       <div className="col-12">
         <div className="card">
-          <div className="grid ">
-            <div className="col-6">
-              <MsjToast show={show} setShow={setShow} />
-              <h5>Perfiles</h5>
-            </div>
-            <div className="col-6 text-right ">
-              <Link to="profile-create" className="btn btn-success">
-                <Button
-                  icon="pi pi-plus"
-                  label="Nuevo Registro"
-                  className="mr-2 mb-2"
-                />
-              </Link>
-            </div>
-          </div>
+          <MsjToast show={show} setShow={setShow} />
+          <ListHeader title="Perfiles" toLink="profile-create" />
 
           <DataTable
             value={profiles}
@@ -135,7 +109,13 @@ const Profiile = () => {
               header=""
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={verifiedBodyTemplate}
+              body={(rowData) => (
+                <ButtonsOption
+                  idItem={rowData.idPerfil}
+                  deleteItem={deleteItem}
+                  link="profile-edit"
+                />
+              )}
             />
           </DataTable>
         </div>

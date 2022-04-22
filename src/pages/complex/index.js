@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
-import { Button } from "primereact/button";
 import { getConplexes, deleteConplex } from "../../service/complexServices";
-import { Link } from "react-router-dom";
-import BtnDelete from "../../components/confirmation/BtnDelete";
+import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ListHeader from "../../components/List/ListHeader";
 
 const Complex = () => {
   const [complexes, setComplexes] = useState([]);
@@ -54,36 +53,12 @@ const Complex = () => {
     }
   };
 
-  const verifiedBodyTemplate = (rowData) => {
-    return (
-      <>
-        <Link to={`complex-edit/${rowData.idComplejo}`}>
-          <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
-        </Link>
-
-        <BtnDelete item={rowData.idComplejo} onConfirmation={deleteItem} />
-      </>
-    );
-  };
   return (
     <div className="grid table-demo">
       <div className="col-12">
         <div className="card">
-          <div className="grid ">
-            <div className="col-6">
-              <MsjToast show={show} setShow={setShow} />
-              <h5>Complejos</h5>
-            </div>
-            <div className="col-6 text-right ">
-              <Link to="complex-create" className="btn btn-primary">
-                <Button
-                  icon="pi pi-plus"
-                  label="Nuevo Registro"
-                  className="mr-2 mb-2"
-                />
-              </Link>
-            </div>
-          </div>
+          <MsjToast show={show} setShow={setShow} />
+          <ListHeader title="Complejos" toLink="complex-create" />
 
           <DataTable
             value={complexes}
@@ -115,7 +90,13 @@ const Complex = () => {
               header=""
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={verifiedBodyTemplate}
+              body={(rowData) => (
+                <ButtonsOption
+                  idItem={rowData.idComplejo}
+                  deleteItem={deleteItem}
+                  link="complex-edit"
+                />
+              )}
             />
           </DataTable>
         </div>

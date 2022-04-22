@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
-import { Button } from "primereact/button";
-import { Link } from "react-router-dom";
 import { deleteMenu, getMenus } from "../../service/profiles/menusServices";
 import { classNames } from "primereact/utils";
-import BtnDelete from "../../components/confirmation/BtnDelete";
+import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
+import ListHeader from "../../components/List/ListHeader";
 
 const Menu = () => {
   const [menus, setMenus] = useState([]);
@@ -41,18 +40,6 @@ const Menu = () => {
     setLoading1(false);
   };
 
-  const verifiedBodyTemplate = (rowData) => {
-    return (
-      <>
-        <Link to={`menu-edit/${rowData.idItemMenu}`}>
-          <Button icon="pi pi-clone" style={{ marginRight: ".5em" }} />
-        </Link>
-
-        <BtnDelete item={rowData.idItemMenu} onConfirmation={deleteItem} />
-      </>
-    );
-  };
-
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
 
@@ -83,21 +70,8 @@ const Menu = () => {
     <div className="grid table-demo">
       <div className="col-12">
         <div className="card">
-          <div className="grid ">
-            <div className="col-6">
-              <MsjToast show={show} setShow={setShow} />
-              <h5>Items de menu</h5>
-            </div>
-            <div className="col-6 text-right ">
-              <Link to="menu-create" className="btn btn-success">
-                <Button
-                  icon="pi pi-plus"
-                  label="Nuevo Registro"
-                  className="mr-2 mb-2"
-                />
-              </Link>
-            </div>
-          </div>
+          <MsjToast show={show} setShow={setShow} />
+          <ListHeader title="Items de menu" toLink="menu-create" />
 
           <DataTable
             value={menus}
@@ -140,7 +114,13 @@ const Menu = () => {
               header=""
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={verifiedBodyTemplate}
+              body={(rowData) => (
+                <ButtonsOption
+                  idItem={rowData.idItemMenu}
+                  deleteItem={deleteItem}
+                  link="menu-edit"
+                />
+              )}
             />
           </DataTable>
         </div>

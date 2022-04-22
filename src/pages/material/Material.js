@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import {
@@ -12,7 +11,8 @@ import {
 } from "../../service/general/materialsServices";
 import MsjToast from "../../components/confirmation/MsjToast";
 import MaterialForm from "../../components/forms/MaterialForm";
-import BtnDelete from "../../components/confirmation/BtnDelete";
+import ButtonsActions from "../../components/List/ButtonsActions";
+import ListHeader from "../../components/List/ListHeader";
 
 const Material = () => {
   let emptyProduct = {
@@ -110,19 +110,6 @@ const Material = () => {
       message: message,
     });
   };
-  const actionBodyTemplate = (rowData) => {
-    return (
-      <div className="actions">
-        <Button
-          icon="pi pi-pencil"
-          className="p-button-rounded p-button-success mr-2"
-          onClick={() => editProduct(rowData)}
-        />
-
-        <BtnDelete item={rowData.idMaterial} onConfirmation={deleteItem} />
-      </div>
-    );
-  };
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
@@ -141,20 +128,8 @@ const Material = () => {
     <div className="grid crud-demo">
       <div className="col-12">
         <div className="card">
-          <div className="grid ">
-            <div className="col-6">
-              <MsjToast show={show} setShow={setShow} />
-              <h5>Materiales</h5>
-            </div>
-            <div className="col-6 text-right ">
-              <Button
-                icon="pi pi-plus"
-                label="Nuevo Registro"
-                className="mr-2 mb-2"
-                onClick={openNew}
-              />
-            </div>
-          </div>
+          <MsjToast show={show} setShow={setShow} />
+          <ListHeader title="Materiales" toLink={openNew} />
 
           <DataTable
             value={products}
@@ -196,7 +171,16 @@ const Material = () => {
               headerStyle={{ width: "14%", minWidth: "10rem" }}
             ></Column>
 
-            <Column body={actionBodyTemplate}></Column>
+            <Column
+              body={(rowData) => (
+                <ButtonsActions
+                  idItem={rowData.idMaterial}
+                  deleteItem={deleteItem}
+                  link={editProduct}
+                  item={rowData}
+                />
+              )}
+            ></Column>
           </DataTable>
 
           <Dialog
