@@ -1,11 +1,10 @@
 import React from "react";
 import { Button } from "primereact/button";
-import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
 
-const JobForm = ({ initialFormValue, onSubmit, loading }) => {
+const JobForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
   const formSchema = Yup.object().shape({
     nombre: Yup.string()
       .required("Por Favor ingrese un Nombre")
@@ -25,15 +24,22 @@ const JobForm = ({ initialFormValue, onSubmit, loading }) => {
             <InputCustom name="nombre" />
           </div>
         </div>
-        <Button
-          label="Guardar"
-          type="submit"
-          className="mr-2 mb-2"
-          loading={loading}
-        />
-        <Link to="/jobs">
-          <Button label="Volver" className="p-button-danger mr-2 mb-2" />
-        </Link>
+        <div className="p-dialog-footer  m-0 p-0">
+          <Button
+            icon="pi pi-times"
+            type="button"
+            label="Cancelar"
+            className=" p-button-danger mr-2 mb-2"
+            onClick={() => onCancel()}
+          />
+          <Button
+            icon="pi pi-check"
+            label="Guardar"
+            type="submit"
+            className="mr-2 mb-2"
+            loading={loading}
+          />
+        </div>
       </Form>
     </Formik>
   );

@@ -4,28 +4,29 @@ import { Column } from "primereact/column";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import MsjToast from "../../components/confirmation/MsjToast";
-import ActivityForm from "../../components/forms/ActivityForm";
 import ButtonsActions from "../../components/List/ButtonsActions";
 import ListHeader from "../../components/List/ListHeader";
 import {
-  deleteActivity,
-  getActivities,
-  postActivity,
-  putActivity,
-} from "../../service/general/activitiesServices";
+  deleteStatus,
+  getStatus,
+  postStatus,
+  putStatus,
+} from "../../service/general/statusServices";
+import StatusForm from "../../components/forms/StatusForm";
+import CheckBodyTemplate from "../../components/List/CheckBodyTemplate";
 
-const Activity = () => {
-  let emptyActivity = {
-    idActividad: 0,
+const Status = () => {
+  let emptyItem = {
+    idEstado: 0,
     nombre: "",
-    duracion: "",
+    permiteUsar: false,
     observaciones: "",
   };
 
-  const [Activities, setActivities] = useState(null);
-  const [ActivityDialog, setActivityDialog] = useState(false);
-  const [Activity, setActivity] = useState(emptyActivity);
-  const [selectedActivities, setSelectedActivities] = useState(null);
+  const [Items, setItems] = useState(null);
+  const [ItemDialog, setItemDialog] = useState(false);
+  const [Item, setItem] = useState(emptyItem);
+  const [selectedItems, setSelectedItems] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -42,37 +43,37 @@ const Activity = () => {
 
   const getItems = async () => {
     setLoading(true);
-    const res = await getActivities();
-    if (!res.error) setActivities(res);
+    const res = await getStatus();
+    if (!res.error) setItems(res);
     setLoading(false);
   };
 
   const openNew = () => {
-    setActivity(emptyActivity);
+    setItem(emptyItem);
     setSubmitted(false);
-    setActivityDialog(true);
+    setItemDialog(true);
   };
 
   const hideDialog = () => {
     setSubmitted(false);
-    setActivityDialog(false);
+    setItemDialog(false);
   };
 
-  const saveActivity = async (values) => {
+  const saveItem = async (values) => {
     setSubmitted(true);
     let severity = "success";
-    let message = "Actividad creado correctamente";
+    let message = "Estado creado correctamente";
 
-    if (Activity.idActividad !== 0) {
-      const res = await putActivity(values);
+    if (Item.idEstado !== 0) {
+      const res = await putStatus(values);
       if (res.error) {
         severity = "error";
         message = res.errorMessage;
       } else {
-        message = "Actividad editado correctamente";
+        message = "Estado editado correctamente";
       }
     } else {
-      const res = await postActivity(values);
+      const res = await postStatus(values);
       if (res.error) {
         severity = "error";
         message = res.errorMessage;
@@ -86,20 +87,20 @@ const Activity = () => {
     });
     setSubmitted(false);
     getItems();
-    setActivityDialog(false);
-    setActivity(emptyActivity);
+    setItemDialog(false);
+    setItem(emptyItem);
   };
 
-  const editActivity = (Activity) => {
-    setActivity({ ...Activity });
-    setActivityDialog(true);
+  const editItem = (Item) => {
+    setItem({ ...Item });
+    setItemDialog(true);
   };
 
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
     let severity = "success";
-    let message = "Actividad eliminado correctamente";
-    const res = await deleteActivity(item);
+    let message = "Estado eliminado correctamente";
+    const res = await deleteStatus(item);
     if (res.error) {
       message = res.errorMessage;
       severity = "error";
@@ -132,12 +133,12 @@ const Activity = () => {
       <div className="col-12">
         <div className="card">
           <MsjToast show={show} setShow={setShow} />
-          <ListHeader title="Actividades" toLink={openNew} />
+          <ListHeader title="Estados" toLink={openNew} />
 
           <DataTable
-            value={Activities}
-            selection={selectedActivities}
-            onSelectionChange={(e) => setSelectedActivities(e.value)}
+            value={Items}
+            selection={selectedItems}
+            onSelectionChange={(e) => setSelectedItems(e.value)}
             dataKey="id"
             paginator
             rows={10}
@@ -146,7 +147,7 @@ const Activity = () => {
             paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
             currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} registros"
             globalFilter={globalFilter}
-            emptyMessage="No hay Actividades registrados."
+            emptyMessage="No hay Estados registrados."
             header={header}
             responsiveLayout="scroll"
             loading={loading}
@@ -157,43 +158,45 @@ const Activity = () => {
               sortable
               headerStyle={{ width: "30%", minWidth: "10rem" }}
             ></Column>
-            <Column
-              field="duracion"
-              header="Duracion"
-              sortable
-              headerStyle={{ width: "20%", minWidth: "10rem" }}
-            ></Column>
 
+            <Column
+              field="permiteUsar"
+              header="Permite Usar"
+              headerStyle={{ width: "10%", minWidth: "10rem" }}
+              body={(rowData) => (
+                <CheckBodyTemplate check={rowData.permiteUsar} />
+              )}
+            ></Column>
             <Column
               field="observaciones"
               header="Observaciones"
-              headerStyle={{ width: "30%", minWidth: "10rem" }}
+              headerStyle={{ width: "40%", minWidth: "10rem" }}
             ></Column>
 
             <Column
-              headerStyle={{ width: "20%", minWidth: "10rem" }}
               body={(rowData) => (
                 <ButtonsActions
-                  idItem={rowData.idActividad}
+                  idItem={rowData.idEstado}
                   deleteItem={deleteItem}
-                  link={editActivity}
+                  link={editItem}
                   item={rowData}
                 />
               )}
+              headerStyle={{ width: "20%", minWidth: "10rem" }}
             ></Column>
           </DataTable>
 
           <Dialog
-            visible={ActivityDialog}
+            visible={ItemDialog}
             style={{ width: "450px" }}
-            header="Actividades"
+            header="Estados"
             modal
             className="p-fluid"
             onHide={hideDialog}
           >
-            <ActivityForm
-              initialFormValue={Activity}
-              onSubmit={saveActivity}
+            <StatusForm
+              initialFormValue={Item}
+              onSubmit={saveItem}
               loading={submitted}
               onCancel={hideDialog}
             />
@@ -208,4 +211,4 @@ const comparisonFn = function (prevProps, nextProps) {
   return prevProps.location.pathname === nextProps.location.pathname;
 };
 
-export default React.memo(Activity, comparisonFn);
+export default React.memo(Status, comparisonFn);

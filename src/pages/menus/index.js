@@ -3,7 +3,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { deleteMenu, getMenus } from "../../service/profiles/menusServices";
-import { classNames } from "primereact/utils";
+import CheckBodyTemplate from "../../components/List/CheckBodyTemplate";
 import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
 import ListHeader from "../../components/List/ListHeader";
@@ -55,17 +55,6 @@ const Menu = () => {
     }
   };
 
-  const checkBodyTemplate = (verified) => {
-    return (
-      <i
-        className={classNames("pi", {
-          "text-green-500 pi-check-circle": verified,
-          "text-pink-500 pi-times-circle": !verified,
-        })}
-      ></i>
-    );
-  };
-
   return (
     <div className="grid table-demo">
       <div className="col-12">
@@ -100,7 +89,7 @@ const Menu = () => {
               dataType="boolean"
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={(rowData) => checkBodyTemplate(rowData.esHoja)}
+              body={(rowData) => <CheckBodyTemplate check={rowData.esHoja} />}
             />
             <Column
               field="esRaiz"
@@ -108,7 +97,7 @@ const Menu = () => {
               dataType="boolean"
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={(rowData) => checkBodyTemplate(rowData.esRaiz)}
+              body={(rowData) => <CheckBodyTemplate check={rowData.esRaiz} />}
             />
             <Column
               header=""

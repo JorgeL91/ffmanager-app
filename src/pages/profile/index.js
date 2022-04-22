@@ -1,127 +1,206 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { FilterMatchMode, FilterOperator } from "primereact/api";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
+import MsjToast from "../../components/confirmation/MsjToast";
+import ButtonsActions from "../../components/List/ButtonsActions";
+import ListHeader from "../../components/List/ListHeader";
+import CheckBodyTemplate from "../../components/List/CheckBodyTemplate";
 import {
   deletePerfil,
   getPerfiles,
+  postPerfil,
+  putPerfil,
 } from "../../service/profiles/profilesServices";
-import { classNames } from "primereact/utils";
-import ButtonsOption from "../../components/List/ButtonsActions";
-import MsjToast from "../../components/confirmation/MsjToast";
-import ListHeader from "../../components/List/ListHeader";
+import ProfileForm from "../../components/forms/ProfileForm";
 
-const Profiile = () => {
-  const [profiles, setProfiles] = useState([]);
-  const [filters1, setFilters1] = useState(null);
-  const [loading1, setLoading1] = useState(true);
+const Status = () => {
+  let emptyItem = {
+    idPerfil: 0,
+    nombre: "",
+    esAdmin: false,
+  };
+
+  const [Items, setItems] = useState(null);
+  const [ItemDialog, setItemDialog] = useState(false);
+  const [Item, setItem] = useState(emptyItem);
+  const [selectedItems, setSelectedItems] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
+  const [globalFilter, setGlobalFilter] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [show, setShow] = useState({
     active: false,
     severity: "error",
     message: "",
   });
 
-  const initFilters1 = () => {
-    setFilters1({
-      global: { value: null, matchMode: FilterMatchMode.CONTAINS },
-      nombre: {
-        operator: FilterOperator.AND,
-        constraints: [{ value: null, matchMode: FilterMatchMode.STARTS_WITH }],
-      },
-    });
+  useEffect(() => {
+    getItems();
+  }, []);
+
+  const getItems = async () => {
+    setLoading(true);
+    const res = await getPerfiles();
+    if (!res.error) setItems(res);
+    setLoading(false);
   };
 
-  useEffect(() => {
-    loadItems();
-    initFilters1();
-  }, []); // eslint-disable-next-line
+  const openNew = () => {
+    setItem(emptyItem);
+    setSubmitted(false);
+    setItemDialog(true);
+  };
 
-  const loadItems = async () => {
-    setLoading1(true);
-    const response = await getPerfiles();
-    if (!response.error) setProfiles(response);
-    setLoading1(false);
+  const hideDialog = () => {
+    setSubmitted(false);
+    setItemDialog(false);
+  };
+
+  const saveItem = async (values) => {
+    setSubmitted(true);
+    let severity = "success";
+    let message = "Perfil creado correctamente";
+
+    if (Item.idPerfil !== 0) {
+      const res = await putPerfil(values);
+      if (res.error) {
+        severity = "error";
+        message = res.errorMessage;
+      } else {
+        message = "Perfil editado correctamente";
+      }
+    } else {
+      const res = await postPerfil(values);
+      if (res.error) {
+        severity = "error";
+        message = res.errorMessage;
+      }
+    }
+    setShow({
+      ...show,
+      active: true,
+      message,
+      severity,
+    });
+    setSubmitted(false);
+    getItems();
+    setItemDialog(false);
+    setItem(emptyItem);
+  };
+
+  const editItem = (Item) => {
+    setItem({ ...Item });
+    setItemDialog(true);
   };
 
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
-
+    let severity = "success";
+    let message = "Perfil eliminado correctamente";
     const res = await deletePerfil(item);
     if (res.error) {
-      setShow({
-        ...show,
-        active: true,
-        message: res.errorMessage,
-      });
+      message = res.errorMessage;
+      severity = "error";
     } else {
-      loadItems();
+      getItems();
     }
+    setShow({
+      ...show,
+      severity: severity,
+      active: true,
+      message: message,
+    });
   };
 
-  const checkBodyTemplate = (verified) => {
-    return (
-      <i
-        className={classNames("pi", {
-          "text-green-500 pi-check-circle": verified,
-          "text-pink-500 pi-times-circle": !verified,
-        })}
-      ></i>
-    );
-  };
+  const header = (
+    <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+      <span className="block mt-2 md:mt-0 p-input-icon-left">
+        <i className="pi pi-search" />
+        <InputText
+          type="search"
+          onInput={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Buscar..."
+        />
+      </span>
+    </div>
+  );
 
   return (
-    <div className="grid table-demo">
+    <div className="grid crud-demo">
       <div className="col-12">
         <div className="card">
           <MsjToast show={show} setShow={setShow} />
-          <ListHeader title="Perfiles" toLink="profile-create" />
+          <ListHeader title="Perfiles" toLink={openNew} />
 
           <DataTable
-            value={profiles}
+            value={Items}
+            selection={selectedItems}
+            onSelectionChange={(e) => setSelectedItems(e.value)}
+            dataKey="id"
             paginator
-            className="p-datatable-gridlines"
-            showGridlines
             rows={10}
-            dataKey="idTipoArea"
-            filters={filters1}
-            filterDisplay="menu"
-            loading={loading1}
+            rowsPerPageOptions={[5, 10, 25]}
+            className="datatable-responsive"
+            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
+            currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} registros"
+            globalFilter={globalFilter}
+            emptyMessage="No hay Perfiles registrados."
+            header={header}
             responsiveLayout="scroll"
-            emptyMessage="No existen datos."
+            loading={loading}
           >
             <Column
               field="nombre"
               header="Nombre"
-              filter
-              filterPlaceholder="Buscar por nombre"
-              style={{ minWidth: "12rem" }}
-            />
+              sortable
+              headerStyle={{ width: "60%", minWidth: "10rem" }}
+            ></Column>
 
             <Column
               field="esAdmin"
-              header="Administrador"
-              dataType="boolean"
-              bodyClassName="text-center"
-              style={{ minWidth: "8rem" }}
-              body={(rowData) => checkBodyTemplate(rowData.esAdmin)}
-            />
+              header="Es Admin"
+              headerStyle={{ width: "20%", minWidth: "10rem" }}
+              body={(rowData) => <CheckBodyTemplate check={rowData.esAdmin} />}
+            ></Column>
+
             <Column
-              header=""
-              bodyClassName="text-center"
-              style={{ minWidth: "8rem" }}
               body={(rowData) => (
-                <ButtonsOption
+                <ButtonsActions
                   idItem={rowData.idPerfil}
                   deleteItem={deleteItem}
-                  link="profile-edit"
+                  link={editItem}
+                  item={rowData}
                 />
               )}
-            />
+              headerStyle={{ width: "20%", minWidth: "10rem" }}
+            ></Column>
           </DataTable>
+
+          <Dialog
+            visible={ItemDialog}
+            style={{ width: "450px" }}
+            header="Perfiles"
+            modal
+            className="p-fluid"
+            onHide={hideDialog}
+          >
+            <ProfileForm
+              initialFormValue={Item}
+              onSubmit={saveItem}
+              loading={submitted}
+              onCancel={hideDialog}
+            />
+          </Dialog>
         </div>
       </div>
     </div>
   );
 };
 
-export default Profiile;
+const comparisonFn = function (prevProps, nextProps) {
+  return prevProps.location.pathname === nextProps.location.pathname;
+};
+
+export default React.memo(Status, comparisonFn);

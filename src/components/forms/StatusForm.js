@@ -3,12 +3,13 @@ import { Button } from "primereact/button";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
+import TextareaCustom from "../formcustom/TextareaCustom";
 import CheckboxCustom from "../formcustom/CheckboxCustom";
 
-const ProfileForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
+const StatusForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
   const formSchema = Yup.object().shape({
     nombre: Yup.string()
-      .required("Por Favor ingrese un Nombre")
+      .required("Este campo es requerido")
       .max(50, "Nombre debe tener maiximo 50 caracteres "),
   });
 
@@ -20,15 +21,19 @@ const ProfileForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
     >
       <Form>
         <div className="p-fluid formgrid grid">
-          <div className="field col-12 ">
+          <div className="field col-12">
             <label htmlFor="nombre">Nombre</label>
             <InputCustom name="nombre" />
           </div>
 
-          <div className="field col-12">
+          <div className="field col-12 ">
+            <label htmlFor="observaciones">Observaciones</label>
+            <TextareaCustom name="observaciones" rows="5" />
+          </div>
+          <div className="field col-12 md:col-6">
             <div className="flex align-items-center">
-              <CheckboxCustom name="esAdmin" />
-              <label htmlFor="rememberme1">Es Administrador</label>
+              <CheckboxCustom name="permiteUsar" />
+              <label>Permite Usar</label>
             </div>
           </div>
         </div>
@@ -53,4 +58,4 @@ const ProfileForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
   );
 };
 
-export default ProfileForm;
+export default StatusForm;

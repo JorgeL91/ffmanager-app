@@ -29,6 +29,8 @@ const Material = () => {
   const [selectedProducts, setSelectedProducts] = useState(null);
   const [submitted, setSubmitted] = useState(false);
   const [globalFilter, setGlobalFilter] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const [show, setShow] = useState({
     active: false,
     severity: "error",
@@ -40,8 +42,10 @@ const Material = () => {
   }, []);
 
   const getItems = async () => {
+    setLoading(true);
     const res = await getMaterials();
     if (!res.error) setProducts(res);
+    setLoading(false);
   };
 
   const openNew = () => {
@@ -118,7 +122,7 @@ const Material = () => {
         <InputText
           type="search"
           onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
+          placeholder="Buscar..."
         />
       </span>
     </div>
@@ -146,6 +150,7 @@ const Material = () => {
             emptyMessage="No hay materiales registrados."
             header={header}
             responsiveLayout="scroll"
+            loading={loading}
           >
             <Column
               field="nombre"

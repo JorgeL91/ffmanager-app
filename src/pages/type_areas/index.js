@@ -3,10 +3,10 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { FilterMatchMode, FilterOperator } from "primereact/api";
 import { deleteTypeArea, getTypeAreas } from "../../service/TypeAreaServices";
-import { classNames } from "primereact/utils";
 import ButtonsOption from "../../components/List/ButtonsActions";
 import MsjToast from "../../components/confirmation/MsjToast";
 import ListHeader from "../../components/List/ListHeader";
+import CheckBodyTemplate from "../../components/List/CheckBodyTemplate";
 
 const TypeArea = () => {
   const [TypeAreas, setTypeAreas] = useState([]);
@@ -55,17 +55,6 @@ const TypeArea = () => {
     }
   };
 
-  const checkBodyTemplate = (verified) => {
-    return (
-      <i
-        className={classNames("pi", {
-          "text-green-500 pi-check-circle": verified,
-          "text-pink-500 pi-times-circle": !verified,
-        })}
-      ></i>
-    );
-  };
-
   return (
     <div className="grid table-demo">
       <div className="col-12">
@@ -101,7 +90,9 @@ const TypeArea = () => {
               dataType="boolean"
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={(rowData) => checkBodyTemplate(rowData.esCompuesta)}
+              body={(rowData) => (
+                <CheckBodyTemplate check={rowData.esCompuesta} />
+              )}
             />
             <Column
               field="esTechada"
@@ -109,7 +100,9 @@ const TypeArea = () => {
               dataType="boolean"
               bodyClassName="text-center"
               style={{ minWidth: "8rem" }}
-              body={(rowData) => checkBodyTemplate(rowData.esTechada)}
+              body={(rowData) => (
+                <CheckBodyTemplate check={rowData.esTechada} />
+              )}
             />
             <Column
               header=""

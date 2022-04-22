@@ -74,6 +74,7 @@ import useToken from "../hooks/useToken";
 import Login from "../pages/Login";
 import Material from "../pages/material";
 import activity from "../pages/activity";
+import status from "../pages/status";
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -226,6 +227,11 @@ const App = () => {
           icon: "pi pi-fw pi-home",
           to: "/users",
         },
+        {
+          label: "Estados",
+          icon: "pi pi-fw pi-home",
+          to: "/status",
+        },
       ],
     },
 
@@ -246,6 +252,16 @@ const App = () => {
           label: "Areas",
           icon: "pi pi-fw pi-home",
           to: "/areas",
+        },
+        {
+          label: "Actividades",
+          icon: "pi pi-fw pi-home",
+          to: "/activities",
+        },
+        {
+          label: "Materiales",
+          icon: "pi pi-fw pi-home",
+          to: "/materials",
         },
       ],
     },
@@ -525,6 +541,7 @@ const App = () => {
           <Route path="/user-edit/:id" component={UserEdit} />
           <Route path="/materials" component={Material} />
           <Route path="/activities" component={activity} />
+          <Route path="/status" component={status} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />

@@ -331,7 +331,7 @@ const Crud = () => {
         <InputText
           type="search"
           onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search..."
+          placeholder="Buscar..."
         />
       </span>
     </div>
