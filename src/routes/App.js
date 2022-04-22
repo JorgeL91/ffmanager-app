@@ -72,7 +72,8 @@ import UserCreate from "../pages/user/UserCreate";
 import UserEdit from "../pages/user/UserEdit";
 import useToken from "../hooks/useToken";
 import Login from "../pages/Login";
-import Material from "../pages/material/Material";
+import Material from "../pages/material";
+import activity from "../pages/activity";
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -523,6 +524,7 @@ const App = () => {
           <Route path="/user-create" component={UserCreate} />
           <Route path="/user-edit/:id" component={UserEdit} />
           <Route path="/materials" component={Material} />
+          <Route path="/activities" component={activity} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
