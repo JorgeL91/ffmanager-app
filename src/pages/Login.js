@@ -26,8 +26,9 @@ const Login = ({ setToken }) => {
         message: "Usuario o contraseña invalidos.",
       });
     } else {
+      //console.log(res);
       const token = {
-        menu: res["items-menu"],
+        menu: res["items-menu"].sort((a, b) => a.order - b.order),
         token: "dfdfgsdfgsdfgsdf",
         idUsuario: res.idUsuario,
         usuario: res.usuario,

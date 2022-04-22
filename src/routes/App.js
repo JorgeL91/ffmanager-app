@@ -72,6 +72,7 @@ import UserCreate from "../pages/user/UserCreate";
 import UserEdit from "../pages/user/UserEdit";
 import useToken from "../hooks/useToken";
 import Login from "../pages/Login";
+import Material from "../pages/material/Material";
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -400,7 +401,8 @@ const App = () => {
           label: element.label,
           items: [],
         };
-        element.items.forEach((children) => {
+        const orderBy = element.items.sort((a, b) => a.order - b.order);
+        orderBy.forEach((children) => {
           item.items.push({
             label: children.label,
             icon: children.icon ? "pi " + children.icon : "pi pi-fw pi-home",
@@ -520,6 +522,7 @@ const App = () => {
           <Route path="/users" component={User} />
           <Route path="/user-create" component={UserCreate} />
           <Route path="/user-edit/:id" component={UserEdit} />
+          <Route path="/materials" component={Material} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />

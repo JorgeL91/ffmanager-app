@@ -45,7 +45,8 @@ const BtnDelete = ({ item, onConfirmation }) => {
     <>
       <Button
         icon="pi  pi-trash"
-        className="p-button-danger"
+        //className="p-button-danger"
+        className="p-button-rounded p-button-warning mt-2"
         onClick={() =>
           setDisplayConfirmation({
             ...displayConfirmation,
