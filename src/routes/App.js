@@ -75,6 +75,7 @@ import Login from "../pages/Login";
 import Material from "../pages/material";
 import activity from "../pages/activity";
 import status from "../pages/status";
+import Reservation from "../pages/reservation";
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -196,6 +197,16 @@ const App = () => {
           label: "Dashboard",
           icon: "pi pi-fw pi-home",
           to: "/",
+        },
+      ],
+    },
+    {
+      label: "Reserva",
+      items: [
+        {
+          label: "Reservar areas",
+          icon: "pi pi-fw pi-home",
+          to: "/reservation",
         },
       ],
     },
@@ -542,6 +553,7 @@ const App = () => {
           <Route path="/materials" component={Material} />
           <Route path="/activities" component={activity} />
           <Route path="/status" component={status} />
+          <Route path="/reservation" component={Reservation} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
