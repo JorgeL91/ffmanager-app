@@ -1,3 +1,4 @@
+import { Button } from "primereact/button";
 import { Steps } from "primereact/steps";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -68,6 +69,9 @@ const Reservation = () => {
           {renderSwitch()}
         </div>
       </div> */}
+      <div className=" p-fluid">
+        <Button label="Generar reserva" />
+      </div>
     </div>
   );
 };

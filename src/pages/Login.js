@@ -27,7 +27,7 @@ const Login = ({ setToken }) => {
       });
     } else {
       const token = {
-        menu: [], //res["items-menu"].sort((a, b) => a.order - b.order),
+        menu: res["items-menu"].sort((a, b) => a.order - b.order),
         token: "dfdfgsdfgsdfgsdf",
         idUsuario: res.idUsuario,
         usuario: res.usuario,
