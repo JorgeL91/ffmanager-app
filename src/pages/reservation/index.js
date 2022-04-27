@@ -3,7 +3,7 @@ import AreaItem from "../../components/reservation/AreaItem";
 import DateForm from "../../components/reservation/DateForm";
 import { getAreas } from "../../service/areaServices";
 
-const Reservation = () => {
+const ListReservation = () => {
   const [areas, setAreas] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -33,4 +33,4 @@ const Reservation = () => {
   );
 };
 
-export default Reservation;
+export default ListReservation;

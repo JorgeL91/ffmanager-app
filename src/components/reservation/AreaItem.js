@@ -1,9 +1,8 @@
 import { Button } from "primereact/button";
-import { Rating } from "primereact/rating";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const AreaItem = ({ area }) => {
-  console.log(area);
   return (
     <div className="col-12 md:col-4">
       <div className="card m-3 border-1 surface-border">
@@ -20,15 +19,16 @@ const AreaItem = ({ area }) => {
           </div>
         </div>
         <div className="flex align-items-center justify-content-between">
-          {/* <span className="">Reservado recientemente</span> */}
           <span className="">594 Reservas este mes</span>
         </div>
         <div className="mt-2 p-fluid">
-          <Button
-            icon="pi pi-external-link"
-            label="Seleccionar Sectores"
-            type="button"
-          />
+          <Link to={`generate-reservation/${area.idArea}`}>
+            <Button
+              icon="pi pi-external-link"
+              label="Seleccionar Sectores"
+              type="button"
+            />
+          </Link>
         </div>
       </div>
     </div>

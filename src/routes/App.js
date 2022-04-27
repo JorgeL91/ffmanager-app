@@ -75,7 +75,8 @@ import Login from "../pages/Login";
 import Material from "../pages/material";
 import activity from "../pages/activity";
 import status from "../pages/status";
-import Reservation from "../pages/reservation";
+import ListReservation from "../pages/reservation";
+import Reservation from "../pages/reservation/Reservation";
 
 const App = () => {
   const { token, setToken } = useToken();
@@ -553,7 +554,11 @@ const App = () => {
           <Route path="/materials" component={Material} />
           <Route path="/activities" component={activity} />
           <Route path="/status" component={status} />
-          <Route path="/reservation" component={Reservation} />
+          <Route path="/reservation" component={ListReservation} />
+          <Route
+            path="/generate-reservation/:idarea?"
+            component={Reservation}
+          />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
