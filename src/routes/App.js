@@ -80,7 +80,7 @@ const App = () => {
   const { token, setToken } = useToken();
   const [menus, setMenus] = useState([]);
   const [layoutMode, setLayoutMode] = useState("static");
-  const [layoutColorMode, setLayoutColorMode] = useState("light");
+  const [layoutColorMode, setLayoutColorMode] = useState("dark");
   const [inputStyle, setInputStyle] = useState("outlined");
   const [ripple, setRipple] = useState(true);
   const [staticMenuInactive, setStaticMenuInactive] = useState(false);
