@@ -170,13 +170,19 @@ const Status = () => {
                 <ButtonsActions
                   idItem={rowData.idPerfil}
                   deleteItem={deleteItem}
-                  link={editItem}
-                  item={rowData}
+                  link="profile-edit"
+                  // item={rowData}
                 />
               )}
               headerStyle={{ width: "20%", minWidth: "10rem" }}
             ></Column>
           </DataTable>
+          {/* 
+          <ButtonsOption
+                  idItem={rowData.idUsuario}
+                  deleteItem={deleteItem}
+                  link="user-edit"
+                /> */}
 
           <Dialog
             visible={ItemDialog}

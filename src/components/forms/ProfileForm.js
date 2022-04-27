@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import InputCustom from "../formcustom/InputCustom";
 import CheckboxCustom from "../formcustom/CheckboxCustom";
+import { Link } from "react-router-dom";
 
 const ProfileForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
   const formSchema = Yup.object().shape({
@@ -33,13 +34,20 @@ const ProfileForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
           </div>
         </div>
         <div className="p-dialog-footer  m-0 p-0">
-          <Button
-            icon="pi pi-times"
-            type="button"
-            label="Cancelar"
-            className=" p-button-danger mr-2 mb-2"
-            onClick={() => onCancel()}
-          />
+          {!initialFormValue.idPerfil ? (
+            <Button
+              icon="pi pi-times"
+              type="button"
+              label="Cancelar"
+              className=" p-button-danger mr-2 mb-2"
+              onClick={() => onCancel()}
+            />
+          ) : (
+            <Link to="/profiles">
+              <Button label="Volver" className=" p-button-danger mr-2 mb-2" />
+            </Link>
+          )}
+
           <Button
             icon="pi pi-check"
             label="Guardar"
