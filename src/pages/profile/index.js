@@ -90,11 +90,6 @@ const Status = () => {
     setItem(emptyItem);
   };
 
-  const editItem = (Item) => {
-    setItem({ ...Item });
-    setItemDialog(true);
-  };
-
   const deleteItem = async (confirmation) => {
     const { item } = { ...confirmation };
     let severity = "success";
@@ -177,12 +172,6 @@ const Status = () => {
               headerStyle={{ width: "20%", minWidth: "10rem" }}
             ></Column>
           </DataTable>
-          {/* 
-          <ButtonsOption
-                  idItem={rowData.idUsuario}
-                  deleteItem={deleteItem}
-                  link="user-edit"
-                /> */}
 
           <Dialog
             visible={ItemDialog}
