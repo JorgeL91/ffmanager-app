@@ -31,7 +31,7 @@ const Login = ({ setToken }) => {
         token: "dfdfgsdfgsdfgsdf",
         idUsuario: res.idUsuario,
         usuario: res.usuario,
-        isAdmin: true,
+        isAdmin: res.esAdmin === "1" ? true : false,
       };
       setToken({ token });
     }
