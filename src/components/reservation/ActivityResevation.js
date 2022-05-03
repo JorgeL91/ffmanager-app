@@ -9,12 +9,6 @@ const ActivityResevation = () => {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [selectedActivities, setSelecteActivities] = useState(null);
 
-  const [show, setShow] = useState({
-    active: false,
-    severity: "error",
-    message: "",
-  });
-
   useEffect(() => {
     getMaterialData();
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

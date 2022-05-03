@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import InputCustom from "../formcustom/InputCustom";
 import { getMaterials } from "../../service/general/materialsServices";
 import { InputText } from "primereact/inputtext";
 import MsjToast from "../confirmation/MsjToast";
@@ -64,12 +63,14 @@ const MaterialResevation = () => {
           active: true,
           message: "El valor no puede ser mayor al stock",
         });
+        return;
       } else if (newValue > rowData.maximoPorDia) {
         setShow({
           ...show,
           active: true,
           message: "El valor no puede ser mayot al maximo por dia",
         });
+        return;
       } else {
         rowData[field] = newValue;
       }
