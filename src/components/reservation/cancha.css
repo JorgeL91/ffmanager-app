@@ -1,0 +1,54 @@
+.bg-cancha {
+  background: url("../../assets/images/cancha1.png");
+  background-size: 100% 100%;
+}
+
+.container-cancha {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(20%, 10vmax);
+  grid-gap: 0px;
+}
+
+@media (max-width: 578px) and (orientation: portrait) {
+  .bg-cancha {
+    transform-origin: top left;
+    transform: rotate(-90deg) translate(-100%);
+    width: 500px;
+  }
+
+  .container-cancha {
+    grid-auto-rows: minmax(20%, 8vmax);
+  }
+
+  .routate-cancha {
+    height: 500px;
+    margin-left: -20px;
+  }
+}
+
+.sector {
+  cursor: pointer;
+
+  border: white 1px solid;
+  width: 100%;
+  height: 100%;
+}
+
+.sector .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-weight: bold;
+}
+
+.sector-selected {
+  background-color: red !important;
+  opacity: 0.3;
+}
+
+.sector:hover {
+  background-color: #ffd54f;
+  opacity: 0.5;
+}

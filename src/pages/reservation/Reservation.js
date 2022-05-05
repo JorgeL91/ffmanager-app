@@ -9,13 +9,17 @@ import { getOneArea } from "../../service/areaServices";
 
 const Reservation = () => {
   const { idarea = 0 } = useParams();
-
   const [area, setArea] = useState();
   const [activeIndex, setActiveIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const loadItem = async () => {
     const res = await getOneArea(idarea);
-    setArea(res);
+
+    if (!res.error) {
+      setArea(res);
+      setLoading(false);
+    }
   };
 
   const wizardItems = [
@@ -37,7 +41,7 @@ const Reservation = () => {
       case 2:
         return <ActivityResevation />;
       default:
-        return <SectorResevation />;
+        return <SectorResevation isCompuesta={area.tiposAreas.esCompuesta} />;
     }
   };
 
@@ -46,20 +50,24 @@ const Reservation = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="card">
-      <h5>Generar Reserva en {area?.nombre}</h5>
-      <div className="col-12 ">
-        <div className="card card-w-title">
-          <Steps
-            model={wizardItems}
-            activeIndex={activeIndex}
-            onSelect={(e) => setActiveIndex(e.index)}
-            readOnly={false}
-          />
-          {renderSwitch()}
-        </div>
-      </div>
-      {/* <div className="col-12 ">
+    <>
+      {loading ? (
+        "dd"
+      ) : (
+        <div className="card">
+          <h5>Generar Reserva en {area?.nombre}</h5>
+          <div className="col-12 ">
+            <div className="card card-w-title">
+              <Steps
+                model={wizardItems}
+                activeIndex={activeIndex}
+                onSelect={(e) => setActiveIndex(e.index)}
+                readOnly={false}
+              />
+              {renderSwitch()}
+            </div>
+          </div>
+          {/* <div className="col-12 ">
         <div className="card card-w-title">
           <TabMenu
             model={wizardItems}
@@ -69,10 +77,12 @@ const Reservation = () => {
           {renderSwitch()}
         </div>
       </div> */}
-      <div className=" p-fluid">
-        <Button label="Generar reserva" />
-      </div>
-    </div>
+          <div className=" p-fluid">
+            <Button label="Generar reserva" />
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -18,9 +18,9 @@ const AreaItem = ({ area }) => {
             Quedan 8 sectores disponibles en el rango fecha/hora seleccionado
           </div>
         </div>
-        <div className="flex align-items-center justify-content-between">
+        {/* <div className="flex align-items-center justify-content-between">
           <span className="">594 Reservas este mes</span>
-        </div>
+        </div> */}
         <div className="mt-2 p-fluid">
           <Link to={`generate-reservation/${area.idArea}`}>
             <Button
