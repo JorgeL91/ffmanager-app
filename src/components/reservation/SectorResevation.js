@@ -31,13 +31,13 @@ const hours = [
   },
 ];
 
-const SectorResevation = ({ isCompuesta }) => {
+const SectorResevation = ({ isCompuesta, sectors, setSectors }) => {
   const [selectedHours, setSelectedHours] = useState(null);
 
   return (
     <>
       {isCompuesta ? (
-        <Cancha />
+        <Cancha sectors={sectors} setSectors={setSectors} />
       ) : (
         <div className="mt-5">
           <DataTable
@@ -71,26 +71,7 @@ const SectorResevation = ({ isCompuesta }) => {
   );
 };
 
-function Cancha() {
-  let sectors = [
-    { id: 1, name: "sector" },
-    { id: 2, name: "sector" },
-    { id: 3, name: "sector" },
-    { id: 4, name: "sector" },
-    { id: 5, name: "sector" },
-    { id: 6, name: "sector" },
-    { id: 7, name: "sector" },
-    { id: 8, name: "sector" },
-    { id: 9, name: "sector" },
-    { id: 10, name: "sector" },
-    { id: 11, name: "sector" },
-    { id: 12, name: "sector" },
-    { id: 13, name: "sector" },
-    { id: 14, name: "sector" },
-    { id: 15, name: "sector" },
-    { id: 16, name: "sector" },
-  ];
-  const [selectedSector, setSelectedSector] = useState(sectors);
+function Cancha({ sectors, setSectors }) {
   const [checkedAll, setCheckedAll] = useState(false);
 
   const onSelectedItem = (sector, index) => {
@@ -99,7 +80,7 @@ function Cancha() {
     } else {
       sector.selected = false;
     }
-    setSelectedSector((values) =>
+    setSectors((values) =>
       values.map((value, i) => (i === index ? sector : value))
     );
   };
@@ -107,12 +88,12 @@ function Cancha() {
   const onSelectedAll = (event) => {
     const ch = event.target.checked;
     let update = [];
-    for (let index = 0; index < selectedSector.length; index++) {
-      const element = selectedSector[index];
+    for (let index = 0; index < sectors.length; index++) {
+      const element = sectors[index];
       element.selected = ch;
       update.push(element);
     }
-    setSelectedSector(update);
+    setSectors(update);
     setCheckedAll(ch);
   };
 
@@ -132,16 +113,13 @@ function Cancha() {
       <div className="routate-cancha ">
         <div className="bg-cancha ">
           <div className="container-cancha">
-            {selectedSector.map((sector, index) => (
+            {sectors.map((sector, index) => (
               <div
                 onClick={() => onSelectedItem(sector, index)}
                 className={"sector " + (sector.selected && "sector-selected")}
-                key={sector.id}
+                key={sector.idSector}
               >
-                <div className="title">
-                  {sector.name}
-                  {sector.id}
-                </div>
+                <div className="title">{sector.nombre}</div>
               </div>
             ))}
           </div>

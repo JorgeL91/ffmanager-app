@@ -19,16 +19,17 @@ const DateForm = ({ getItems, loading, setShow }) => {
   const { isAdmin } = token;
 
   const onGetAreas = () => {
-    // if (moment(endDate).isSameOrBefore(startDate, "hours")) {
-    //   setShow({
-    //     severity: "error",
-    //     active: true,
-    //     message: "Hora hasta debe ser mayor a hora desde",
-    //   });
-    //   return;
-    // }
+    if (moment(endDate).isSameOrBefore(startDate, "hours")) {
+      setShow({
+        severity: "error",
+        active: true,
+        message: "Hora hasta debe ser mayor a hora desde",
+      });
+      return;
+    }
     let ed = new Date(
-      moment(startDate).add(1, "d").hours(moment(endDate).hours()).toString()
+      // moment(startDate).add(1, "d").hours(moment(endDate).hours()).toString()
+      moment(startDate).hours(moment(endDate).hours()).toString()
     );
 
     const sd = moment(startDate).format("YYYY-MM-DD H:mm");

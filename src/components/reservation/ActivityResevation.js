@@ -1,22 +1,14 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { InputText } from "primereact/inputtext";
-import React, { useState, useEffect } from "react";
-import { getActivities } from "../../service/general/activitiesServices";
+import React, { useState } from "react";
 
-const ActivityResevation = () => {
-  const [activities, setActivities] = useState(null);
+const ActivityResevation = ({
+  selectedActivities,
+  setSelecteActivities,
+  activities,
+}) => {
   const [globalFilter, setGlobalFilter] = useState(null);
-  const [selectedActivities, setSelecteActivities] = useState(null);
-
-  useEffect(() => {
-    getMaterialData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const getMaterialData = async () => {
-    const res = await getActivities();
-    if (!res.error) setActivities(res);
-  };
 
   const header = (
     <div className="flex flex-column md:flex-row md:justify-content-between md:align-items-center">

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import { getMaterials } from "../../service/general/materialsServices";
 import { InputText } from "primereact/inputtext";
 import MsjToast from "../confirmation/MsjToast";
 
-const MaterialResevation = () => {
-  const [materials, setMaterials] = useState(null);
+const MaterialResevation = ({ materials, setMaterials }) => {
   const [globalFilter, setGlobalFilter] = useState(null);
   const [show, setShow] = useState({
     active: false,
@@ -14,28 +12,16 @@ const MaterialResevation = () => {
     message: "",
   });
 
-  useEffect(() => {
-    getMaterialData();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const getMaterialData = async () => {
-    const res = await getMaterials();
-    res.forEach((element) => {
-      element.count = 0;
-    });
-    if (!res.error) setMaterials(res);
-  };
-
   const columns = [
     { field: "nombre", header: "Nombre" },
     { field: "stock", header: "Stock" },
-    { field: "count", header: "Cantidad" },
+    { field: "cantidad", header: "Cantidad" },
     { field: "maximoPorDia", header: "Maximo por dia" },
     { field: "observaciones", header: "Observaciones" },
   ];
   const cellEditor = (options) => {
     //return textEditor(options);
-    if (options.field !== "count") {
+    if (options.field !== "cantidad") {
       return options.value;
     } else {
       return textEditor(options);
@@ -46,7 +32,7 @@ const MaterialResevation = () => {
     return (
       <InputText
         className="w-100"
-        type="text"
+        type="number"
         value={options.value}
         onChange={(e) => options.editorCallback(e.target.value)}
       />

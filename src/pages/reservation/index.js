@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MsjToast from "../../components/confirmation/MsjToast";
 import AreaItem from "../../components/reservation/AreaItem";
 import DateForm from "../../components/reservation/DateForm";
-import { getAreas } from "../../service/areaServices";
 import { getAreasAvailable } from "../../service/reserva/reservaService";
 import { useParams } from "react-router-dom";
 
