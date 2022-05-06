@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MsjToast from "../../components/confirmation/MsjToast";
 import AreaItem from "../../components/reservation/AreaItem";
 import DateForm from "../../components/reservation/DateForm";
@@ -15,14 +15,24 @@ const ListReservation = () => {
     message: "",
   });
 
-  // useEffect(() => {
-  //   getItems();
-  // }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    setAreas(null);
+  }, [id]); // eslint-disable-line react-hooks/exhaustive-deps
+
   const getItems = async (startDate, endDate) => {
     setLoading(true);
     const res = await getAreasAvailable(id, startDate, endDate);
     setLoading(false);
     if (!res.error) {
+      if (res.length === 0) {
+        setShow({
+          severity: "error",
+          active: true,
+          message: "No hay areas disponibles",
+        });
+        setAreas(res);
+        return;
+      }
       let items = [];
       res.forEach((element) => {
         element.url = `${element.idArea}/${startDate}/${endDate}`;
