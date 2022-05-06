@@ -75,6 +75,12 @@ function Cancha({ sectors, setSectors }) {
   const [checkedAll, setCheckedAll] = useState(false);
 
   const onSelectedItem = (sector, index) => {
+    if (sector.idEstado !== null) {
+      return;
+    }
+    if (sector.numeroSector === 16) {
+      return;
+    }
     if (sector.selected === undefined || sector.selected === false) {
       sector.selected = true;
     } else {
@@ -116,7 +122,12 @@ function Cancha({ sectors, setSectors }) {
             {sectors.map((sector, index) => (
               <div
                 onClick={() => onSelectedItem(sector, index)}
-                className={"sector " + (sector.selected && "sector-selected")}
+                className={
+                  "sector " +
+                  (sector.selected && "sector-selected ") +
+                  (sector.idEstado && " sector-disabled ") +
+                  (sector.numeroSector === 16 && " sector-reserved ")
+                }
                 key={sector.idSector}
               >
                 <div className="title">{sector.nombre}</div>

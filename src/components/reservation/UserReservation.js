@@ -44,7 +44,7 @@ const UserReservation = ({ user, setUser }) => {
   };
 
   return (
-    <div className="field p-fluid mb-5">
+    <div className="field p-fluid my-5">
       <label htmlFor="direction">Usuario</label>
 
       <AutoComplete

@@ -1,5 +1,5 @@
 .bg-cancha {
-  background: url("../../assets/images/cancha1.png");
+  background: url("../../assets/images/cancha2.png");
   background-size: 100% 100%;
 }
 
@@ -46,6 +46,16 @@
 .sector-selected {
   background-color: red !important;
   opacity: 0.3;
+}
+
+.sector-disabled {
+  background-color: gray !important;
+  opacity: 0.6;
+}
+
+.sector-reserved {
+  background-color: #fbc02d !important;
+  opacity: 0.6;
 }
 
 .sector:hover {

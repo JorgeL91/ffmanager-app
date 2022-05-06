@@ -193,15 +193,14 @@ const Reservation = () => {
         <div className="card">
           <h5>Generar Reserva</h5>
           <div className="col-12 ">
-            <div className="card card-w-title">
-              <Steps
-                model={wizardItems}
-                activeIndex={activeIndex}
-                onSelect={(e) => setActiveIndex(e.index)}
-                readOnly={false}
-              />
-              {renderSwitch()}
-            </div>
+            <Steps
+              model={wizardItems}
+              activeIndex={activeIndex}
+              onSelect={(e) => setActiveIndex(e.index)}
+              readOnly={false}
+            />
+            {renderSwitch()}
+
             {isAdmin && <UserReservation setUser={setUser} user={user} />}
           </div>
           {/* <div className="col-12 ">
