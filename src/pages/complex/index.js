@@ -64,6 +64,11 @@ const Complex = () => {
             header={<SearchTable filter={setGlobalFilter} />}
           >
             <Column
+              field="idComplejo"
+              header="id"
+              style={{ minWidth: "1rem" }}
+            />
+            <Column
               field="nombre"
               header="Nombre"
               style={{ minWidth: "12rem" }}

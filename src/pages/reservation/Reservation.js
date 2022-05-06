@@ -5,17 +5,17 @@ import { useParams } from "react-router-dom";
 import ActivityResevation from "../../components/reservation/ActivityResevation";
 import MaterialResevation from "../../components/reservation/MaterialResevation";
 import SectorResevation from "../../components/reservation/SectorResevation";
-import { getOneArea } from "../../service/areaServices";
+import { getSectoresAvailable } from "../../service/reserva/reservaService";
 
 const Reservation = () => {
-  const { idarea = 0 } = useParams();
+  const { idarea = 0, starDate, endDate } = useParams();
   const [area, setArea] = useState();
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const loadItem = async () => {
-    const res = await getOneArea(idarea);
-
+    const res = await getSectoresAvailable(idarea, starDate, endDate);
+    console.log(res);
     if (!res.error) {
       setArea(res);
       setLoading(false);
@@ -41,9 +41,11 @@ const Reservation = () => {
       case 2:
         return <ActivityResevation />;
       default:
-        return <SectorResevation isCompuesta={area.tiposAreas.esCompuesta} />;
+        return <SectorResevation isCompuesta={true} />;
     }
   };
+
+  // area?.tiposAreas.esCompuesta;
 
   useEffect(() => {
     loadItem();
@@ -52,10 +54,10 @@ const Reservation = () => {
   return (
     <>
       {loading ? (
-        "dd"
+        "Cargando"
       ) : (
         <div className="card">
-          <h5>Generar Reserva en {area?.nombre}</h5>
+          <h5>Generar Reserva</h5>
           <div className="col-12 ">
             <div className="card card-w-title">
               <Steps

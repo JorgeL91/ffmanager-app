@@ -554,9 +554,9 @@ const App = () => {
           <Route path="/materials" component={Material} />
           <Route path="/activities" component={activity} />
           <Route path="/status" component={status} />
-          <Route path="/reservation" component={ListReservation} />
+          <Route path="/reservation/:id" component={ListReservation} />
           <Route
-            path="/generate-reservation/:idarea?"
+            path="/generate-reservation/:idarea/:starDate/:endDate"
             component={Reservation}
           />
         </div>
