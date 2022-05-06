@@ -6,6 +6,7 @@ import MsjToast from "../../components/confirmation/MsjToast";
 import ActivityResevation from "../../components/reservation/ActivityResevation";
 import MaterialResevation from "../../components/reservation/MaterialResevation";
 import SectorResevation from "../../components/reservation/SectorResevation";
+import UserReservation from "../../components/reservation/UserReservation";
 import useToken from "../../hooks/useToken";
 import { getActivities } from "../../service/general/activitiesServices";
 import { getMaterials } from "../../service/general/materialsServices";
@@ -21,10 +22,12 @@ const Reservation = () => {
   const [sectors, setSectors] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [activities, setActivities] = useState(null);
+  const [user, setUser] = useState(null);
 
   const [selectedActivities, setSelecteActivities] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [btnLoading, setBtnLoading] = useState(false);
   const [show, setShow] = useState({
     active: false,
     severity: "error",
@@ -100,6 +103,11 @@ const Reservation = () => {
     const ar = selectedActivities.map((obj) => obj.idActividad);
     let ur = 0;
     if (isAdmin) {
+      if (!user) {
+        messageError("Debe seleccionar un Usuario");
+        return;
+      }
+      ur = user.idUsuario;
     } else {
       ur = idUsuario;
     }
@@ -116,7 +124,9 @@ const Reservation = () => {
       actividadesDeReserva: ar,
       usuarioDeReserva: ur,
     };
+    setBtnLoading(true);
     const res = await postReseva(body);
+    setBtnLoading(false);
     if (res.error) {
       messageError("Error al crear la reserva, inteta nuevamente");
     } else {
@@ -127,6 +137,7 @@ const Reservation = () => {
       });
       setSelecteActivities([]);
       loadItem();
+      setActiveIndex(0);
     }
   };
 
@@ -191,7 +202,7 @@ const Reservation = () => {
               />
               {renderSwitch()}
             </div>
-            {isAdmin && <h1>Seleccione un usuario</h1>}
+            {isAdmin && <UserReservation setUser={setUser} user={user} />}
           </div>
           {/* <div className="col-12 ">
         <div className="card card-w-title">
@@ -207,6 +218,7 @@ const Reservation = () => {
             <Button
               label="Generar reserva"
               onClick={() => onReservation()}
+              loading={btnLoading}
               type="button"
             />
           </div>
