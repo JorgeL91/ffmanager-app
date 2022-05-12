@@ -4,13 +4,25 @@ import { DataTable } from "primereact/datatable";
 import { Checkbox } from "primereact/checkbox";
 
 import "./cancha.css";
+import { Button } from "primereact/button";
 
-const SectorResevation = ({ isCompuesta, sectors, setSectors }) => {
+const SectorResevation = ({
+  isCompuesta,
+  sectors,
+  setSectors,
+  getListHours,
+  getNewsSectores,
+}) => {
   const [selectedHours, setSelectedHours] = useState(null);
   return (
     <>
       {isCompuesta === "true" ? (
-        <Cancha sectors={sectors} setSectors={setSectors} />
+        <Cancha
+          sectors={sectors}
+          setSectors={setSectors}
+          getListHours={getListHours}
+          getNewsSectores={getNewsSectores}
+        />
       ) : (
         <div className="mt-5">
           <DataTable
@@ -44,14 +56,13 @@ const SectorResevation = ({ isCompuesta, sectors, setSectors }) => {
   );
 };
 
-function Cancha({ sectors, setSectors }) {
+function Cancha({ sectors, setSectors, getListHours, getNewsSectores }) {
   const [checkedAll, setCheckedAll] = useState(false);
+  const hours = getListHours();
+  const [selectedHours, setSelectedHours] = useState(0);
 
   const onSelectedItem = (sector, index) => {
-    if (sector.idEstado !== null) {
-      return;
-    }
-    if (sector.numeroSector === 16) {
+    if (!sector.disponible) {
       return;
     }
     if (sector.selected === undefined || sector.selected === false) {
@@ -76,8 +87,27 @@ function Cancha({ sectors, setSectors }) {
     setCheckedAll(ch);
   };
 
+  const onButton = (item, key) => {
+    getNewsSectores(item);
+    setSelectedHours(key);
+  };
+
   return (
     <div>
+      <div className="col-12 my-3">
+        {hours.length > 1 &&
+          hours.map((item, key) => (
+            <Button
+              type="button"
+              onClick={() => onButton(item, key)}
+              className="mx-2"
+              key={key}
+              disabled={selectedHours === key}
+            >
+              {item}
+            </Button>
+          ))}
+      </div>
       <div className="col-12 my-3">
         <Checkbox
           inputId="cb1"
@@ -96,10 +126,12 @@ function Cancha({ sectors, setSectors }) {
               <div
                 onClick={() => onSelectedItem(sector, index)}
                 className={
-                  "sector " +
-                  (sector.selected && "sector-selected ") +
-                  (sector.idEstado && " sector-disabled ") +
-                  (sector.numeroSector === 16 && " sector-reserved ")
+                  "sector " + (sector.selected && "sector-selected ")
+                  // +(sector.idEstado && " sector-disabled ")
+                  // (sector.numeroSector === 16 && " sector-reserved ")
+                }
+                style={
+                  !sector.disponible ? { backgroundColor: sector.color } : {}
                 }
                 key={sector.idSector}
               >

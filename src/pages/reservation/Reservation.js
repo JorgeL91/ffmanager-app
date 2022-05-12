@@ -25,6 +25,7 @@ const Reservation = () => {
   const [materials, setMaterials] = useState([]);
   const [activities, setActivities] = useState(null);
   const [user, setUser] = useState(null);
+  const [selectedHour, setSelectedHour] = useState(null);
 
   const [selectedActivities, setSelecteActivities] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -51,8 +52,8 @@ const Reservation = () => {
     if (!res.error) setActivities(res);
   };
 
-  const getSectoresData = async () => {
-    const res = await getSectoresAvailable(idarea, starDate, endDate);
+  const getSectoresData = async (start, end) => {
+    const res = await getSectoresAvailable(idarea, start, end);
     if (!res.error) {
       setSectors(res);
     }
@@ -80,7 +81,11 @@ const Reservation = () => {
   const loadItem = async () => {
     setLoading(true);
     if (compuesta === "true") {
-      getSectoresData();
+      let start = moment(starDate);
+      let end = start.add(1, "h").format("YYYY-MM-DD H:mm");
+      const hours = start.hours();
+      setSelectedHour([hours - 1, hours]);
+      getSectoresData(starDate, end);
     } else {
       getHoursData();
     }
@@ -145,37 +150,65 @@ const Reservation = () => {
   };
 
   const createReservation = async (sr, mr, ar, ur) => {
-    const body = {
-      idSector: sr[0].idSector,
-      fechaHoraDesde: starDate,
-      fechaHoraHasta: endDate,
-      materilesDeReserva: mr,
-      actividadesDeReserva: ar,
-      usuarioDeReserva: ur,
-    };
+    let start = moment(starDate)
+      .hours(selectedHour[0])
+      .format("YYYY-MM-DD H:mm");
+    let end = moment(starDate).hours(selectedHour[1]).format("YYYY-MM-DD H:mm");
+
     setBtnLoading(true);
-    const res = await postReseva(body);
+    sr.forEach((element) => {
+      const body = {
+        idSector: element.idSector,
+        fechaHoraDesde: start,
+        fechaHoraHasta: end,
+        materilesDeReserva: mr,
+        actividadesDeReserva: ar,
+        usuarioDeReserva: ur,
+      };
+      postReseva(body);
+    });
+
     setBtnLoading(false);
-    if (res.error) {
-      messageError("Error al crear la reserva, inteta nuevamente");
-    } else {
-      setShow({
-        active: true,
-        severity: "success",
-        message: "Reserva creada correctamente",
-      });
-      setSelecteActivities([]);
-      loadItem();
-      setActiveIndex(0);
-    }
+    // if (res.error) {
+    //   messageError("Error al crear la reserva, inteta nuevamente");
+    // } else {
+    setShow({
+      active: true,
+      severity: "success",
+      message: "Reserva creada correctamente",
+    });
+    setSelecteActivities([]);
+    loadItem();
+    setActiveIndex(0);
+    // }
   };
 
+  const validateResponse = async () => {};
   const messageError = (message) => {
     setShow({
       active: true,
       severity: "error",
       message: message,
     });
+  };
+
+  const getListHours = () => {
+    var entryHour = moment(starDate).hours();
+    var exitHour = moment(endDate).hours();
+
+    let items = [];
+    for (let index = entryHour; index < exitHour; index++) {
+      items.push(index + " - " + (index + 1));
+    }
+    return items;
+  };
+
+  const getNewsSectores = (hours) => {
+    const h = hours.split(" - ");
+    setSelectedHour([h[0], h[1]]);
+    let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD H:mm");
+    let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD H:mm");
+    getSectoresData(start, end);
   };
 
   const renderSwitch = () => {
@@ -198,9 +231,11 @@ const Reservation = () => {
       default:
         return (
           <SectorResevation
+            getListHours={getListHours}
             sectors={sectors}
             setSectors={setSectors}
             isCompuesta={compuesta}
+            getNewsSectores={getNewsSectores}
           />
         );
     }
