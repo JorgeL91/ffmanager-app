@@ -27,7 +27,6 @@ const UserReservation = ({ user, setUser }) => {
   };
 
   const searchText = (event) => {
-    console.log(items);
     setTimeout(() => {
       if (!event.query.trim().length) {
         setAutoFilteredValue([...items]);

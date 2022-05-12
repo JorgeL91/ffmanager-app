@@ -4,36 +4,9 @@ import { DataTable } from "primereact/datatable";
 import { Checkbox } from "primereact/checkbox";
 
 import "./cancha.css";
-const hours = [
-  {
-    id: 1,
-    hour: "8:00 - 9:00",
-  },
-  {
-    id: 2,
-    hour: "9:00 - 10:00",
-  },
-  {
-    id: 3,
-    hour: "10:00 - 12:00",
-  },
-  {
-    id: 4,
-    hour: "12:00 - 13:00",
-  },
-  {
-    id: 5,
-    hour: "13:00 - 14:00",
-  },
-  {
-    id: 6,
-    hour: "15:00 - 16:00",
-  },
-];
 
 const SectorResevation = ({ isCompuesta, sectors, setSectors }) => {
   const [selectedHours, setSelectedHours] = useState(null);
-  console.log(isCompuesta);
   return (
     <>
       {isCompuesta === "true" ? (
@@ -41,7 +14,7 @@ const SectorResevation = ({ isCompuesta, sectors, setSectors }) => {
       ) : (
         <div className="mt-5">
           <DataTable
-            value={hours}
+            value={sectors}
             selection={selectedHours}
             onSelectionChange={(e) => setSelectedHours(e.value)}
             dataKey="id"

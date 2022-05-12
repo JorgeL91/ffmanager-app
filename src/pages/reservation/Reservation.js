@@ -3,6 +3,7 @@ import { Steps } from "primereact/steps";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import MsjToast from "../../components/confirmation/MsjToast";
+import moment from "moment";
 import ActivityResevation from "../../components/reservation/ActivityResevation";
 import MaterialResevation from "../../components/reservation/MaterialResevation";
 import SectorResevation from "../../components/reservation/SectorResevation";
@@ -58,12 +59,22 @@ const Reservation = () => {
   };
 
   const getHoursData = async () => {
-    const array = ["8", "9", "10", "11", "12"];
-    const res = await getHoursAvailable(idarea, starDate, array);
-    console.log(res);
-    // if (!res.error) {
-    //   setSectors(res);
-    // }
+    var entryHour = moment(starDate).hours();
+    var exitHour = moment(endDate).hours();
+
+    let items = [];
+    for (let index = entryHour; index <= exitHour; index++) {
+      items.push(index);
+    }
+    const res = await getHoursAvailable(idarea, starDate, items);
+
+    if (!res.error) {
+      let items = [];
+      Object.keys(res).map((key) =>
+        items.push({ hour: key, status: res[key], id: key })
+      );
+      setSectors(items);
+    }
   };
 
   const loadItem = async () => {
