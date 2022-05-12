@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Checkbox } from "primereact/checkbox";
+import { Button } from "primereact/button";
 
 import "./cancha.css";
-import { Button } from "primereact/button";
-import { date } from "yup";
 
 const SectorResevation = ({
   isCompuesta,
