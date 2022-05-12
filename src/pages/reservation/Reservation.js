@@ -110,7 +110,7 @@ const Reservation = () => {
 
   const onReservation = () => {
     let sr = [];
-    if (compuesta === true) {
+    if (compuesta === "true") {
       sr = sectors.filter((item) => {
         return item.selected === true;
       });
