@@ -5,6 +5,7 @@ import { Checkbox } from "primereact/checkbox";
 
 import "./cancha.css";
 import { Button } from "primereact/button";
+import { date } from "yup";
 
 const SectorResevation = ({
   isCompuesta,
@@ -12,8 +13,13 @@ const SectorResevation = ({
   setSectors,
   getListHours,
   getNewsSectores,
+  selectedHours,
+  setSelectedHours,
 }) => {
-  const [selectedHours, setSelectedHours] = useState(null);
+  const isRowSelectable = (event) => {
+    const data = event.data;
+    return data.status === "libre";
+  };
   return (
     <>
       {isCompuesta === "true" ? (
@@ -38,6 +44,7 @@ const SectorResevation = ({
             currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} registros"
             emptyMessage="Disponibilidad no encontrada."
             responsiveLayout="scroll"
+            isDataSelectable={isRowSelectable}
           >
             <Column
               selectionMode="multiple"
@@ -47,7 +54,13 @@ const SectorResevation = ({
               field="hour"
               header="Rango de tiempos libres"
               sortable
-              headerStyle={{ width: "80%", minWidth: "10rem" }}
+              headerStyle={{ width: "60%", minWidth: "10rem" }}
+            ></Column>
+            <Column
+              field="status"
+              header="Estado"
+              sortable
+              headerStyle={{ width: "20%", minWidth: "10rem" }}
             ></Column>
           </DataTable>{" "}
         </div>

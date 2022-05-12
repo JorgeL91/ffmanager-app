@@ -25,7 +25,8 @@ const Reservation = () => {
   const [materials, setMaterials] = useState([]);
   const [activities, setActivities] = useState(null);
   const [user, setUser] = useState(null);
-  const [selectedHour, setSelectedHour] = useState(null);
+  const [deteHour, setDateHour] = useState(null);
+  const [selectedHours, setSelectedHours] = useState([]);
 
   const [selectedActivities, setSelecteActivities] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -84,7 +85,7 @@ const Reservation = () => {
       let start = moment(starDate);
       let end = start.add(1, "h").format("YYYY-MM-DD H:mm");
       const hours = start.hours();
-      setSelectedHour([hours - 1, hours]);
+      setDateHour([hours - 1, hours]);
       getSectoresData(starDate, end);
     } else {
       getHoursData();
@@ -108,13 +109,23 @@ const Reservation = () => {
   ];
 
   const onReservation = () => {
-    const sr = sectors.filter((item) => {
-      return item.selected === true;
-    });
-    if (sr.length === 0) {
-      messageError("Debe seleccionar sectores");
-      return;
+    let sr = [];
+    if (compuesta === true) {
+      sr = sectors.filter((item) => {
+        return item.selected === true;
+      });
+      if (sr.length === 0) {
+        messageError("Debe seleccionar sectores");
+        return;
+      }
+    } else {
+      if (selectedHours.length === 0) {
+        messageError("Debe seleccionar horas");
+        return;
+      }
+      sr = selectedHours;
     }
+
     const mr = materials
       .filter((item) => {
         return item.cantidad !== 0;
@@ -145,15 +156,36 @@ const Reservation = () => {
     } else {
       ur = idUsuario;
     }
+    if (compuesta === true) {
+      createReservation(sr, mr, ar, ur);
+    } else {
+      createReservationSimple(sr, mr, ar, ur);
+    }
+  };
 
-    createReservation(sr, mr, ar, ur);
+  const createReservationSimple = async (sr, mr, ar, ur) => {
+    setBtnLoading(true);
+    sr.forEach((element) => {
+      const h = element.hour.split("-");
+      let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD H:mm");
+      let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD H:mm");
+      const body = {
+        fechaHoraDesde: start,
+        fechaHoraHasta: end,
+        materilesDeReserva: mr,
+        actividadesDeReserva: ar,
+        usuarioDeReserva: ur,
+      };
+      postReseva(body);
+    });
+    setSelectedHours([]);
+    setBtnLoading(false);
+    successResponse();
   };
 
   const createReservation = async (sr, mr, ar, ur) => {
-    let start = moment(starDate)
-      .hours(selectedHour[0])
-      .format("YYYY-MM-DD H:mm");
-    let end = moment(starDate).hours(selectedHour[1]).format("YYYY-MM-DD H:mm");
+    let start = moment(starDate).hours(deteHour[0]).format("YYYY-MM-DD H:mm");
+    let end = moment(starDate).hours(deteHour[1]).format("YYYY-MM-DD H:mm");
 
     setBtnLoading(true);
     sr.forEach((element) => {
@@ -165,10 +197,15 @@ const Reservation = () => {
         actividadesDeReserva: ar,
         usuarioDeReserva: ur,
       };
+
       postReseva(body);
     });
 
     setBtnLoading(false);
+    successResponse();
+  };
+
+  const successResponse = () => {
     // if (res.error) {
     //   messageError("Error al crear la reserva, inteta nuevamente");
     // } else {
@@ -181,15 +218,6 @@ const Reservation = () => {
     loadItem();
     setActiveIndex(0);
     // }
-  };
-
-  const validateResponse = async () => {};
-  const messageError = (message) => {
-    setShow({
-      active: true,
-      severity: "error",
-      message: message,
-    });
   };
 
   const getListHours = () => {
@@ -205,10 +233,18 @@ const Reservation = () => {
 
   const getNewsSectores = (hours) => {
     const h = hours.split(" - ");
-    setSelectedHour([h[0], h[1]]);
+    setDateHour([h[0], h[1]]);
     let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD H:mm");
     let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD H:mm");
     getSectoresData(start, end);
+  };
+
+  const messageError = (message) => {
+    setShow({
+      active: true,
+      severity: "error",
+      message: message,
+    });
   };
 
   const renderSwitch = () => {
@@ -236,6 +272,8 @@ const Reservation = () => {
             setSectors={setSectors}
             isCompuesta={compuesta}
             getNewsSectores={getNewsSectores}
+            selectedHours={selectedHours}
+            setSelectedHours={setSelectedHours}
           />
         );
     }
