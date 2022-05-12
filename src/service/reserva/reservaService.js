@@ -14,7 +14,17 @@ export function getAreasAvailable(idComplejo, startDate, endDate) {
 }
 
 export function getSectoresAvailable(idArea, startDate, endDate) {
-  const url = `${urlApi}/get-all-sectores-disponibles/${idArea}/${startDate}/${endDate}`;
+  const url = `${urlApi}/get-all-sectores-disponibles-de-area-compuesta/${idArea}/${startDate}/${endDate}`;
+
+  const options = {
+    method: "GET",
+    url: url,
+  };
+  return invokeApi(options);
+}
+
+export function getHoursAvailable(idArea, date, hours) {
+  const url = `${urlApi}/get-all-sectores-disponibles-de-area-simple/${idArea}/${date}/${hours}`;
 
   const options = {
     method: "GET",

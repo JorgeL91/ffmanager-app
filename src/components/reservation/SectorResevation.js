@@ -33,10 +33,10 @@ const hours = [
 
 const SectorResevation = ({ isCompuesta, sectors, setSectors }) => {
   const [selectedHours, setSelectedHours] = useState(null);
-
+  console.log(isCompuesta);
   return (
     <>
-      {isCompuesta ? (
+      {isCompuesta === "true" ? (
         <Cancha sectors={sectors} setSectors={setSectors} />
       ) : (
         <div className="mt-5">

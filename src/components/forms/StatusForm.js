@@ -30,6 +30,10 @@ const StatusForm = ({ initialFormValue, onSubmit, loading, onCancel }) => {
             <label htmlFor="observaciones">Observaciones</label>
             <TextareaCustom name="observaciones" rows="5" />
           </div>
+          <div className="field col-12">
+            <label htmlFor="color">Color</label>
+            <InputCustom name="color" />
+          </div>
           <div className="field col-12 md:col-6">
             <div className="flex align-items-center">
               <CheckboxCustom name="permiteUsar" />

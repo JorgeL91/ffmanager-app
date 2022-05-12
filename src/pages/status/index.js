@@ -21,6 +21,7 @@ const Status = () => {
     nombre: "",
     permiteUsar: false,
     observaciones: "",
+    color: "",
   };
 
   const [Items, setItems] = useState(null);
@@ -143,7 +144,7 @@ const Status = () => {
               field="nombre"
               header="Nombre"
               sortable
-              headerStyle={{ width: "30%", minWidth: "10rem" }}
+              headerStyle={{ width: "20%", minWidth: "10rem" }}
             ></Column>
 
             <Column
@@ -153,6 +154,11 @@ const Status = () => {
               body={(rowData) => (
                 <CheckBodyTemplate check={rowData.permiteUsar} />
               )}
+            ></Column>
+            <Column
+              field="color"
+              header="Color"
+              headerStyle={{ width: "10%", minWidth: "10rem" }}
             ></Column>
             <Column
               field="observaciones"

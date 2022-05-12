@@ -556,7 +556,7 @@ const App = () => {
           <Route path="/status" component={status} />
           <Route path="/reservation/:id" component={ListReservation} />
           <Route
-            path="/generate-reservation/:idarea/:starDate/:endDate"
+            path="/generate-reservation/:idarea/:compuesta/:starDate/:endDate"
             component={Reservation}
           />
         </div>

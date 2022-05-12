@@ -35,7 +35,7 @@ const ListReservation = () => {
       }
       let items = [];
       res.forEach((element) => {
-        element.url = `${element.idArea}/${startDate}/${endDate}`;
+        element.url = `${element.idArea}/${element.esCompuesta}/${startDate}/${endDate}`;
         items.push(element);
       });
       setAreas(items);
@@ -45,6 +45,15 @@ const ListReservation = () => {
         active: true,
         message: res.errorMessage,
       });
+      setAreas([
+        {
+          url: `15/false/${startDate}/${endDate}`,
+          idArea: 15,
+          nombre: "quemada",
+          descripcion: "descripcion",
+          esCompuesta: true,
+        },
+      ]);
     }
   };
 

@@ -11,6 +11,7 @@ import useToken from "../../hooks/useToken";
 import { getActivities } from "../../service/general/activitiesServices";
 import { getMaterials } from "../../service/general/materialsServices";
 import {
+  getHoursAvailable,
   getSectoresAvailable,
   postReseva,
 } from "../../service/reserva/reservaService";
@@ -18,7 +19,7 @@ import {
 const Reservation = () => {
   const { token } = useToken();
   const { isAdmin, idUsuario } = token;
-  const { idarea = 0, starDate, endDate } = useParams();
+  const { idarea = 0, compuesta, starDate, endDate } = useParams();
   const [sectors, setSectors] = useState([]);
   const [materials, setMaterials] = useState([]);
   const [activities, setActivities] = useState(null);
@@ -33,7 +34,6 @@ const Reservation = () => {
     severity: "error",
     message: "",
   });
-
   const getMaterialData = async () => {
     const res = await getMaterials();
 
@@ -50,14 +50,32 @@ const Reservation = () => {
     if (!res.error) setActivities(res);
   };
 
-  const loadItem = async () => {
-    setLoading(true);
+  const getSectoresData = async () => {
     const res = await getSectoresAvailable(idarea, starDate, endDate);
-    getMaterialData();
-    getAactivitesData();
     if (!res.error) {
       setSectors(res);
     }
+  };
+
+  const getHoursData = async () => {
+    const array = ["8", "9", "10", "11", "12"];
+    const res = await getHoursAvailable(idarea, starDate, array);
+    console.log(res);
+    // if (!res.error) {
+    //   setSectors(res);
+    // }
+  };
+
+  const loadItem = async () => {
+    setLoading(true);
+    if (compuesta === "true") {
+      getSectoresData();
+    } else {
+      getHoursData();
+    }
+
+    getMaterialData();
+    getAactivitesData();
     setLoading(false);
   };
 
@@ -171,7 +189,7 @@ const Reservation = () => {
           <SectorResevation
             sectors={sectors}
             setSectors={setSectors}
-            isCompuesta={true}
+            isCompuesta={compuesta}
           />
         );
     }
