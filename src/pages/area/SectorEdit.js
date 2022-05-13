@@ -36,10 +36,10 @@ const SectorEdit = () => {
       idArea: res.areas.idArea,
       nombre: res.areas.nombre,
     };
-    if (res.estadosDeSectores.length !== 0) {
-      let lastItem = res.estadosDeSectores.pop();
-      setFormStatus(lastItem.estados);
-    }
+    // if (res.estadosDeSectores.length !== 0) {
+    //   let lastItem = res.estadosDeSectores.pop();
+    //   setFormStatus(lastItem.estados);
+    // }
     setInitial(res);
     setLoading(false);
   };

@@ -19,7 +19,12 @@ const DateForm = ({ getItems, loading, setShow }) => {
   const { isAdmin } = token;
 
   const onGetAreas = () => {
-    if (moment(endDate).isSameOrBefore(startDate, "hours")) {
+    let ed = new Date(
+      // moment(startDate).add(1, "d").hours(moment(endDate).hours()).toString()
+      moment(startDate).hours(moment(endDate).hours())
+    );
+
+    if (moment(ed).isSameOrBefore(startDate, "hours")) {
       setShow({
         severity: "error",
         active: true,
@@ -27,13 +32,9 @@ const DateForm = ({ getItems, loading, setShow }) => {
       });
       return;
     }
-    let ed = new Date(
-      // moment(startDate).add(1, "d").hours(moment(endDate).hours()).toString()
-      moment(startDate).hours(moment(endDate).hours()).toString()
-    );
 
     const sd = moment(startDate).format("YYYY-MM-DD HH:mm");
-    const sdf = moment(ed).format("YYYY-MM-DD HH:mm");
+    const sdf = moment(ed.toString()).format("YYYY-MM-DD HH:mm");
 
     getItems(sd, sdf);
   };

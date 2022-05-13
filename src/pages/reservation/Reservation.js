@@ -57,7 +57,8 @@ const Reservation = () => {
   const getSectoresData = async (start, end) => {
     const res = await getSectoresAvailable(idarea, start, end);
     if (!res.error) {
-      setSectors(res);
+      const items = res.sort((a, b) => a.numeroSector - b.numeroSector);
+      setSectors(items);
     }
   };
 
@@ -159,7 +160,7 @@ const Reservation = () => {
     } else {
       ur = idUsuario;
     }
-    if (compuesta === true) {
+    if (compuesta === "true") {
       createReservation(sr, mr, ar, ur);
     } else {
       createReservationSimple(sr, mr, ar, ur);
@@ -192,16 +193,15 @@ const Reservation = () => {
     let end = moment(starDate).hours(deteHour[1]).format("YYYY-MM-DD HH:mm");
 
     setBtnLoading(true);
-    sr.forEach(async (element) => {
+    sr.forEach(async (element, index) => {
       const body = {
         idSector: element.idSector,
         fechaHoraDesde: start,
         fechaHoraHasta: end,
-        materilesDeReserva: mr,
+        materilesDeReserva: index === 0 ? mr : [],
         actividadesDeReserva: ar,
         usuarioDeReserva: ur,
       };
-
       await postReseva(body);
     });
     setTimeout(successResponse, 2000);
