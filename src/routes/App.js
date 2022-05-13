@@ -8,7 +8,7 @@ import { AppFooter } from "../components/shared/AppFooter";
 import { AppMenu } from "../components/menu/AppMenu";
 import { AppConfig } from "../components/shared/AppConfig";
 
-import Dashboard from "../components/ui/Dashboard";
+// import Dashboard from "../components/ui/Dashboard";
 import ButtonDemo from "../components/ui/ButtonDemo";
 import ChartDemo from "../components/ui/ChartDemo";
 import Documentation from "../components/ui/Documentation";
@@ -493,9 +493,10 @@ const App = () => {
           <Route
             path="/"
             exact
-            render={() => (
-              <Dashboard colorMode={layoutColorMode} location={location} />
-            )}
+            // render={() => (
+            //   <Dashboard colorMode={layoutColorMode} location={location} />
+            // )}
+            component={Institution}
           />
           <Route path="/formlayout" component={FormLayoutDemo} />
           <Route path="/input" component={InputDemo} />
