@@ -16,8 +16,6 @@ const MaterialResevation = ({ materials, setMaterials }) => {
     { field: "nombre", header: "Nombre" },
     { field: "stock", header: "Stock" },
     { field: "cantidad", header: "Cantidad" },
-    { field: "maximoPorDia", header: "Maximo por dia" },
-    { field: "observaciones", header: "Observaciones" },
   ];
   const cellEditor = (options) => {
     //return textEditor(options);
@@ -41,20 +39,12 @@ const MaterialResevation = ({ materials, setMaterials }) => {
 
   const onCellEditComplete = (e) => {
     let { rowData, newValue, field, originalEvent: event } = e;
-
     if (newValue) {
       if (newValue > rowData.stock) {
         setShow({
           ...show,
           active: true,
           message: "El valor no puede ser mayor al stock",
-        });
-        return;
-      } else if (newValue > rowData.maximoPorDia) {
-        setShow({
-          ...show,
-          active: true,
-          message: "El valor no puede ser mayot al maximo por dia",
         });
         return;
       } else {

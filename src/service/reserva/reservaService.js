@@ -3,6 +3,16 @@ import invokeApi from "../../helpers/invokeApi";
 
 const urlApi = `${config.apiUrl}/reservas-services/reservas`;
 
+export function getStockMaterials(startDate, endDate) {
+  const url = `${urlApi}/get-stock-materiales/${startDate}/${endDate}`;
+
+  const options = {
+    method: "GET",
+    url: url,
+  };
+  return invokeApi(options);
+}
+
 export function getAreasAvailable(idComplejo, startDate, endDate) {
   const url = `${urlApi}/get-all-areas-disponibles/${idComplejo}/${startDate}/${endDate}`;
 

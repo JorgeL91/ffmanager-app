@@ -32,8 +32,8 @@ const DateForm = ({ getItems, loading, setShow }) => {
       moment(startDate).hours(moment(endDate).hours()).toString()
     );
 
-    const sd = moment(startDate).format("YYYY-MM-DD H:mm");
-    const sdf = moment(ed).format("YYYY-MM-DD H:mm");
+    const sd = moment(startDate).format("YYYY-MM-DD HH:mm");
+    const sdf = moment(ed).format("YYYY-MM-DD HH:mm");
 
     getItems(sd, sdf);
   };

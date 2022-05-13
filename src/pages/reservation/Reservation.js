@@ -10,11 +10,11 @@ import SectorResevation from "../../components/reservation/SectorResevation";
 import UserReservation from "../../components/reservation/UserReservation";
 import useToken from "../../hooks/useToken";
 import { getActivities } from "../../service/general/activitiesServices";
-import { getMaterials } from "../../service/general/materialsServices";
 import {
   getHoursAvailable,
   getSectoresAvailable,
   postReseva,
+  getStockMaterials,
 } from "../../service/reserva/reservaService";
 
 const Reservation = () => {
@@ -37,8 +37,9 @@ const Reservation = () => {
     severity: "error",
     message: "",
   });
-  const getMaterialData = async () => {
-    const res = await getMaterials();
+
+  const getMaterialData = async (starDate, end) => {
+    const res = await getStockMaterials(starDate, end);
 
     if (!res.error) {
       setMaterials(res);
@@ -81,17 +82,19 @@ const Reservation = () => {
 
   const loadItem = async () => {
     setLoading(true);
+
     if (compuesta === "true") {
       let start = moment(starDate);
-      let end = start.add(1, "h").format("YYYY-MM-DD H:mm");
+      let end = start.add(1, "h").format("YYYY-MM-DD HH:mm");
       const hours = start.hours();
       setDateHour([hours - 1, hours]);
       getSectoresData(starDate, end);
+      getMaterialData(starDate, end);
     } else {
       getHoursData();
+      getMaterialData(starDate, endDate);
     }
 
-    getMaterialData();
     getAactivitesData();
     setLoading(false);
   };
@@ -110,7 +113,7 @@ const Reservation = () => {
 
   const onReservation = () => {
     let sr = [];
-    if (compuesta === true) {
+    if (compuesta === "true") {
       sr = sectors.filter((item) => {
         return item.selected === true;
       });
@@ -165,30 +168,31 @@ const Reservation = () => {
 
   const createReservationSimple = async (sr, mr, ar, ur) => {
     setBtnLoading(true);
-    sr.forEach((element) => {
+    sr.forEach(async (element) => {
       const h = element.hour.split("-");
-      let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD H:mm");
-      let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD H:mm");
+      let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD HH:mm");
+      let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD HH:mm");
       const body = {
+        idArea: idarea,
         fechaHoraDesde: start,
         fechaHoraHasta: end,
         materilesDeReserva: mr,
         actividadesDeReserva: ar,
         usuarioDeReserva: ur,
       };
-      postReseva(body);
+      await postReseva(body);
     });
     setSelectedHours([]);
-    setBtnLoading(false);
-    successResponse();
+    setTimeout(successResponse, 2000);
+    //successResponse();
   };
 
   const createReservation = async (sr, mr, ar, ur) => {
-    let start = moment(starDate).hours(deteHour[0]).format("YYYY-MM-DD H:mm");
-    let end = moment(starDate).hours(deteHour[1]).format("YYYY-MM-DD H:mm");
+    let start = moment(starDate).hours(deteHour[0]).format("YYYY-MM-DD HH:mm");
+    let end = moment(starDate).hours(deteHour[1]).format("YYYY-MM-DD HH:mm");
 
     setBtnLoading(true);
-    sr.forEach((element) => {
+    sr.forEach(async (element) => {
       const body = {
         idSector: element.idSector,
         fechaHoraDesde: start,
@@ -198,14 +202,14 @@ const Reservation = () => {
         usuarioDeReserva: ur,
       };
 
-      postReseva(body);
+      await postReseva(body);
     });
-
-    setBtnLoading(false);
-    successResponse();
+    setTimeout(successResponse, 2000);
+    // successResponse();
   };
 
   const successResponse = () => {
+    setBtnLoading(false);
     // if (res.error) {
     //   messageError("Error al crear la reserva, inteta nuevamente");
     // } else {
@@ -234,9 +238,10 @@ const Reservation = () => {
   const getNewsSectores = (hours) => {
     const h = hours.split(" - ");
     setDateHour([h[0], h[1]]);
-    let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD H:mm");
-    let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD H:mm");
+    let start = moment(starDate).hours(h[0]).format("YYYY-MM-DD HH:mm");
+    let end = moment(starDate).hours(h[1]).format("YYYY-MM-DD HH:mm");
     getSectoresData(start, end);
+    getMaterialData(start, end);
   };
 
   const messageError = (message) => {
