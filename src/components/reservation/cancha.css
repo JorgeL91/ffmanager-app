@@ -41,6 +41,7 @@
   align-items: center;
   height: 100%;
   font-weight: bold;
+      text-align: center;
 }
 
 .sector-selected {
@@ -61,4 +62,13 @@
 .sector:hover {
   background-color: #ffd54f;
   opacity: 0.5;
+}
+
+.btn-hour-reservation {
+  opacity: 0.4;
+}
+
+.btn-hour-reservation button:disabled,
+button[disabled]{
+opacity: 1 !important;
 }

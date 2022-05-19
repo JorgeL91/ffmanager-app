@@ -27,6 +27,8 @@ const SectorResevation = ({
           setSectors={setSectors}
           getListHours={getListHours}
           getNewsSectores={getNewsSectores}
+          btnHours={selectedHours}
+          setBtnHours={setSelectedHours}
         />
       ) : (
         <div className="mt-5">
@@ -68,10 +70,17 @@ const SectorResevation = ({
   );
 };
 
-function Cancha({ sectors, setSectors, getListHours, getNewsSectores }) {
+function Cancha({
+  sectors,
+  setSectors,
+  getListHours,
+  getNewsSectores,
+  btnHours,
+  setBtnHours,
+}) {
   const [checkedAll, setCheckedAll] = useState(false);
+
   const hours = getListHours();
-  const [selectedHours, setSelectedHours] = useState(0);
 
   const onSelectedItem = (sector, index) => {
     if (!sector.disponible) {
@@ -101,7 +110,7 @@ function Cancha({ sectors, setSectors, getListHours, getNewsSectores }) {
 
   const onButton = (item, key) => {
     getNewsSectores(item);
-    setSelectedHours(key);
+    setBtnHours(key);
   };
 
   return (
@@ -112,9 +121,9 @@ function Cancha({ sectors, setSectors, getListHours, getNewsSectores }) {
             <Button
               type="button"
               onClick={() => onButton(item, key)}
-              className="mx-2"
+              className="mx-2 btn-hour-reservation"
               key={key}
-              disabled={selectedHours === key}
+              disabled={btnHours === key}
             >
               {item}
             </Button>
@@ -147,7 +156,11 @@ function Cancha({ sectors, setSectors, getListHours, getNewsSectores }) {
                 }
                 key={sector.idSector}
               >
-                <div className="title">{sector.nombre}</div>
+                <div className="title">
+                  {sector.nombre}
+                  <br />
+                  {sector.usuarioReserva}
+                </div>
               </div>
             ))}
           </div>

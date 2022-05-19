@@ -26,7 +26,7 @@ const Reservation = () => {
   const [activities, setActivities] = useState(null);
   const [user, setUser] = useState(null);
   const [deteHour, setDateHour] = useState(null);
-  const [selectedHours, setSelectedHours] = useState([]);
+  const [selectedHours, setSelectedHours] = useState(null);
 
   const [selectedActivities, setSelecteActivities] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -81,17 +81,27 @@ const Reservation = () => {
     }
   };
 
-  const loadItem = async () => {
+  const loadItem = async (isRefresh = false) => {
     setLoading(true);
 
     if (compuesta === "true") {
       let start = moment(starDate);
       let end = start.add(1, "h").format("YYYY-MM-DD HH:mm");
-      const hours = start.hours();
-      setDateHour([hours - 1, hours]);
-      getSectoresData(starDate, end);
-      getMaterialData(starDate, end);
+
+      if (isRefresh) {
+        start = moment(starDate).hours(deteHour[0]).format("YYYY-MM-DD HH:mm");
+        end = moment(starDate).hours(deteHour[1]).format("YYYY-MM-DD HH:mm");
+      } else {
+        const hours = start.hours();
+        setDateHour([hours - 1, hours]);
+        start = moment(starDate).format("YYYY-MM-DD HH:mm");
+        setSelectedHours(0);
+      }
+
+      getSectoresData(start, end);
+      getMaterialData(start, end);
     } else {
+      setSelectedHours([]);
       getHoursData();
       getMaterialData(starDate, endDate);
     }
@@ -140,15 +150,15 @@ const Reservation = () => {
           cantidad: obj.cantidad,
         };
       });
-    if (mr.length === 0) {
-      messageError("Debe seleccionar materiales");
-      return;
-    }
+    // if (mr.length === 0) {
+    //   messageError("Debe seleccionar materiales");
+    //   return;
+    // }
 
-    if (selectedActivities.length === 0) {
-      messageError("Debe seleccionar actividades");
-      return;
-    }
+    // if (selectedActivities.length === 0) {
+    //   messageError("Debe seleccionar actividades");
+    //   return;
+    // }
     const ar = selectedActivities.map((obj) => obj.idActividad);
     let ur = 0;
     if (isAdmin) {
@@ -184,7 +194,7 @@ const Reservation = () => {
       await postReseva(body);
     });
     setSelectedHours([]);
-    setTimeout(successResponse, 2000);
+    setTimeout(successResponse, 3000);
     //successResponse();
   };
 
@@ -204,7 +214,7 @@ const Reservation = () => {
       };
       await postReseva(body);
     });
-    setTimeout(successResponse, 2000);
+    setTimeout(successResponse, 3000);
     // successResponse();
   };
 
@@ -219,7 +229,7 @@ const Reservation = () => {
       message: "Reserva creada correctamente",
     });
     setSelecteActivities([]);
-    loadItem();
+    loadItem(true);
     setActiveIndex(0);
     // }
   };
@@ -227,7 +237,6 @@ const Reservation = () => {
   const getListHours = () => {
     var entryHour = moment(starDate).hours();
     var exitHour = moment(endDate).hours();
-
     let items = [];
     for (let index = entryHour; index < exitHour; index++) {
       items.push(index + " - " + (index + 1));
