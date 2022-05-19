@@ -7,6 +7,7 @@ import { AppTopbar } from "../components/shared/AppTopbar";
 import { AppFooter } from "../components/shared/AppFooter";
 import { AppMenu } from "../components/menu/AppMenu";
 import { AppConfig } from "../components/shared/AppConfig";
+import config from "../config/config";
 
 // import Dashboard from "../components/ui/Dashboard";
 import ButtonDemo from "../components/ui/ButtonDemo";
@@ -77,9 +78,10 @@ import activity from "../pages/activity";
 import status from "../pages/status";
 import ListReservation from "../pages/reservation";
 import Reservation from "../pages/reservation/Reservation";
+import { useIdleTimer } from "react-idle-timer";
 
 const App = () => {
-  const { token, setToken } = useToken();
+  const { token, setToken, deleteToken, validateSession } = useToken();
   const [menus, setMenus] = useState([]);
   const [layoutMode, setLayoutMode] = useState("static");
   const [layoutColorMode, setLayoutColorMode] = useState("dark");
@@ -91,6 +93,18 @@ const App = () => {
   const [mobileTopbarMenuActive, setMobileTopbarMenuActive] = useState(false);
   const copyTooltipRef = useRef();
   const location = useLocation();
+
+  //////////////////////////////////
+  const onIdle = () => {
+    deleteToken();
+  };
+
+  useIdleTimer({
+    onIdle,
+    timeout: config.sessionIdleTime * 60000,
+  });
+
+  ////////////////////////////////////
 
   PrimeReact.ripple = true;
 
@@ -109,7 +123,8 @@ const App = () => {
     copyTooltipRef &&
       copyTooltipRef.current &&
       copyTooltipRef.current.updateTargetEvents();
-  }, [location]);
+    validateSession();
+  }, [location]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onInputStyleChange = (inputStyle) => {
     setInputStyle(inputStyle);

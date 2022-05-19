@@ -62,8 +62,12 @@ const Login = ({ setToken }) => {
       <MsjToast show={show} setShow={setShow} />
       <div className="xs:col-12 sm:col-12  md:col-5">
         <Card>
-          <div className="mb-5 text-center">
-            <img src="assets/layout/images/logo-dark.svg" alt="logo" />
+          <div className="mb-5 text-center ">
+            <img
+              style={{ height: "100px" }}
+              src="assets/layout/images/logo.png"
+              alt="logo"
+            />
           </div>
 
           <Formik

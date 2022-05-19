@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import useToken from "../../hooks/useToken";
+import config from "../../config/config";
 
 export const AppTopbar = (props) => {
   const { deleteToken } = useToken();
@@ -12,12 +13,12 @@ export const AppTopbar = (props) => {
         <img
           src={
             props.layoutColorMode === "light"
-              ? "assets/layout/images/logo-dark.svg"
-              : "assets/layout/images/logo-white.svg"
+              ? "assets/layout/images/logo.png"
+              : "assets/layout/images/logo.png"
           }
           alt="logo"
         />
-        <span>SAKAI</span>
+        <span>{config.namePage}</span>
       </Link>
 
       <button
