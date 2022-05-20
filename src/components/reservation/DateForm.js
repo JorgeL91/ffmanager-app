@@ -53,7 +53,7 @@ const DateForm = ({ getItems, loading, setShow }) => {
               showIcon
               showTime
               hourFormat="24"
-              minDate={dateNow}
+              minDate={new Date(moment().hours(0).minutes(0))}
               maxDate={
                 isAdmin
                   ? new Date(moment().add(8, "d").format("L"))

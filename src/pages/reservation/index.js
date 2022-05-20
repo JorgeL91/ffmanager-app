@@ -34,11 +34,16 @@ const ListReservation = () => {
         return;
       }
       let items = [];
+
       res.forEach((element) => {
         element.url = `${element.idArea}/${element.esCompuesta}/${startDate}/${endDate}`;
         items.push(element);
       });
-      setAreas(items);
+      setAreas(
+        items.sort((a, b) =>
+          a.nombre.toLowerCase() > b.nombre.toLowerCase() ? 1 : -1
+        )
+      );
     } else {
       setShow({
         severity: "error",
