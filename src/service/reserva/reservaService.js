@@ -3,6 +3,27 @@ import invokeApi from "../../helpers/invokeApi";
 
 const urlApi = `${config.apiUrl}/reservas-services/reservas`;
 
+export function deleteReservation(idReserva) {
+  const url = `${urlApi}/delete-reserva${idReserva}`;
+
+  const options = {
+    method: "DELETE",
+    url: url,
+  };
+  return invokeApi(options);
+}
+
+export function getReservationXUser(startDate, endDate, userId) {
+  console.log(userId);
+  const url = `${urlApi}/get-all-reservas-usuarios/${startDate}/${endDate}`;
+
+  const options = {
+    method: "GET",
+    url: url,
+  };
+  return invokeApi(options);
+}
+
 export function getStockMaterials(startDate, endDate) {
   const url = `${urlApi}/get-stock-materiales/${startDate}/${endDate}`;
 

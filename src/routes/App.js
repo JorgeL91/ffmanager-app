@@ -79,6 +79,7 @@ import status from "../pages/status";
 import ListReservation from "../pages/reservation";
 import Reservation from "../pages/reservation/Reservation";
 import { useIdleTimer } from "react-idle-timer";
+import MyReservation from "../pages/reservation/MyReservation";
 
 const App = () => {
   const { token, setToken, deleteToken, validateSession } = useToken();
@@ -575,6 +576,7 @@ const App = () => {
             path="/generate-reservation/:idarea/:compuesta/:starDate/:endDate"
             component={Reservation}
           />
+          <Route path="/my-reservations" component={MyReservation} />
         </div>
 
         <AppFooter layoutColorMode={layoutColorMode} />
