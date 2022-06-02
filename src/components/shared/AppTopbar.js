@@ -2,7 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import useToken from "../../hooks/useToken";
-import config from "../../config/config";
+import escudo from "../../assets/images/escudo.png";
+import title from "../../assets/images/title.png";
 
 export const AppTopbar = (props) => {
   const { deleteToken } = useToken();
@@ -10,15 +11,9 @@ export const AppTopbar = (props) => {
   return (
     <div className="layout-topbar">
       <Link to="/" className="layout-topbar-logo">
-        <img
-          src={
-            props.layoutColorMode === "light"
-              ? "assets/layout/images/logo.png"
-              : "assets/layout/images/logo.png"
-          }
-          alt="logo"
-        />
-        <span>{config.namePage}</span>
+        <img src={escudo} alt="logo" />
+        {/* <span>{config.namePage}</span> */}
+        <img src={title} alt="logo" height="2rem" />
       </Link>
 
       <button
