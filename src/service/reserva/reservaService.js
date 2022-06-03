@@ -14,8 +14,7 @@ export function deleteReservation(idReserva) {
 }
 
 export function getReservationXUser(startDate, endDate, userId) {
-  console.log(userId);
-  const url = `${urlApi}/get-all-reservas-usuarios/${startDate}/${endDate}`;
+  const url = `${urlApi}/get-all-reservas-usuarios/${startDate}/${endDate}/${userId}`;
 
   const options = {
     method: "GET",
