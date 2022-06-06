@@ -6,6 +6,7 @@ import { Card } from "primereact/card";
 import InputCustom from "../components/formcustom/InputCustom";
 import { postLoginUser } from "../service/profiles/usersServices";
 import MsjToast from "../components/confirmation/MsjToast";
+import escudo from "../assets/images/escudo.png";
 
 const Login = ({ setToken }) => {
   const [loading, setLoading] = useState(false);
@@ -63,11 +64,7 @@ const Login = ({ setToken }) => {
       <div className="xs:col-12 sm:col-12  md:col-5">
         <Card>
           <div className="mb-5 text-center ">
-            <img
-              style={{ height: "100px" }}
-              src="assets/layout/images/logo.png"
-              alt="logo"
-            />
+            <img style={{ height: "150px" }} src={escudo} alt="logo" />
           </div>
 
           <Formik

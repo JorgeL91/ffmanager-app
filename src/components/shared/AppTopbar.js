@@ -13,7 +13,12 @@ export const AppTopbar = (props) => {
       <Link to="/" className="layout-topbar-logo">
         <img src={escudo} alt="logo" />
         {/* <span>{config.namePage}</span> */}
-        <img src={title} alt="logo" height="2rem" />
+        <img
+          src={title}
+          alt="logo"
+          height="2rem"
+          style={{ marginTop: "10px" }}
+        />
       </Link>
 
       <button
