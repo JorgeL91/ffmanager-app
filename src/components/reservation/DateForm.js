@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Calendar } from "primereact/calendar";
 import moment from "moment";
-import useToken from "../../hooks/useToken";
 import { Button } from "primereact/button";
 
 const DateForm = ({ getItems, loading, setShow }) => {
@@ -15,8 +14,6 @@ const DateForm = ({ getItems, loading, setShow }) => {
 
   const [startDate, setStarDate] = useState(dateNow);
   const [endDate, setEndDate] = useState(new Date(moment().minutes(0)));
-  const { token } = useToken();
-  const { isAdmin } = token;
 
   const onGetAreas = () => {
     let ed = new Date(
@@ -54,11 +51,7 @@ const DateForm = ({ getItems, loading, setShow }) => {
               showTime
               hourFormat="24"
               minDate={new Date(moment().hours(0).minutes(0))}
-              maxDate={
-                isAdmin
-                  ? new Date(moment().add(8, "d").format("L"))
-                  : new Date(moment().add(1, "d").format("L"))
-              }
+              maxDate={new Date(moment().add(8, "d").format("L"))}
               stepMinute={60}
             />
           </div>

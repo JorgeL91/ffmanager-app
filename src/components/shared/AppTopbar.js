@@ -6,8 +6,7 @@ import escudo from "../../assets/images/escudo.png";
 import title from "../../assets/images/title.png";
 
 export const AppTopbar = (props) => {
-  const { deleteToken } = useToken();
-
+  const { deleteToken, token } = useToken();
   return (
     <div className="layout-topbar">
       <Link to="/" className="layout-topbar-logo">
@@ -42,6 +41,7 @@ export const AppTopbar = (props) => {
           "layout-topbar-menu-mobile-active": props.mobileTopbarMenuActive,
         })}
       >
+        <h5 className="pt-2">{token.usuario}</h5>
         <li>
           <button
             className="p-link layout-topbar-button"

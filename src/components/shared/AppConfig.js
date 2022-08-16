@@ -66,9 +66,9 @@ export const AppConfig = (props) => {
     document.documentElement.style.fontSize = scale + "px";
   }, [scale]);
 
-  const toggleConfigurator = (event) => {
-    setActive((prevState) => !prevState);
-  };
+  // const toggleConfigurator = (event) => {
+  //   setActive((prevState) => !prevState);
+  // };
 
   const configClassName = classNames("layout-config", {
     "layout-config-active": active,
@@ -121,13 +121,13 @@ export const AppConfig = (props) => {
 
   return (
     <div ref={config} className={configClassName} id={"layout-config"}>
-      <button
+      {/* <button
         className="layout-config-button p-link"
         id="layout-config-button"
         onClick={toggleConfigurator}
       >
         <i className="pi pi-cog"></i>
-      </button>
+      </button> */}
       <Button
         className="p-button-danger layout-config-close p-button-rounded p-button-text"
         icon="pi pi-times"

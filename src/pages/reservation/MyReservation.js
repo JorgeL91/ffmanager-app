@@ -37,11 +37,11 @@ const MyReservation = () => {
     if (!res.error) {
       setAreas(Object.values(res)[0]);
     } else {
-      setShow({
-        severity: "error",
-        active: true,
-        message: res.errorMessage,
-      });
+      // setShow({
+      //   severity: "error",
+      //   active: true,
+      //   message: res.errorMessage,
+      // });
     }
   };
 
@@ -49,9 +49,9 @@ const MyReservation = () => {
     return moment(date).format("YYYY-MM-DD HH:mm");
   };
 
-  const countBodyTemplate = (list) => {
-    return list.length;
-  };
+  // const countBodyTemplate = (list) => {
+  //   return list.length;
+  // };
 
   const cancelReservation = async (confirmation) => {
     const { item } = { ...confirmation };
@@ -111,7 +111,7 @@ const MyReservation = () => {
           body={(rowData) => dateBodyTemplate(rowData.fechaHasta)}
         ></Column>
 
-        <Column
+        {/* <Column
           header="Actividades"
           headerStyle={{ width: "10%", minWidth: "10rem" }}
           body={(rowData) => countBodyTemplate(rowData.actividadesDeReserva)}
@@ -121,7 +121,7 @@ const MyReservation = () => {
           header="Materiales"
           headerStyle={{ width: "10%", minWidth: "10rem" }}
           body={(rowData) => countBodyTemplate(rowData.materialesDeReserva)}
-        ></Column>
+        ></Column> */}
         <Column
           field="usuarios.usuario"
           header="Usuario"
