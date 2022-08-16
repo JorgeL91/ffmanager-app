@@ -128,6 +128,11 @@ const MyReservation = () => {
           headerStyle={{ width: "20%", minWidth: "10rem" }}
         ></Column>
         <Column
+          field="nombreArea"
+          header="Nombre Area"
+          headerStyle={{ width: "20%", minWidth: "10rem" }}
+        ></Column>
+        <Column
           body={(rowData) => (
             <BtnDelete
               item={rowData.idReserva}

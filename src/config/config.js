@@ -1,6 +1,6 @@
 export default {
-  apiUrl: "http://metricball.io:8080/ffmanager/api-services",
-  namePage: "Focusball",
-  sessionIdleTime: 5, //MINUTES INACTIVE
-  sessionTime: 15, //MINUTES DURATION SESSION
+  apiUrl: window.env.apiUrl,
+  namePage: window.env.namePage,
+  sessionIdleTime: window.env.sessionIdleTime, //MINUTES INACTIVE
+  sessionTime: window.env.sessionTime, //MINUTES DURATION SESSION
 };
